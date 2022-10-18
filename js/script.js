@@ -108,6 +108,57 @@ arrayLibros.push (new Libros (14, "Cuentos Montessori para las Buenas Noches", "
 
 
 // ****** LIBROS DISPONIBLES ****** //
+
+const listaLibros = document.getElementById ("lista-libros");
+let contId = 1;
+
+for (const libros of arrayLibros){
+    let li = document.createElement ("li");
+    let a = document.createElement ("a");
+
+    li.setAttribute ("id", contId);
+    li.className = "libro";
+    li.innerHTML = libros.titulo;
+    //a.href = ("./pages/ficha-tecnica.html");
+    
+    a.append(li);
+    listaLibros.append(a);
+    contId++;
+}
+
+// ****** FICHA TECNICA LIBRO CLICKEADO ****** //
+
+function buscarLibroPorClick (id){
+    return arrayLibros.find ((libro) => {
+        return libro.id === id;
+    })
+}
+
+listaLibros.addEventListener ("click", (event) => {
+    let valorTarget = event.target;
+    let idTarget = parseInt (valorTarget.id);
+    
+    // LLAMAR A LA FUNCION
+    const libroClickeado = buscarLibroPorClick (idTarget);
+    console.log (libroClickeado);
+
+    // MOSTRAR FICHA TECNICA
+    let contenedor = document.getElementById ("contenedor-ficha-tecnica");
+    contenedor.innerHTML = `<h3>${libroClickeado.titulo}</h3>
+                            <p><strong>Autor: </strong>${libroClickeado.autor}</p>
+                            <p><strong>Fecha de Publicación: </strong>${libroClickeado.fechaPublicacion}</p>
+                            <p><strong>Editorial: </strong>${libroClickeado.editorial}</p>
+                            <p><strong>Formato: </strong>${libroClickeado.formato}</p>
+                            <p><strong>Idioma: </strong>${libroClickeado.idioma}</p>
+                            <p><strong>Cantidad de páginas: </strong>${libroClickeado.cantidadPaginas}</p>
+                            <p><strong>ISBN: </strong>${libroClickeado.isbn}</p>
+                            <p><strong>Rango de edad: </strong>${libroClickeado.rangoEdad}</p>
+                            <p><strong>Sipnosis: </strong>${libroClickeado.sipnosis}</p>
+                            <p><strong>Precio: </strong>$${libroClickeado.precio}</p>`
+
+})
+
+
 console.log ("LIBROS DISPONIBLES");
 
 for (const libro of arrayLibros){
@@ -117,41 +168,41 @@ for (const libro of arrayLibros){
 
 
 // // ****** VENDER LIBRO POR TITULO ****** //
-let verifVentaLibro = true;
+// let verifVentaLibro = true;
 
-while (verifVentaLibro === true){
+// while (verifVentaLibro === true){
 
-    let elegido = prompt ("Elegir libro que desea comprar. SALIR para pagar.");
-    let libroElegido = elegido.toUpperCase ();
+//     let elegido = prompt ("Elegir libro que desea comprar. SALIR para pagar.");
+//     let libroElegido = elegido.toUpperCase ();
 
-    if (libroElegido !== "SALIR"){
+//     if (libroElegido !== "SALIR"){
 
-        const libroAVender = arrayLibros.find (libro =>{
-            if (libro.titulo === libroElegido){
-                return true;
-            } else {
-                return false;
-            }    
-        })
+//         const libroAVender = arrayLibros.find (libro =>{
+//             if (libro.titulo === libroElegido){
+//                 return true;
+//             } else {
+//                 return false;
+//             }    
+//         })
 
-        // llamar al MÉTODO para vender libro
+//         // llamar al MÉTODO para vender libro
 
-        if (libroAVender){
-            verifVentaLibro = false;
-            libroAVender.venderLibro();
-        } else {
-            alert ("No se encontró el libro que está buscando.");
-        }
+//         if (libroAVender){
+//             verifVentaLibro = false;
+//             libroAVender.venderLibro();
+//         } else {
+//             alert ("No se encontró el libro que está buscando.");
+//         }
 
-    } else {
+//     } else {
 
-        verifVentaLibro = false;
-        if (cantidadCompraLibro > 0){
-            alert ("Total a pagar $" + totalCarrito + "\n¡Gracias por tu compra!");
-        }
+//         verifVentaLibro = false;
+//         if (cantidadCompraLibro > 0){
+//             alert ("Total a pagar $" + totalCarrito + "\n¡Gracias por tu compra!");
+//         }
         
-    }  
-}
+//     }  
+// }
 
 
 
