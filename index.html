@@ -11,23 +11,42 @@
     <title>Little Ñams - Libros Infantiles</title>
 </head>
 <body>
+
+    <header>
+        <h1>Little Ñams</h1>
+        <nav></nav>
+        
+        <div class = "contenedor-buscador">
+            <div class = "buscador">
+                <input id = "buscar-box" class = "estilo-buscar-box" placeholder = "Ingresar título, autor, ISBN, o palabra clave">
+
+                <div class="contenedor-select">
+                    <select id="buscar-por" class="estilo-select mostrar">
+                        <option value="todos" selected>Todos</option>
+                        <option value="titulo">Título</option>
+                        <option value="autor">Autor</option>
+                        <option value="editorial">Editorial</option>
+                        <option value="isbn">ISBN</option>
+                    </select>
+                </div>
+
+                <div class = "boton-buscar">BUSCAR</div>
+            </div>           
+        </div>
+    </header>
+
     <main>
-        <h1>Libros Infantiles</h1>
-
-        <section>
-            <h2> Libros Disponibles</h2>
-            <ul id = "lista-libros"></ul>
+        <section id = "seccion-libros-disponibles">
+            <h2> Libros Infantiles</h2>
+            <ul id = "lista-libros" class = "grid-wrapper"></ul>
         </section>
 
-        <section>
-            <h2>Ficha Técnica</h2>
-            <div id = "contenedor-ficha-tecnica"></div>
-            
+        <section id = "seccion-ficha-tecnica">
+            <div id = "contenedor-ficha-tecnica"></div> 
         </section>
-
     </main>
     
-    
-    <script src="/js/script.js"></script>
+    <script src = "/modules/Libros.js"></script>
+    <script src="/main.js"></script>
 </body>
 </html>
