@@ -75,11 +75,11 @@ function buscarLibroPorTitulo(titulo){
                     <p><strong>Autor: </strong>${libro.autor}</p>
                     <p><strong>Editorial: </strong>${libro.editorial}</p>
                     <label for= "cantidad-libro"><strong>Cant.</strong></label>
-                    <input type = "number" id = "cantidad-libro" name = "cantidad-libro" min="1" class = "input-cantidad-libro">
+                    <input type = "number" id = "cantidad-libro" name = "cantidad-libro" min="1" onchange = valorInput() class = "input-cantidad-libro">
                     <p class = "precio">AR$ ${libro.precio}</p>
                     <div class = "contenedor-botones">
                         <button id = "volver" class = "botones-accion" onclick = regresarAListaLibros()>Volver</button>
-                        <button id = "boton-agregar-libro" class = "botones-accion" onclick = agregarACarrito(${libro.stockLibro})>Comprar</button>
+                        <button id = "boton-agregar-libro" class = "botones-accion" onclick = agregarACarrito(${libro.titulo},${libro.stockLibro})>Comprar</button>
                     </div>
                 </div>
             </div>
@@ -154,26 +154,26 @@ function buscarLibrosPorAutor(nombreAutor){
     }
 }
 
-// agregar a carrito
-function agregarACarrito (stockLibro) {
+// función agregar a carrito
+function agregarACarrito (titulo, stock) {
     console.log ("click en comprar");
-    console.log (stockLibro);
+    console.log (titulo + " " + stock);
 }
 
+// funcion sacar valor del input cantidad libros a 
 
-// const botonAgregarLibro = document.getElementById ("boton-agregar-libro");
-// botonAgregarLibro.addEventListener ("click", (event) => {
-//     let inputCantidadLibro = event.target;
-//     let cantidadLibro = inputCantidadLibro.value;
-//     console.log (cantidadLibro);
-// });
+const inputCantidadLibro = document.getElementById ("cantidad-libro");
+
+inputCantidadLibro.addEventListener ("change", () => {
+    let cantidadLibro = parseInt(inputCantidadLibro.value)
+    console.log (cantidadLibro);
+
+})
+
 
 
 
             
-
-
-
 // // ****** VENDER LIBRO POR TITULO ****** //
 // let verifVentaLibro = true;
 
