@@ -1,49 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Recetas saludables para bebés, niños y familias. Consejos de alimentación, Baby-Led Weaning y crianza respetuosa para ayudar a los padres a transitar y disfrutar esta linda etapa.">
     <meta name="keywords" content="recetas, saludables, fáciles, niños, bebés, blw, snacks, crianza, respetuosa">
+    <!--Font Awesome Icons-->
+    <script src="https://kit.fontawesome.com/6ae03c6937.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="./images/favicon-littlenams.png">
     <title>Little Ñams - Libros Infantiles</title>
 </head>
+
+
 <body>
-
     <header>
-        <h1>Little Ñams</h1>
-        <nav></nav>
-        
-        <div class = "contenedor-buscador">
-            <div class = "buscador">
-                <input id = "buscar-box" class = "estilo-buscar-box" placeholder = "Ingresar título, autor, ISBN, o palabra clave">
+        <nav class="contenedor-nav">
+            <!--logo-->
+            <a class="navbar-brand" href="#">
+                <img class="img-fluid animacion-logo  ms-lg-3 ms-xl-5" src="./images/logo-littlenams-head-2.png"
+                alt="Logo Little Ñams">
+            </a>
+          
+            <!--form buscar-->
+            <div class = "contenedor-buscador">
+                <div class = "buscador">
+                    <input id = "buscar-box" class = "estilo-buscar-box" placeholder = "Ingresar título, autor, ISBN, o palabra clave">
+    
+                    <div class="contenedor-select">
+                        <select id="buscar-por" class="estilo-select mostrar">
+                            <option value="todos" selected>Todos</option>
+                            <option value="titulo">Título</option>
+                            <option value="autor">Autor</option>
+                            <option value="editorial">Editorial</option>
+                            <option value="isbn">ISBN</option>
+                        </select>
+                    </div>
+    
+                    <div class = "boton-buscar">BUSCAR</div>
+                </div>           
+            </div>
 
-                <div class="contenedor-select">
-                    <select id="buscar-por" class="estilo-select mostrar">
-                        <option value="todos" selected>Todos</option>
-                        <option value="titulo">Título</option>
-                        <option value="autor">Autor</option>
-                        <option value="editorial">Editorial</option>
-                        <option value="isbn">ISBN</option>
-                    </select>
-                </div>
-
-                <div class = "boton-buscar">BUSCAR</div>
-            </div>           
-        </div>
+            <div class = "contenedor-carrito">
+                <a><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+            </div>
+        </nav>   
     </header>
 
     <main>
         <section id = "seccion-libros-disponibles">
-            <h2> Libros Infantiles</h2>
+            <h1> Libros Infantiles</h1>
             <ul id = "lista-libros" class = "grid-wrapper"></ul>
         </section>
 
-        <section id = "seccion-ficha-tecnica">
-            <div id = "contenedor-ficha-tecnica"></div> 
+        <section id = "seccion-detalle-libro">
+            <div id = "contenedor-detalle-libro"></div> 
         </section>
+
+        <section id = "seccion-libros-autor" class = "no-mostrar">
+            <h2 class = "h2-titulo-azul">Libros por Autor</h2>
+            <ul id = "libros-por-autor" class = "grid-wrapper"></ul>
+        </section>
+
     </main>
     
     <script src = "/modules/Libros.js"></script>

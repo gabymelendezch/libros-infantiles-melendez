@@ -1,97 +1,178 @@
 // accedo a la info en localStorage y la guardo en variable libros 
 const libros = JSON.parse (localStorage.getItem ("libros"))
 
-// ****** LIBROS DISPONIBLES INDEX ****** //
+
+// mostrar libros disponibles //
 const listaLibros = document.getElementById ("lista-libros");
 let contId = 1;
 
+
 for (const libro of libros){
-    let div = document.createElement ("div");
-    let li = document.createElement ("li");
-    let linkLibro = document.createElement ("a");
-    let linkAutor = document.createElement ("a");
-    //let boton = document.createElement ("button");
 
-    div.className = "contenedor-por-libro"
+    if (libro.stockLibro > 0){
 
-    li.className = "libro";
-    linkLibro.setAttribute ("id", contId);
-    linkLibro.onclick = function () { buscarLibroPorClick(linkLibro.id) };
-    linkLibro.innerHTML = `<img src = "${libro.img}"/>
-                    <h3>${libro.titulo}</h3>`
-    
-    linkAutor.onclick = function () { buscarAutor(libro.autor) };          
-    linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
-    
-    //boton.className = "botones-ir boton-ver-ficha";
-    //boton.innerText = "Ver";
-    
-    li.append(linkLibro);
-    li.append(linkAutor);
-    div.append (li);
-    listaLibros.append(div);
-    //listaLibros.append(boton);   
-    contId++;
+        let div = document.createElement ("div");
+        let li = document.createElement ("li");
+        let linkLibro = document.createElement ("a");
+        let linkAutor = document.createElement ("a");
+
+        div.className = "contenedor-por-libro";
+
+        li.className = "libro";
+        linkLibro.className = "estilo-link-libros";
+        linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
+        linkLibro.innerHTML = `<img src = "${libro.img}"/>
+                            <h2>${libro.titulo}</h2>`
+        
+        linkAutor.className = "estilo-link-libros";
+        linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };          
+        linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
+        
+        li.append(linkLibro);
+        li.append(linkAutor);
+        div.append (li);
+        listaLibros.append(div);  
+    }
 }
 
-console.log (listaLibros);
 
-
-// ****** IR A LIBRO CLICKEADO ****** //
-
-// función para buscar id del libro
+// función botón volver
 function regresarAListaLibros (){
     let lista = document.getElementById ("seccion-libros-disponibles");
     lista.className = "mostrar";
 
-    let contenedor = document.getElementById ("seccion-ficha-tecnica");
+    let contenedor = document.getElementById ("seccion-detalle-libro");
     contenedor.className = "no-mostrar";
 }
 
-function buscarLibroPorClick(id){
-    const etiqueta = document.getElementById(id);
-    const idEtiqueta = parseInt (etiqueta.id); // id de la etiqueta <a>
+// función buscar por titulo
+function buscarLibroPorTitulo(titulo){
+
+    let librosAutor = document.getElementById ("seccion-libros-autor");
+    librosAutor.className = "no-mostrar";
 
     return libros.find ((libro) => {
-        if (libro.id === idEtiqueta){
 
-            // MOSTRAR FICHA TECNICA
+        if (libro.titulo === titulo){
+            
+            // muestro detalle libro
             let lista = document.getElementById ("seccion-libros-disponibles");
             lista.className = "no-mostrar";
 
-            let seccionFicha = document.getElementById ("seccion-ficha-tecnica");
+            let seccionFicha = document.getElementById ("seccion-detalle-libro");
             seccionFicha.className = "mostrar";
 
-            let contenedor = document.getElementById ("contenedor-ficha-tecnica");
+            let contenedor = document.getElementById ("contenedor-detalle-libro");
             contenedor.innerHTML = 
 
-            `<h2>${libro.titulo}</h2>
-            <img src = "${libro.img}"/>
-            <p><strong>Autor: </strong>${libro.autor}</p>
-            <p><strong>Fecha de Publicación: </strong>${libro.fechaPublicacion}</p>
-            <p><strong>Editorial: </strong>${libro.editorial}</p>
-            <p><strong>Formato: </strong>${libro.formato}</p>
-            <p><strong>Idioma: </strong>${libro.idioma}</p>
-            <p><strong>Cantidad de páginas: </strong>${libro.cantidadPaginas}</p>
-            <p><strong>ISBN: </strong>${libro.isbn}</p>
-            <p><strong>Rango de edad: </strong>${libro.rangoEdad}</p>
-            <p><strong>Sipnosis: </strong>${libro.sipnosis}</p>
-            <p><strong>Precio: </strong>$${libro.precio}</p>
-            <button id = "volver" class = "botones-accion" onclick = regresarAListaLibros()>Volver</button>`
+            `<div class = "contenedor-carrito">
+                <div class = "libro-img">
+                    <img src = "${libro.img}"/>
+                </div>
+
+                <div class = "precio-libro">
+                    <h2 class = "h2-titulo-azul">${libro.titulo}</h2>
+                    <p><strong>Autor: </strong>${libro.autor}</p>
+                    <p><strong>Editorial: </strong>${libro.editorial}</p>
+                    <label for= "cantidad-libro"><strong>Cant.</strong></label>
+                    <input type = "number" id = "cantidad-libro" name = "cantidad-libro" min="1" class = "input-cantidad-libro">
+                    <p class = "precio">AR$ ${libro.precio}</p>
+                    <div class = "contenedor-botones">
+                        <button id = "volver" class = "botones-accion" onclick = regresarAListaLibros()>Volver</button>
+                        <button id = "boton-agregar-libro" class = "botones-accion" onclick = agregarACarrito(${libro.stockLibro})>Comprar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class = "detalle-libro">
+                <div class = "sipnosis">
+                    <h3 class = "h3-estilo">Sipnosis</h3>
+                    <p>${libro.sipnosis}</p>
+                </div>
+
+                <div class = "ficha">
+                    <h3 class = "h3-estilo">Ficha Técnica</h3>
+                    <p><strong>Fecha de Publicación: </strong>${libro.fechaPublicacion}</p>
+                    <p><strong>Formato: </strong>${libro.formato}</p>
+                    <p><strong>Idioma: </strong>${libro.idioma}</p>
+                    <p><strong>Cantidad de páginas: </strong>${libro.cantidadPaginas}</p>
+                    <p><strong>ISBN: </strong>${libro.isbn}</p>
+                    <p><strong>Rango de edad: </strong>${libro.rangoEdad}</p>
+                </div>
+            </div>`
         }
 
     })
 }
 
-function buscarAutor(nombreAutor){
-    console.log (nombreAutor);
+
+// función buscar por autor
+function buscarLibrosPorAutor(nombreAutor){
+
+    const librosPorAutor = libros.filter ((libro) => libro.autor === nombreAutor);
+    console.log (librosPorAutor);
+
+    let lista = document.getElementById ("seccion-libros-disponibles");
+    lista.className = "no-mostrar";
+
+    let seccionFicha = document.getElementById ("seccion-detalle-libro");
+    seccionFicha.className = "no-mostrar";
+
+    let librosAutor = document.getElementById ("seccion-libros-autor");
+    librosAutor.className = "mostrar";
+
+    const listaLibrosPorAutor = document.getElementById ("libros-por-autor");
+
+    listaLibrosPorAutor.innerHTML = "";
+
+
+    for (const libro of librosPorAutor){
+
+        if (libro.stockLibro > 0){
+
+            let div = document.createElement ("div");
+            let li = document.createElement ("li");
+            let linkLibro = document.createElement ("a");
+            let linkAutor = document.createElement ("a");
+
+            div.className = "contenedor-por-libro";
+            li.className = "libro";
+            linkLibro.className = "estilo-link-libros";
+            linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
+            linkLibro.innerHTML = `<img src = "${libro.img}"/>
+                            <h2>${libro.titulo}</h2>`
+            
+            linkAutor.className = "estilo-link-libros";               
+            linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };          
+            linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
+            
+            li.append(linkLibro);
+            li.append(linkAutor);
+            div.append (li);
+            listaLibrosPorAutor.append(div);
+        }        
+    }
 }
 
-// console.log ("LIBROS DISPONIBLES");
+// agregar a carrito
+function agregarACarrito (stockLibro) {
+    console.log ("click en comprar");
+    console.log (stockLibro);
+}
 
-// for (const libro of arrayLibros){
-//     console.log ("* ID " + libro.id + " - " + libro.titulo);
-// }
+
+// const botonAgregarLibro = document.getElementById ("boton-agregar-libro");
+// botonAgregarLibro.addEventListener ("click", (event) => {
+//     let inputCantidadLibro = event.target;
+//     let cantidadLibro = inputCantidadLibro.value;
+//     console.log (cantidadLibro);
+// });
+
+
+
+            
+
+
 
 // // ****** VENDER LIBRO POR TITULO ****** //
 // let verifVentaLibro = true;
