@@ -1,6 +1,10 @@
 // accedo a la info en localStorage y la guardo en variable libros 
 const libros = JSON.parse (localStorage.getItem ("libros"))
 
+// variables globales
+let unidadesLibroAComprar = 0;
+let validarBuscarLibro = 0;
+
 
 // mostrar libros disponibles //
 const listaLibros = document.getElementById ("lista-libros");
@@ -12,20 +16,21 @@ for (const libro of libros){
     if (libro.stockLibro > 0){
 
         let div = document.createElement ("div");
-        let li = document.createElement ("li");
-        let linkLibro = document.createElement ("a");
-        let linkAutor = document.createElement ("a");
-
         div.className = "contenedor-por-libro";
 
+        let li = document.createElement ("li");
         li.className = "libro";
+
+        let linkLibro = document.createElement ("a");
         linkLibro.className = "estilo-link-libros";
         linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
         linkLibro.innerHTML = `<img src = "${libro.img}"/>
                             <h2>${libro.titulo}</h2>`
+
         
+        let linkAutor = document.createElement ("a");
         linkAutor.className = "estilo-link-libros";
-        linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };          
+        linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };    
         linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
         
         li.append(linkLibro);
@@ -63,6 +68,7 @@ function buscarLibroPorTitulo(titulo){
             seccionFicha.className = "mostrar";
 
             let contenedor = document.getElementById ("contenedor-detalle-libro");
+
             contenedor.innerHTML = 
 
             `<div class = "contenedor-carrito">
@@ -77,9 +83,9 @@ function buscarLibroPorTitulo(titulo){
                     <label for= "cantidad-libro"><strong>Cant.</strong></label>
                     <input type = "number" id = "cantidad-libro" name = "cantidad-libro" min="1" onchange = valorInput() class = "input-cantidad-libro">
                     <p class = "precio">AR$ ${libro.precio}</p>
-                    <div class = "contenedor-botones">
+                    <div id= "botones" class = "contenedor-botones">
                         <button id = "volver" class = "botones-accion" onclick = regresarAListaLibros()>Volver</button>
-                        <button id = "boton-agregar-libro" class = "botones-accion" onclick = agregarACarrito(${libro.titulo},${libro.stockLibro})>Comprar</button>
+                    
                     </div>
                 </div>
             </div>
@@ -100,9 +106,50 @@ function buscarLibroPorTitulo(titulo){
                     <p><strong>Rango de edad: </strong>${libro.rangoEdad}</p>
                 </div>
             </div>`
-        }
 
-    })
+            const botones = document.getElementById ("botones");
+
+            // crear botón comprar
+            const botonAgregar = document.createElement ("button");
+            botonAgregar.innerText = "Comprar"
+            botonAgregar.setAttribute ("id", "boton-agregar-libro");
+            botonAgregar.className = "botones-accion";
+
+            // evento botón
+            botonAgregar.addEventListener ("click", () => {
+
+                if (unidadesLibroAComprar === 0){
+
+                    // confirmar si se agregó valor al input
+                    console.log ("Elija cantidad");
+            
+                } else {
+            
+                    //chequear si hay suficientes libros en stock
+                    if (unidadesLibroAComprar > libro.stockLibro) {
+                        console.log (`hay solo ${libro.stockLibro} libros en stock`);
+            
+                    } else {
+                        document.getElementById ("cantidad-libro").value = "";
+            
+                        //agregar a array carrito
+
+                        //disminuir stock 
+                        libro.stockLibro = libro.stockLibro - unidadesLibroAComprar;
+
+                        //almacenar en el localStorage
+                        localStorage.setItem ("libros", JSON.stringify (libros));
+                        
+                        console.log (`se agregó a carrito, compró ${unidadesLibroAComprar} libros, quedan ${libro.stockLibro} libros en stock`);
+    
+                    }    
+                }    
+
+            });
+
+            botones.append (botonAgregar);
+        }
+    }) 
 }
 
 
@@ -131,17 +178,18 @@ function buscarLibrosPorAutor(nombreAutor){
         if (libro.stockLibro > 0){
 
             let div = document.createElement ("div");
-            let li = document.createElement ("li");
-            let linkLibro = document.createElement ("a");
-            let linkAutor = document.createElement ("a");
-
             div.className = "contenedor-por-libro";
+
+            let li = document.createElement ("li");
             li.className = "libro";
+
+            let linkLibro = document.createElement ("a");
             linkLibro.className = "estilo-link-libros";
             linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
             linkLibro.innerHTML = `<img src = "${libro.img}"/>
                             <h2>${libro.titulo}</h2>`
-            
+
+            let linkAutor = document.createElement ("a");
             linkAutor.className = "estilo-link-libros";               
             linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };          
             linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
@@ -154,21 +202,41 @@ function buscarLibrosPorAutor(nombreAutor){
     }
 }
 
-// función agregar a carrito
-function agregarACarrito (titulo, stock) {
-    console.log ("click en comprar");
-    console.log (titulo + " " + stock);
+
+// función sacar valor input (cantidad libros)
+function valorInput (){
+    unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);  
+    console.log (unidadesLibroAComprar);
 }
 
-// funcion sacar valor del input cantidad libros a 
+// // función agregar a carrito
+// function agregarACarrito (stock) {
 
-const inputCantidadLibro = document.getElementById ("cantidad-libro");
+//     if (unidadesLibroAComprar === 0){
 
-inputCantidadLibro.addEventListener ("change", () => {
-    let cantidadLibro = parseInt(inputCantidadLibro.value)
-    console.log (cantidadLibro);
+//         // confirmar si se agregó valor al input
+//         console.log ("Elija cantidad");
 
-})
+//     } else {
+
+//         //chequear si hay suficientes libros en stock
+//         if (unidadesLibroAComprar > stock) {
+//             console.log (`hay solo ${stock} libros en stock`);
+
+//         } else {
+
+//             document.getElementById ("cantidad-libro").value = "";
+//             console.log (`se agregó a carrito, compró ${unidadesLibroAComprar} libros`);
+
+//             //agregar a array carrito
+//             //almacenar en localStorage
+//             //disminuir stock en libro.stockLibro
+
+//         }    
+//     }    
+// }
+
+
 
 
 
@@ -211,26 +279,6 @@ inputCantidadLibro.addEventListener ("change", () => {
 //     }  
 // }
 
-
-
-// // ****** BUSCAR FICHA TECNICA POR TITULO ****** //
-let buscarPor;
-// buscarPor = prompt ("Escoger libro (escribir el titulo) para mostrar ficha técnica.");
-// let buscarLibroPorTitulo = buscarPor.toUpperCase();
-
-// // buscar dentro del arrayLibros 
-// const filtrarPorTitulo = (libro) =>{
-//     if (libro.titulo.includes (buscarLibroPorTitulo)){
-//         return true; // true para que pueda agregarse en el nuevo arrayBusqueda 
-//     } 
-// }
-
-// const arrayBusqueda = arrayLibros.filter((filtrarPorTitulo)); // uso como parámetro función 'filtrarPorTitulo'
-
-// // llamar al MÉTODO para mostrar ficha técnica
-// arrayBusqueda.forEach ((libro) => {
-//     libro.mostrarFichaTecnica();
-// })
 
 
 

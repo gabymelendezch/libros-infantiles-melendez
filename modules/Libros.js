@@ -107,5 +107,5 @@ arrayLibros.push (new Libros (13, "../images/cuentos-montessori-crecer-felices.p
 arrayLibros.push (new Libros (14, "../images/cuentos-montessori-buenas-noches.png", "Cuentos Montessori para las Buenas Noches", "Prada Marta", "Octubre 2019", "Nube de Tinta", "Rústica", "Español", 96, "9788417605148", "4 - 6 años", "Nuestros pequeños crecen cada día, y es importante guardar un momento antes de acostarse para parar, conectar y empatizar con ellos, compartir vivencias y expresar emociones que necesitan de ese momento de reposo para salir. El sueño es fundamental en su desarrollo y el momento justo de antes de ir a dormir influye en su calidad y en los pensamientos y emociones que quedan en el cerebro justo antes de entrar en este modo de «desconexión y procesamiento de información».\nEste libro se convertirá en la herramienta de papel ideal para encontrar vuestro momento al final del día para miraros a los ojos, inspirar calma, naturaleza, valorar lo cotidiano, apreciar el mundo en todos sus aspectos y alentar a los niños y niñas a ser ellos mismos\n«Siembra en los niños ideas buenas aunque no las entiendan.Los años se encargarán de descifrarlas en su entendimiento y de hacerlas crecer en su corazón.» María Montessori", 8, 3500));
 
 
-// almaceno arrayLibros en localStorage
-localStorage.setItem ("libros", JSON.stringify (arrayLibros));
+// almaceno arrayLibros en localStorage por primera vez
+//localStorage.setItem ("libros", JSON.stringify (arrayLibros));
