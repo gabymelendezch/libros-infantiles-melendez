@@ -1,15 +1,12 @@
 // accedo a la info en localStorage y la guardo en variable libros 
-const libros = JSON.parse (localStorage.getItem ("libros"))
+const libros = JSON.parse (localStorage.getItem ("libros"));
 
 // variables globales
 let unidadesLibroAComprar = 0;
-let validarBuscarLibro = 0;
-
 
 // mostrar libros disponibles //
 const listaLibros = document.getElementById ("lista-libros");
 let contId = 1;
-
 
 for (const libro of libros){
 
@@ -27,7 +24,6 @@ for (const libro of libros){
         linkLibro.innerHTML = `<img src = "${libro.img}"/>
                             <h2>${libro.titulo}</h2>`
 
-        
         let linkAutor = document.createElement ("a");
         linkAutor.className = "estilo-link-libros";
         linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };    
@@ -43,17 +39,21 @@ for (const libro of libros){
 
 // función botón volver
 function regresarAListaLibros (){
-    let lista = document.getElementById ("seccion-libros-disponibles");
+    const lista = document.getElementById ("seccion-libros-disponibles");
     lista.className = "mostrar";
 
-    let contenedor = document.getElementById ("seccion-detalle-libro");
+    const contenedor = document.getElementById ("seccion-detalle-libro");
     contenedor.className = "no-mostrar";
+
+    const alerta = document.getElementById ("alerta");
+    alerta.className = "alerta-no-mostrar";
+    alerta.innerText = "";
 }
 
-// función buscar por titulo
+// función mostrar info libro clickeado
 function buscarLibroPorTitulo(titulo){
 
-    let librosAutor = document.getElementById ("seccion-libros-autor");
+    const librosAutor = document.getElementById ("seccion-libros-autor");
     librosAutor.className = "no-mostrar";
 
     return libros.find ((libro) => {
@@ -61,13 +61,13 @@ function buscarLibroPorTitulo(titulo){
         if (libro.titulo === titulo){
             
             // muestro detalle libro
-            let lista = document.getElementById ("seccion-libros-disponibles");
+            const lista = document.getElementById ("seccion-libros-disponibles");
             lista.className = "no-mostrar";
 
-            let seccionFicha = document.getElementById ("seccion-detalle-libro");
+            const seccionFicha = document.getElementById ("seccion-detalle-libro");
             seccionFicha.className = "mostrar";
 
-            let contenedor = document.getElementById ("contenedor-detalle-libro");
+            const contenedor = document.getElementById ("contenedor-detalle-libro");
 
             contenedor.innerHTML = 
 
@@ -85,7 +85,6 @@ function buscarLibroPorTitulo(titulo){
                     <p class = "precio">AR$ ${libro.precio}</p>
                     <div id= "botones" class = "contenedor-botones">
                         <button id = "volver" class = "botones-accion" onclick = regresarAListaLibros()>Volver</button>
-                    
                     </div>
                 </div>
             </div>
@@ -108,6 +107,7 @@ function buscarLibroPorTitulo(titulo){
             </div>`
 
             const botones = document.getElementById ("botones");
+            const alerta = document.getElementById ("alerta");
 
             // crear botón comprar
             const botonAgregar = document.createElement ("button");
@@ -125,53 +125,61 @@ function buscarLibroPorTitulo(titulo){
             
                 } else {
             
-                    //chequear si hay suficientes libros en stock
+                    // chequear si hay suficientes libros en stock
                     if (unidadesLibroAComprar > libro.stockLibro) {
-                        console.log (`hay solo ${libro.stockLibro} libros en stock`);
-            
-                    } else {
+
+                        // borro input
                         document.getElementById ("cantidad-libro").value = "";
+                        alerta.className = "alertas-mostrar";
+                        alerta.innerText = `Lo sentimos, tenemos ${libro.stockLibro} libros en stock`
+                        
+                    } else {
+
+                        // borro input
+                        document.getElementById ("cantidad-libro").value = "";
+
+                        // borro alertas
+                        alerta.className = "alertas-no-mostrar";
+                        alerta.innerText = "";
             
-                        //agregar a array carrito
+                        //agregar a carrito
 
                         //disminuir stock 
                         libro.stockLibro = libro.stockLibro - unidadesLibroAComprar;
 
                         //almacenar en el localStorage
                         localStorage.setItem ("libros", JSON.stringify (libros));
-                        
+                  
                         console.log (`se agregó a carrito, compró ${unidadesLibroAComprar} libros, quedan ${libro.stockLibro} libros en stock`);
     
                     }    
                 }    
-
             });
 
             botones.append (botonAgregar);
+            seccionFicha.append(alerta);
         }
     }) 
 }
 
 
-// función buscar por autor
+// función mostrar libros por autor clickeado
 function buscarLibrosPorAutor(nombreAutor){
 
     const librosPorAutor = libros.filter ((libro) => libro.autor === nombreAutor);
-    console.log (librosPorAutor);
 
-    let lista = document.getElementById ("seccion-libros-disponibles");
+    const lista = document.getElementById ("seccion-libros-disponibles");
     lista.className = "no-mostrar";
 
-    let seccionFicha = document.getElementById ("seccion-detalle-libro");
+    const seccionFicha = document.getElementById ("seccion-detalle-libro");
     seccionFicha.className = "no-mostrar";
 
-    let librosAutor = document.getElementById ("seccion-libros-autor");
+    const librosAutor = document.getElementById ("seccion-libros-autor");
     librosAutor.className = "mostrar";
 
     const listaLibrosPorAutor = document.getElementById ("libros-por-autor");
 
     listaLibrosPorAutor.innerHTML = "";
-
 
     for (const libro of librosPorAutor){
 
@@ -193,49 +201,38 @@ function buscarLibrosPorAutor(nombreAutor){
             linkAutor.className = "estilo-link-libros";               
             linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };          
             linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
-            
+
             li.append(linkLibro);
             li.append(linkAutor);
             div.append (li);
-            listaLibrosPorAutor.append(div);
+            listaLibrosPorAutor.append(div);       
         }        
     }
-}
 
+    // crear div botones
+    let divBoton = document.createElement ("div");
+    divBoton.className = "contenedor-botones-autor";
+    divBoton.getAttribute ("id", "botones" );
+
+    // crear botón volver
+    let boton = document.createElement ("button");
+    boton.className = "botones-accion";
+    boton.innerText = "Volver";
+    boton.addEventListener ("click", () => {
+        librosAutor.className = "no-mostrar";
+        boton.className = "botones-accion no-mostrar";
+        regresarAListaLibros();
+    })
+
+    divBoton.append (boton);
+    librosAutor.append (divBoton);
+}
 
 // función sacar valor input (cantidad libros)
 function valorInput (){
     unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);  
     console.log (unidadesLibroAComprar);
 }
-
-// // función agregar a carrito
-// function agregarACarrito (stock) {
-
-//     if (unidadesLibroAComprar === 0){
-
-//         // confirmar si se agregó valor al input
-//         console.log ("Elija cantidad");
-
-//     } else {
-
-//         //chequear si hay suficientes libros en stock
-//         if (unidadesLibroAComprar > stock) {
-//             console.log (`hay solo ${stock} libros en stock`);
-
-//         } else {
-
-//             document.getElementById ("cantidad-libro").value = "";
-//             console.log (`se agregó a carrito, compró ${unidadesLibroAComprar} libros`);
-
-//             //agregar a array carrito
-//             //almacenar en localStorage
-//             //disminuir stock en libro.stockLibro
-
-//         }    
-//     }    
-// }
-
 
 
 
