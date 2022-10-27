@@ -108,4 +108,4 @@ arrayLibros.push (new Libros (14, "../images/cuentos-montessori-buenas-noches.pn
 
 
 // almaceno arrayLibros en localStorage por primera vez
-//localStorage.setItem ("libros", JSON.stringify (arrayLibros));
+localStorage.setItem ("libros", JSON.stringify (arrayLibros));

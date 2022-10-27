@@ -1,12 +1,14 @@
+//localStorage.clear ();
 // accedo a la info en localStorage y la guardo en variable libros 
 const libros = JSON.parse (localStorage.getItem ("libros"));
 
 // variables globales
+let contId = 1;
 let unidadesLibroAComprar = 0;
+let itemsAgregados = 0;
 
 // mostrar libros disponibles //
 const listaLibros = document.getElementById ("lista-libros");
-let contId = 1;
 
 for (const libro of libros){
 
@@ -37,6 +39,40 @@ for (const libro of libros){
 }
 
 
+// función obtener carrito
+function obtenerCarrito () {
+    let carrito = [];
+
+    const carritoLS = localStorage.getItem ("carrito");
+
+    if (carritoLS !== null) {
+        carrito = JSON.parse(carritoLS);
+    }
+
+    return carrito;
+}
+let carrito = obtenerCarrito ();
+
+
+// función obtener items agregados
+function obtenerItems () {
+    let items = 0;
+
+    const itemsLS = localStorage.getItem ("items");
+
+    if (itemsLS !== null) {
+        items = JSON.parse(itemsLS);
+    }
+
+    return items;
+}
+let items = obtenerItems ();
+
+// mostrar items en contenedor carrito
+infoItems = document.getElementById ("info-carrito");
+infoItems.innerText = `${items} productos`;
+
+
 // función botón volver
 function regresarAListaLibros (){
     const lista = document.getElementById ("seccion-libros-disponibles");
@@ -50,7 +86,7 @@ function regresarAListaLibros (){
     alerta.innerText = "";
 }
 
-// función mostrar info libro clickeado
+// función mostrar libro clickeado
 function buscarLibroPorTitulo(titulo){
 
     const librosAutor = document.getElementById ("seccion-libros-autor");
@@ -81,7 +117,7 @@ function buscarLibroPorTitulo(titulo){
                     <p><strong>Autor: </strong>${libro.autor}</p>
                     <p><strong>Editorial: </strong>${libro.editorial}</p>
                     <label for= "cantidad-libro"><strong>Cant.</strong></label>
-                    <input type = "number" id = "cantidad-libro" name = "cantidad-libro" min="1" onchange = valorInput() class = "input-cantidad-libro">
+                    <input type = "number" id = "cantidad-libro" name = "cantidad-libro" value = "1" min = "1" onchange = valorInput() class = "input-cantidad-libro">
                     <p class = "precio">AR$ ${libro.precio}</p>
                     <div id= "botones" class = "contenedor-botones">
                         <button id = "volver" class = "botones-accion" onclick = regresarAListaLibros()>Volver</button>
@@ -115,45 +151,59 @@ function buscarLibroPorTitulo(titulo){
             botonAgregar.setAttribute ("id", "boton-agregar-libro");
             botonAgregar.className = "botones-accion";
 
-            // evento botón
+            // evento botón comprar
             botonAgregar.addEventListener ("click", () => {
+                
+                // chequear si hay suficientes libros en stock
+                let unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);
 
-                if (unidadesLibroAComprar === 0){
+                if ((!unidadesLibroAComprar === 1) || (unidadesLibroAComprar > libro.stockLibro)) {
 
-                    // confirmar si se agregó valor al input
-                    console.log ("Elija cantidad");
-            
+                    console.log (unidadesLibroAComprar);
+                    // borro input
+                    document.getElementById ("cantidad-libro").value = 1;
+                    alerta.className = "alertas-mostrar";
+                    alerta.innerText = `Lo sentimos, solo tenemos ${libro.stockLibro} libros en stock`
+                    
                 } else {
-            
-                    // chequear si hay suficientes libros en stock
-                    if (unidadesLibroAComprar > libro.stockLibro) {
 
-                        // borro input
-                        document.getElementById ("cantidad-libro").value = "";
-                        alerta.className = "alertas-mostrar";
-                        alerta.innerText = `Lo sentimos, tenemos ${libro.stockLibro} libros en stock`
-                        
-                    } else {
+                    // borrar input
+                    document.getElementById ("cantidad-libro").value = 1;
 
-                        // borro input
-                        document.getElementById ("cantidad-libro").value = "";
+                    // borrar alertas
+                    alerta.className = "alertas-no-mostrar";
+                    alerta.innerText = "";
 
-                        // borro alertas
-                        alerta.className = "alertas-no-mostrar";
-                        alerta.innerText = "";
-            
-                        //agregar a carrito
+                    // sumar items
+                    items = items + unidadesLibroAComprar;
 
-                        //disminuir stock 
-                        libro.stockLibro = libro.stockLibro - unidadesLibroAComprar;
+                    // indicar info items en carrito
+                    infoItems = document.getElementById ("info-carrito");
+                    infoItems.innerText = `${items} productos`;
+        
+                    // agregar a array carrito
+                    alerta.className = "alertas-mostrar";
+                    alerta.innerText = `Se agregó ${unidadesLibroAComprar} libro/s a su carrito`;
 
-                        //almacenar en el localStorage
-                        localStorage.setItem ("libros", JSON.stringify (libros));
-                  
-                        console.log (`se agregó a carrito, compró ${unidadesLibroAComprar} libros, quedan ${libro.stockLibro} libros en stock`);
-    
-                    }    
-                }    
+                    carrito.push ({
+                        titulo: libro.titulo,
+                        cantidad: unidadesLibroAComprar,
+                        precio: libro.precio,
+                    });
+
+                    // almacenar array carrito en localStorage
+                    localStorage.setItem ("carrito", JSON.stringify (carrito));
+
+                    // almacenar cantidad items agregados en localStorage
+                    localStorage.setItem ("items", JSON.stringify (items));
+
+                    //disminuir stock 
+                    libro.stockLibro = libro.stockLibro - unidadesLibroAComprar;
+
+                    //almacenar array libros en localStorage
+                    localStorage.setItem ("libros", JSON.stringify (libros));
+
+                }
             });
 
             botones.append (botonAgregar);
@@ -228,151 +278,27 @@ function buscarLibrosPorAutor(nombreAutor){
     librosAutor.append (divBoton);
 }
 
+
 // función sacar valor input (cantidad libros)
 function valorInput (){
     unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);  
     console.log (unidadesLibroAComprar);
+
+    // borro alertas
+    alerta.className = "alertas-no-mostrar";
+    alerta.innerText = "";
 }
 
 
+// evento click en carrito de compras 
+const iconoCarrito = document.getElementById ("icono-carrito");
 
+iconoCarrito.addEventListener ("click", () => {
 
+    // ver carrito
+    console.log ("ver carrito")
+});
 
-            
-// // ****** VENDER LIBRO POR TITULO ****** //
-// let verifVentaLibro = true;
-
-// while (verifVentaLibro === true){
-
-//     let elegido = prompt ("Elegir libro que desea comprar. SALIR para pagar.");
-//     let libroElegido = elegido.toUpperCase ();
-
-//     if (libroElegido !== "SALIR"){
-
-//         const libroAVender = arrayLibros.find (libro =>{
-//             if (libro.titulo === libroElegido){
-//                 return true;
-//             } else {
-//                 return false;
-//             }    
-//         })
-
-//         // llamar al MÉTODO para vender libro
-
-//         if (libroAVender){
-//             verifVentaLibro = false;
-//             libroAVender.venderLibro();
-//         } else {
-//             alert ("No se encontró el libro que está buscando.");
-//         }
-
-//     } else {
-
-//         verifVentaLibro = false;
-//         if (cantidadCompraLibro > 0){
-//             alert ("Total a pagar $" + totalCarrito + "\n¡Gracias por tu compra!");
-//         }
-        
-//     }  
-// }
-
-
-
-
-// ****** AGREGAR STOCK POR ID ****** //
-let verifId = true;
-let idLibroElegido;
-let buscarLibroPorId;
-let indiceLibroElegido;
-// let cantidadEnStock;
-
-
-// idLibroElegido = parseInt (prompt ("Elegir ID del libro que desea aumentar stock."));
-
-// while (verifId === true){
-
-//     buscarLibroPorId = arrayLibros.find (libro => {
-//         if (libro.id === idLibroElegido){
-//             return true;
-//         } 
-//     })
-
-//     if (buscarLibroPorId){
-//         cantidadEnStock = buscarLibroPorId.stockLibro;
-//         verifId = false;
-//         alert ("Elegiste " + buscarLibroPorId.titulo + "\nCantidad en stock: " + cantidadEnStock);
-        
-//     } else {
-//         idLibroElegido = parseInt (prompt ("No se encontró ID, ingresar ID válida."));;
-//     }
-// }
-
-// indiceLibroElegido = arrayLibros.map (libro => libro.id).indexOf(idLibroElegido);
-// let cantidadAAgregar = parseInt (prompt ("¿Cuántos libros desea agregar?"));
-
-// while (isNaN(cantidadAAgregar) || (cantidadAAgregar === 0)){
-//     cantidadAAgregar = parseInt (prompt ("Ingrese cantidad válida. ¿Cuántos libros desea agregar?"));
-// }
-
-// arrayLibros[indiceLibroElegido].agregarStockLibro(cantidadAAgregar);
-
-
-
-// ****** VER STOCK POR ID ****** //
-// idLibroElegido = parseInt (prompt ("Elegir ID del libro que desea ver stock."));
-
-// while (verifId === true){
-
-//     buscarLibroPorId = arrayLibros.find (libro => {
-//         if (libro.id === idLibroElegido){
-//             return true;
-//         } 
-//     })
-
-//     if (buscarLibroPorId){
-//         verifId = false;   
-//     } else {
-//         idLibroElegido = parseInt (prompt ("No se encontró ID, ingresar ID válida."));;
-//     }
-// }
-
-// indiceLibroElegido = arrayLibros.map (libro => libro.id).indexOf(idLibroElegido);
-// arrayLibros[indiceLibroElegido].verStockLibro();
-
-
-
-// ****** CAMBIAR PRECIO POR ID ****** //
-// let precioActual;
-// let precioACambiar;
-
-// idLibroElegido = parseInt (prompt ("Elegir ID del libro que desea cambiar de precio."));
-
-// while (verifId === true){
-
-//     buscarLibroPorId = arrayLibros.find (libro => {
-//         if (libro.id === idLibroElegido){
-//             return true;
-//         } 
-//     })
-
-//     if (buscarLibroPorId){
-//         precioActual = buscarLibroPorId.precio;
-//         verifId = false;
-//         alert ("Elegiste " + buscarLibroPorId.titulo + "\nPrecio Actual: $" + precioActual);
-        
-//     } else {
-//         idLibroElegido = parseInt (prompt ("No se encontró ID, ingresar ID válida."));;
-//     }
-// }
-
-// indiceLibroElegido = arrayLibros.map (libro => libro.id).indexOf(idLibroElegido);
-// precioACambiar = parseInt (prompt ("Ingrese nuevo precio."));
-
-// while (isNaN(precioACambiar) || (precioACambiar === 0)){
-//     precioACambiar = parseInt (prompt ("Ingrese precio válido."));
-// }
-
-// arrayLibros[indiceLibroElegido].cambiarPrecioLibro (precioACambiar);
 
 
 
@@ -477,61 +403,99 @@ let indiceLibroElegido;
 
 
 
-// ****** CLASE USUARIO ****** //
-
-class Usuarios{
-    constructor (nombre, apellido, email, contrasenia){
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.contrasenia = contrasenia;
-    }
-}
+// ****** AGREGAR STOCK POR ID ****** //
+let verifId = true;
+let idLibroElegido;
+let buscarLibroPorId;
+let indiceLibroElegido;
+// let cantidadEnStock;
 
 
-// ****** REGISTRAR USUARIO NUEVO ****** //
-// let arrayUsuarios = [];
-// let nombreUsuario = "";
-// let apellidoUsuario = "";
-// let emailUsuario = "";
-// let contraseniaUsuario = "";
+// idLibroElegido = parseInt (prompt ("Elegir ID del libro que desea aumentar stock."));
 
-// nombreUsuario = prompt ("Ingresar nombre");
+// while (verifId === true){
 
-// while (nombreUsuario === "" || !isNaN(nombreUsuario)){
-//     nombreUsuario = prompt ("Dato inválido, ingresar nombre");
-// }
+//     buscarLibroPorId = arrayLibros.find (libro => {
+//         if (libro.id === idLibroElegido){
+//             return true;
+//         } 
+//     })
 
-// apellidoUsuario = prompt ("Ingresar apellido");
-
-// while (apellidoUsuario === "" || !isNaN(apellidoUsuario)){
-//     apellidoUsuario = prompt ("Dato inválido, ingresar apellido");
-// }
-
-// emailUsuario =  prompt ("Ingresar correo electrónico");
-
-// while (emailUsuario === "" || !emailUsuario.includes("@") || !emailUsuario.includes(".com")){
-//     emailUsuario = prompt ("Correo inválido, ingresar correo electrónico");
-// }
-
-// contraseniaUsuario = prompt ("Crear contraseña");
-
-// while (contraseniaUsuario === "" || contraseniaUsuario.length < 8){
-//     contraseniaUsuario = prompt ("Contraseña inválida, debe de tener al menos 8 caracteres");
-// }
-
-// arrayUsuarios.push (new Usuarios (nombreUsuario, apellidoUsuario, emailUsuario, contraseniaUsuario));
-
-
-// ****** INGRESO USUARIO ****** //
-// emailUsuario = prompt ("Dirección de correo electrónico");
-// contraseniaUsuario = prompt ("Contraseña");
-
-// const usuarioElegido = arrayUsuarios.filter (usuario => {
-//     if (usuario.email ===  emailUsuario && usuario.contrasenia === contraseniaUsuario){
-//         alert ("Bienvenido " + usuario.nombre);
-//         return true;
+//     if (buscarLibroPorId){
+//         cantidadEnStock = buscarLibroPorId.stockLibro;
+//         verifId = false;
+//         alert ("Elegiste " + buscarLibroPorId.titulo + "\nCantidad en stock: " + cantidadEnStock);
+        
 //     } else {
-//         alert ("La dirección de correo electrónico o la contraseña que ingresaste no coinciden con nuestros registros. Revisa su ortografía y vuelva a intentarlo.");
+//         idLibroElegido = parseInt (prompt ("No se encontró ID, ingresar ID válida."));;
 //     }
-// })
+// }
+
+// indiceLibroElegido = arrayLibros.map (libro => libro.id).indexOf(idLibroElegido);
+// let cantidadAAgregar = parseInt (prompt ("¿Cuántos libros desea agregar?"));
+
+// while (isNaN(cantidadAAgregar) || (cantidadAAgregar === 0)){
+//     cantidadAAgregar = parseInt (prompt ("Ingrese cantidad válida. ¿Cuántos libros desea agregar?"));
+// }
+
+// arrayLibros[indiceLibroElegido].agregarStockLibro(cantidadAAgregar);
+
+
+
+// ****** VER STOCK POR ID ****** //
+// idLibroElegido = parseInt (prompt ("Elegir ID del libro que desea ver stock."));
+
+// while (verifId === true){
+
+//     buscarLibroPorId = arrayLibros.find (libro => {
+//         if (libro.id === idLibroElegido){
+//             return true;
+//         } 
+//     })
+
+//     if (buscarLibroPorId){
+//         verifId = false;   
+//     } else {
+//         idLibroElegido = parseInt (prompt ("No se encontró ID, ingresar ID válida."));;
+//     }
+// }
+
+// indiceLibroElegido = arrayLibros.map (libro => libro.id).indexOf(idLibroElegido);
+// arrayLibros[indiceLibroElegido].verStockLibro();
+
+
+
+// ****** CAMBIAR PRECIO POR ID ****** //
+// let precioActual;
+// let precioACambiar;
+
+// idLibroElegido = parseInt (prompt ("Elegir ID del libro que desea cambiar de precio."));
+
+// while (verifId === true){
+
+//     buscarLibroPorId = arrayLibros.find (libro => {
+//         if (libro.id === idLibroElegido){
+//             return true;
+//         } 
+//     })
+
+//     if (buscarLibroPorId){
+//         precioActual = buscarLibroPorId.precio;
+//         verifId = false;
+//         alert ("Elegiste " + buscarLibroPorId.titulo + "\nPrecio Actual: $" + precioActual);
+        
+//     } else {
+//         idLibroElegido = parseInt (prompt ("No se encontró ID, ingresar ID válida."));;
+//     }
+// }
+
+// indiceLibroElegido = arrayLibros.map (libro => libro.id).indexOf(idLibroElegido);
+// precioACambiar = parseInt (prompt ("Ingrese nuevo precio."));
+
+// while (isNaN(precioACambiar) || (precioACambiar === 0)){
+//     precioACambiar = parseInt (prompt ("Ingrese precio válido."));
+// }
+
+// arrayLibros[indiceLibroElegido].cambiarPrecioLibro (precioACambiar);
+
+
