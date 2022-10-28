@@ -17,7 +17,7 @@
 
 <body>
     <header>
-        <nav class="contenedor-nav">
+        <nav>
             <!--logo-->
             <a class="navbar-brand" href="#">
                 <img class="img-fluid animacion-logo  ms-lg-3 ms-xl-5" src="./images/logo-littlenams-head-2.png"
@@ -39,10 +39,11 @@
                         </select>
                     </div>
     
-                    <div class = "boton-buscar">BUSCAR</div>
+                    <div id = "boton-buscar">BUSCAR</div>
                 </div>           
             </div>
 
+            <!--info carrito-->
             <div class = "contenedor-carrito">
                 <a id = "info-carrito">  productos</a>
                 <a id = "icono-carrito"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
@@ -51,20 +52,36 @@
     </header>
 
     <main>
+        <!--sección libros disponibles-->
         <section id = "seccion-libros-disponibles">
             <h1> Libros Infantiles</h1>
             <ul id = "lista-libros" class = "grid-wrapper"></ul>
         </section>
 
+        <!--sección detalle por libro-->
         <section id = "seccion-detalle-libro">
             <div id = "contenedor-detalle-libro"></div> 
             <div id = "alerta" class = "alertas-no-mostrar"></div>
         </section>
 
+        <!--sección libros por autor clickeado-->
         <section id = "seccion-libros-autor" class = "no-mostrar">
             <h2 class = "h2-titulo-azul">Libros por Autor</h2>
             <ul id = "libros-por-autor" class = "grid-wrapper"></ul>
+            <div>
+                <button id = "botones" class = "botones-accion" onclick = "regresarAListaLibros()">Volver</button>
+            </div>
         </section>
+
+        <!--sección resultado búsqueda por input box-->
+        <section id = "seccion-busqueda" class = "no-mostrar">
+            <h2 class = "h2-titulo-azul"> Resultado Búsqueda</h2>
+            <ul id = "libros-por-busqueda" class = "grid-wrapper"></ul>
+            <div>
+                <button id = "botones" class = "botones-accion" onclick = "regresarAListaLibros()">Volver</button>
+            </div>
+        </section>
+
 
     </main>
     

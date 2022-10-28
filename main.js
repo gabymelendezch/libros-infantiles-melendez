@@ -81,6 +81,12 @@ function regresarAListaLibros (){
     const contenedor = document.getElementById ("seccion-detalle-libro");
     contenedor.className = "no-mostrar";
 
+    const librosAutor = document.getElementById ("seccion-libros-autor");
+    librosAutor.className = "no-mostrar";
+
+    const resultadoBusqueda = document.getElementById ("seccion-busqueda");
+    resultadoBusqueda.className = "no-mostrar";
+
     const alerta = document.getElementById ("alerta");
     alerta.className = "alerta-no-mostrar";
     alerta.innerText = "";
@@ -96,18 +102,19 @@ function buscarLibroPorTitulo(titulo){
 
         if (libro.titulo === titulo){
             
-            // muestro detalle libro
-            const lista = document.getElementById ("seccion-libros-disponibles");
-            lista.className = "no-mostrar";
-
+            // mostrar sección detalle libro
             const seccionFicha = document.getElementById ("seccion-detalle-libro");
             seccionFicha.className = "mostrar";
 
-            const contenedor = document.getElementById ("contenedor-detalle-libro");
+            // no mostrar
+            const lista = document.getElementById ("seccion-libros-disponibles");
+            lista.className = "no-mostrar";
 
+            // información del libro
+            const contenedor = document.getElementById ("contenedor-detalle-libro");
             contenedor.innerHTML = 
 
-            `<div class = "contenedor-carrito">
+            `<div class = "contenedor-imagen-info">
                 <div class = "libro-img">
                     <img src = "${libro.img}"/>
                 </div>
@@ -218,77 +225,57 @@ function buscarLibrosPorAutor(nombreAutor){
 
     const librosPorAutor = libros.filter ((libro) => libro.autor === nombreAutor);
 
+    // mostrar sección libros por autor
+    const librosAutor = document.getElementById ("seccion-libros-autor");
+    librosAutor.className = "mostrar";
+
+    // no mostrar
     const lista = document.getElementById ("seccion-libros-disponibles");
     lista.className = "no-mostrar";
 
     const seccionFicha = document.getElementById ("seccion-detalle-libro");
     seccionFicha.className = "no-mostrar";
 
-    const librosAutor = document.getElementById ("seccion-libros-autor");
-    librosAutor.className = "mostrar";
-
+    // grid con libros del autor clickeado
     const listaLibrosPorAutor = document.getElementById ("libros-por-autor");
-
     listaLibrosPorAutor.innerHTML = "";
 
     for (const libro of librosPorAutor){
 
-        if (libro.stockLibro > 0){
+        let div = document.createElement ("div");
+        div.className = "contenedor-por-libro";
 
-            let div = document.createElement ("div");
-            div.className = "contenedor-por-libro";
+        let li = document.createElement ("li");
+        li.className = "libro";
 
-            let li = document.createElement ("li");
-            li.className = "libro";
-
-            let linkLibro = document.createElement ("a");
-            linkLibro.className = "estilo-link-libros";
-            linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
-            linkLibro.innerHTML = `<img src = "${libro.img}"/>
+        let linkLibro = document.createElement ("a");
+        linkLibro.className = "estilo-link-libros";
+        linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
+        linkLibro.innerHTML = `<img src = "${libro.img}"/>
                             <h2>${libro.titulo}</h2>`
 
-            let linkAutor = document.createElement ("a");
-            linkAutor.className = "estilo-link-libros";               
-            linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };          
-            linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
+        let linkAutor = document.createElement ("a");
+        linkAutor.className = "estilo-link-libros";               
+        linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };          
+        linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
 
-            li.append(linkLibro);
-            li.append(linkAutor);
+        li.append(linkLibro);
+        li.append(linkAutor);
             div.append (li);
-            listaLibrosPorAutor.append(div);       
-        }        
+        listaLibrosPorAutor.append(div);                          
     }
-
-    // crear div botones
-    let divBoton = document.createElement ("div");
-    divBoton.className = "contenedor-botones-autor";
-    divBoton.getAttribute ("id", "botones" );
-
-    // crear botón volver
-    let boton = document.createElement ("button");
-    boton.className = "botones-accion";
-    boton.innerText = "Volver";
-    boton.addEventListener ("click", () => {
-        librosAutor.className = "no-mostrar";
-        boton.className = "botones-accion no-mostrar";
-        regresarAListaLibros();
-    })
-
-    divBoton.append (boton);
-    librosAutor.append (divBoton);
 }
 
 
-// función sacar valor input (cantidad libros)
+// función sacar valor input (cantidad libros a comprar)
 function valorInput (){
     unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);  
     console.log (unidadesLibroAComprar);
 
-    // borro alertas
+    // borrar alertas
     alerta.className = "alertas-no-mostrar";
     alerta.innerText = "";
 }
-
 
 // evento click en carrito de compras 
 const iconoCarrito = document.getElementById ("icono-carrito");
@@ -298,6 +285,45 @@ iconoCarrito.addEventListener ("click", () => {
     // ver carrito
     console.log ("ver carrito")
 });
+
+
+// evento click en botón buscar
+const botonBuscar = document.getElementById ("boton-buscar");
+
+botonBuscar.addEventListener ("click", () => {
+
+    const inputBuscarBox = document.getElementById ("buscar-box");
+    buscarBox = inputBuscarBox.value;
+    inputBuscarBox.value = "";
+    inputBuscarBox.placeholder = "Ingresar título, autor, ISBN, o palabra clave";
+    
+    const inputBuscarPor = document.getElementById ("buscar-por");
+    buscarPor = inputBuscarPor.value;
+    inputBuscarPor.value = "todos";
+
+    // buscar si el buscar box tiene algún valor
+    if (buscarBox){
+        console.log ("se ingresó " + buscarBox);
+
+        // mostrar sección búsqueda
+        const resultadoBusqueda = document.getElementById ("seccion-busqueda");
+        resultadoBusqueda.className = "mostrar";
+
+        // no mostrar
+        const lista = document.getElementById ("seccion-libros-disponibles");
+        lista.className = "no-mostrar";
+
+        const contenedor = document.getElementById ("seccion-detalle-libro");
+        contenedor.className = "no-mostrar";
+
+        const librosAutor = document.getElementById ("seccion-libros-autor");
+        librosAutor.className =     "no-mostrar";
+
+    
+    }
+
+    console.log (buscarBox + " " + buscarPor);
+})
 
 
 

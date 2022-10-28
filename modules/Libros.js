@@ -22,47 +22,7 @@ class Libros {
         this.stockLibro = stockLibro;
         this.precio = precio;   
     }
-
-    venderLibro (){
-        cantidadCompraLibro = parseInt (prompt ("Cuántos libros desea comprar."));
-        
-
-        while ( (isNaN (cantidadCompraLibro)) || (!Number.isInteger (cantidadCompraLibro)) ){
-            cantidadCompraLibro = parseInt (prompt ("Error, ingrese cantidad."));
-        }
-        
-        if (cantidadCompraLibro <= this.stockLibro){
-            this.stockLibro = this.stockLibro - cantidadCompraLibro;
-            totalCarrito = totalCarrito + (this.precio * cantidadCompraLibro);
-            alert ("Agregaste " + cantidadCompraLibro + " libro(s) al carrito de compras. El total es de $" + totalCarrito);
-
-        } else {
-            
-            while (verif === 0){
-                if (cantidadCompraLibro > this.stockLibro){
-
-                    alert ("Solamente hay " + this.stockLibro + " libros en stock.");
-                    cantidadCompraLibro = parseInt (prompt ("Cuántos libros desea comprar."));
-                  
-                    while ( (isNaN (cantidadCompraLibro)) || (!Number.isInteger (cantidadCompraLibro)) ){
-                        alert ("Error, ingrese cantidad.");
-                        cantidadCompraLibro = parseInt (prompt ("Cuántos libros desea comprar."));
-                    }
-
-                } else {
-                    this.stockLibro = this.stockLibro - cantidadCompraLibro;
-                    totalCarrito = totalCarrito + (this.precio * cantidadCompraLibro);
-                    alert ("Agregaste " + cantidadCompraLibro + " libro(s) al carrito de compras. El total es de $" + totalCarrito);
-                    verif = 1;              
-                }
-            }   
-
-            verif = 0;
-        }
-
-        verifVentaLibro = true; // para que vuelva a ejecutar el código de VENDER LIBRO POR TITULO
-    }
-
+    
     agregarStockLibro (cantidad){
         this.stockLibro = this.stockLibro + cantidad;
         verifId = true;
@@ -108,4 +68,4 @@ arrayLibros.push (new Libros (14, "../images/cuentos-montessori-buenas-noches.pn
 
 
 // almaceno arrayLibros en localStorage por primera vez
-localStorage.setItem ("libros", JSON.stringify (arrayLibros));
+//localStorage.setItem ("libros", JSON.stringify (arrayLibros));
