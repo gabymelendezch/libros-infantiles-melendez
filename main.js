@@ -7,7 +7,7 @@ let contId = 1;
 let unidadesLibroAComprar = 0;
 let itemsAgregados = 0;
 
-// mostrar libros disponibles //
+// MOSTRAR libros disponibles //
 const listaLibros = document.getElementById ("lista-libros");
 
 for (const libro of libros){
@@ -39,7 +39,7 @@ for (const libro of libros){
 }
 
 
-// función obtener carrito
+// FUNCION obtener carrito
 function obtenerCarrito () {
     let carrito = [];
 
@@ -54,7 +54,7 @@ function obtenerCarrito () {
 let carrito = obtenerCarrito ();
 
 
-// función obtener items agregados
+// FUNCION obtener items agregados
 function obtenerItems () {
     let items = 0;
 
@@ -74,7 +74,7 @@ infoItems = document.getElementById ("info-carrito");
 infoItems.innerText = `${items} productos`;
 
 
-// función botón volver
+// FUNCION botón volver
 function regresarAListaLibros (){
     const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
     seccionLibrosDisponibles.className = "mostrar";
@@ -93,7 +93,7 @@ function regresarAListaLibros (){
     alerta.innerText = "";
 }
 
-// función mostrar libro clickeado
+// FUNCION mostrar libro clickeado
 function buscarLibroPorTitulo(titulo){
 
     return libros.find ((libro) => {
@@ -223,7 +223,7 @@ function buscarLibroPorTitulo(titulo){
     }) 
 }
 
-// función mostrar libros por autor clickeado
+// FUNCION mostrar libros por autor clickeado
 function buscarLibrosPorAutor(nombreAutor){
 
     const librosPorAutor = libros.filter ((libro) => libro.autor === nombreAutor);
@@ -273,7 +273,7 @@ function buscarLibrosPorAutor(nombreAutor){
 }
 
 
-// función sacar valor input (cantidad libros a comprar)
+// FUNCION sacar valor input (cantidad libros a comprar)
 function valorInput (){
     unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);  
     console.log (unidadesLibroAComprar);
@@ -283,8 +283,11 @@ function valorInput (){
     alerta.innerText = "";
 }
 
-// función mostrar resultado por búsqueda
+// FUNCION mostrar resultado por búsqueda
 function mostrarResultadoBusqueda (id){
+
+    const divSinResultado = document.getElementById ("sin-resultado");
+    divSinResultado.className = "no-mostrar";
 
     for (const libro of libros) {
         if (libro.id === id) {
@@ -317,16 +320,7 @@ function mostrarResultadoBusqueda (id){
     }
 }
 
-// evento click en carrito de compras 
-const iconoCarrito = document.getElementById ("icono-carrito");
-
-iconoCarrito.addEventListener ("click", () => {
-    // ver carrito
-    console.log ("ver carrito")
-});
-
-
-// evento click en botón buscar
+// EVENTO click en botón buscar
 const botonBuscar = document.getElementById ("boton-buscar");
 
 botonBuscar.addEventListener ("click", () => {
@@ -370,9 +364,8 @@ botonBuscar.addEventListener ("click", () => {
             if (buscarPor === "titulo"){
                 if (libro.titulo.includes (buscarValue)){
                     mostrarResultadoBusqueda (libro.id);
-                } else {
-                    verifSinResultados = 1;
-                }
+                    verifSinResultados ++;
+                } 
             }
         });
 
@@ -394,112 +387,25 @@ botonBuscar.addEventListener ("click", () => {
             } 
         });
 
-        // sin resultados 
-        if (verifSinResultados === 1){
-            console.log ("no se encontraron resultados");
+        // sin resultados
+        if (verifSinResultados === 0){
+            const divSinResultado = document.getElementById ("sin-resultado");
+            divSinResultado.className = "mostrar";
+            divSinResultado.innerHTML = "";
+            divSinResultado.innerHTML = `<p>Lo sentimos, no pudimos encontrar lo que estás buscando. Intenta otra búsqueda.</p>`
         }
     }
 })
 
 
-// ****** BUSCAR POR FORMATO ****** //
-// let arrayBuscarPorFormato;
+// EVENTO click en carrito de compras 
+const iconoCarrito = document.getElementById ("icono-carrito");
 
-// buscarPor = prompt ("Escriba el formato deseado:\n* Tapa dura\n* Rústica");
-// let buscarPorFormatoElegido = buscarPor.toUpperCase();
+iconoCarrito.addEventListener ("click", () => {
+    // ver carrito
+    console.log ("ver carrito")
+});
 
-
-// arrayBuscarPorFormato = arrayLibros.filter ((libro) => {
-//     if (libro.formato.toUpperCase() === buscarPorFormatoElegido){
-//         cont++;
-//         return libro.formato.toUpperCase() == buscarPorFormatoElegido;
-//     }
-// });
-
-// alert ("Se encontraron " + cont + " libro/s con el formato seleccionado - " + buscarPorFormatoElegido);
-
-// // llamar al MÉTODO para mostrar FICHAS TECNICAS por formato elegido
-// arrayBuscarPorFormato.forEach ((libro) => {
-//     libro.mostrarFichaTecnica();
-// })
-
-
-
-// ****** BUSCAR POR RANGO DE PRECIO ****** //
-// let arrayBuscarPorRangoPrecio;
-// let cont = 0;
-
-// buscarPor = prompt ("Elija rango de precio, escriba una letra:\na) 500 - 1000\nb) 1000 - 2000\nc) 2000 - 3000\nd) 3000 - 4000\ne) 4000 - 5000\nf) más de 5000");
-
-// switch (buscarPor){
-
-//     case "a":
-//     case "A":
-//         arrayBuscarPorRangoPrecio = arrayLibros.filter ((libro)=>{
-//             if (libro.precio >= 500 && libro.precio <= 1000){
-//                 cont++;
-//                 return true;
-//             }
-//         });
-//         break;
-
-//     case "b":
-//     case "B":
-//         arrayBuscarPorRangoPrecio = arrayLibros.filter ((libro)=>{
-//             if (libro.precio > 1000 && libro.precio <= 2000){
-//                 cont++;
-//                 return true;
-//             }
-//         });
-//         break;
-
-//     case "c":
-//     case "C":
-//         arrayBuscarPorRangoPrecio = arrayLibros.filter ((libro)=>{
-//             if (libro.precio > 2000 && libro.precio <= 3000){
-//                 cont++;
-//                 return true;
-//             }
-//         });
-//         break;
-
-//     case "d":
-//     case "D":
-//         arrayBuscarPorRangoPrecio = arrayLibros.filter ((libro)=>{
-//             if (libro.precio > 3000 && libro.precio <= 4000){
-//                 cont++;
-//                 return true;
-//             }
-//         });
-//         break;
-
-//     case "e":
-//     case "E":
-//         arrayBuscarPorRangoPrecio = arrayLibros.filter ((libro)=>{
-//             if (libro.precio > 4000 && libro.precio <= 5000){
-//                 cont++;
-//                 return true;
-//             }
-//         });
-//         break;
-    
-//     case "f":
-//     case "F":
-//         arrayBuscarPorRangoPrecio = arrayLibros.filter ((libro)=>{
-//             if (libro.precio > 5000){
-//                 cont++;
-//                 return true;
-//             }
-//         });
-//         break;
-// }
-
-// alert ("Se encontraron " + cont + " libro/s en el rango de precio seleccionado.");
-
-// // llamar al MÉTODO para mostrar FICHAS TECNICAS por rango de precio
-// arrayBuscarPorRangoPrecio.forEach ((libro) => {
-//     libro.mostrarFichaTecnica();
-// })
 
 
 
