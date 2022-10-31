@@ -33,8 +33,9 @@ nav{
 }
 
 main {
-    margin-left: 80px;
-    margin-right: 80px;
+    margin-left: 90px;
+    margin-right: 90px;
+    margin-bottom: 60px;
 }
 
 section {
@@ -264,12 +265,15 @@ p {
 }
 
 /* sección resultado búsqueda */
-#sin-resultado{
-    padding-bottom: 30px;    
+.sin-resultado{
+    padding-top: 5px;
+    padding-bottom: 30px;
+    font-size: 18px;
+    letter-spacing: 0.5px;
 }
 
 /* alertas */
-.alertas-no-mostrar {
+.alertas-no-mostrar{
     display: none;
 }
 
@@ -285,15 +289,26 @@ p {
 }
 
 /* carrito */
-.contenedor-carrito {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-}
-
 #info-carrito {
     padding-right: 20px;
+}
+
+#contenedor-detalle-carrito{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.detalle-compra-por-libro{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.total-pagar{
+    padding-top: 15px;
+    font-size: 14px;
 }
 
 

@@ -6,6 +6,8 @@ const libros = JSON.parse (localStorage.getItem ("libros"));
 let contId = 1;
 let unidadesLibroAComprar = 0;
 let itemsAgregados = 0;
+let totalAPagar = 0;
+let subtotalItem = 0;
 
 // MOSTRAR libros disponibles //
 const listaLibros = document.getElementById ("lista-libros");
@@ -74,7 +76,7 @@ infoItems = document.getElementById ("info-carrito");
 infoItems.innerText = `${items} productos`;
 
 
-// FUNCION botón volver
+// FUNCION botón home
 function regresarAListaLibros (){
     const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
     seccionLibrosDisponibles.className = "mostrar";
@@ -87,6 +89,9 @@ function regresarAListaLibros (){
 
     const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
     seccionResultadoBusqueda.className = "no-mostrar";
+
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "no-mostrar";
 
     const alerta = document.getElementById ("alerta");
     alerta.className = "alerta-no-mostrar";
@@ -114,6 +119,9 @@ function buscarLibroPorTitulo(titulo){
             const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
             seccionResultadoBusqueda.className = "no-mostrar";
 
+            const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+            seccionDetalleCarrito.className = "no-mostrar";
+
             // información del libro
             const contenedor = document.getElementById ("contenedor-detalle-libro");
             contenedor.innerHTML = 
@@ -131,7 +139,7 @@ function buscarLibroPorTitulo(titulo){
                     <input type = "number" id = "cantidad-libro" name = "cantidad-libro" value = "1" min = "1" onchange = valorInput() class = "input-cantidad-libro">
                     <p class = "precio">AR$ ${libro.precio}</p>
                     <div id= "botones" class = "contenedor-botones">
-                        <button id = "volver" class = "botones-accion" onclick = regresarAListaLibros()>Volver</button>
+                        <button class = "botones-accion" onclick = regresarAListaLibros()>Home</button>
                     </div>
                 </div>
             </div>
@@ -170,7 +178,6 @@ function buscarLibroPorTitulo(titulo){
 
                 if ((!unidadesLibroAComprar === 1) || (unidadesLibroAComprar > libro.stockLibro)) {
 
-                    console.log (unidadesLibroAComprar);
                     // borro input
                     document.getElementById ("cantidad-libro").value = 1;
                     alerta.className = "alertas-mostrar";
@@ -215,7 +222,7 @@ function buscarLibroPorTitulo(titulo){
                     localStorage.setItem ("libros", JSON.stringify (libros));
 
                 }
-            });
+            })
 
             botones.append (botonAgregar);
             seccionFicha.append(alerta);
@@ -241,6 +248,10 @@ function buscarLibrosPorAutor(nombreAutor){
 
     const seccionBusqueda = document.getElementById ("seccion-busqueda");
     seccionBusqueda.className = "no-mostrar";
+
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "no-mostrar";
+
 
     // grid con libros del autor clickeado
     const listaLibrosPorAutor = document.getElementById ("libros-por-autor");
@@ -283,6 +294,7 @@ function valorInput (){
     alerta.innerText = "";
 }
 
+
 // FUNCION mostrar resultado por búsqueda
 function mostrarResultadoBusqueda (id){
 
@@ -320,12 +332,15 @@ function mostrarResultadoBusqueda (id){
     }
 }
 
+
+
 // EVENTO click en botón buscar
 const botonBuscar = document.getElementById ("boton-buscar");
 
 botonBuscar.addEventListener ("click", () => {
 
     let verifSinResultados = 0;
+    let arrayVerifId = [];
 
     // limpiar sección 
     const listaResultadoBusqueda = document.getElementById ("libros-por-busqueda");
@@ -345,54 +360,112 @@ botonBuscar.addEventListener ("click", () => {
     const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
     seccionLibrosAutor.className = "no-mostrar";
 
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "no-mostrar";
+
+
+    const alerta = document.getElementById ("alerta");
+    alerta.className = "alerta-no-mostrar";
+    alerta.innerText = "";
+
     // obtener value input box
     const inputBuscarBox = document.getElementById ("buscar-box");
-    const buscarValue = inputBuscarBox.value.toUpperCase();
+    const arrayBuscarValue = inputBuscarBox.value.toUpperCase().split(" ");
+
     inputBuscarBox.value = "";
-    inputBuscarBox.placeholder = "Ingresar título, autor, ISBN, o palabra clave";
+    inputBuscarBox.placeholder = "Ingresar título, autor, editorial o palabra clave";
     
     // obtener value option
     const inputBuscarPor = document.getElementById ("buscar-por");
     const buscarPor = inputBuscarPor.value;
-    inputBuscarPor.value = "todos";
 
-    // buscar si el box tiene algún valor
-    if (buscarValue){
+    // condicional: si el formulario tiene algún value
+    if (arrayBuscarValue){
 
-        // resultado búsqueda por título
-        const resultadoTitulo = libros.filter ((libro) => {
-            if (buscarPor === "titulo"){
-                if (libro.titulo.includes (buscarValue)){
-                    mostrarResultadoBusqueda (libro.id);
-                    verifSinResultados ++;
-                } 
-            }
-        });
+        // resultado búsqueda por "todos"
+        if (buscarPor === "todos"){
 
-        // resultado búsqueda por autor
-        const resultadoAutor = libros.filter ((libro) => {
-            if (buscarPor === "autor"){
-                if (libro.autor.toUpperCase().includes (buscarValue)){
-                    mostrarResultadoBusqueda (libro.id);
-                }
-            } 
-        });
+            for (const palabra of arrayBuscarValue){
 
-        // resultado búsqueda por editorial
-        const resultadoEditorial = libros.filter ((libro) => {
-            if (buscarPor === "editorial"){
-                if (libro.editorial.toUpperCase().includes (buscarValue)){
-                    mostrarResultadoBusqueda (libro.id);
-                }
-            } 
-        });
+                libros.filter ((libro) => {
+
+                    if (libro.titulo.includes (palabra) || libro.autor.toUpperCase().includes (palabra) || libro.editorial.toUpperCase().includes (palabra)) {
+                        verifSinResultados = 1;
+
+                        if (!arrayVerifId.includes (libro.id)){
+                            arrayVerifId.push (libro.id);
+                            mostrarResultadoBusqueda (libro.id);
+                        }   
+                    }  
+                }) 
+            }    
+        }
+
+        // resultado búsqueda por "título"
+        if (buscarPor === "titulo"){
+
+            for (const palabra of arrayBuscarValue){
+
+                libros.filter ((libro) => {
+
+                    if (libro.titulo.includes (palabra)) {
+                        verifSinResultados = 1;
+
+                        if (!arrayVerifId.includes (libro.id)){
+                            arrayVerifId.push (libro.id);
+                            mostrarResultadoBusqueda (libro.id);
+                        }   
+                    }  
+                }) 
+            }    
+        }
+
+        // resultado búsqueda por "autor"
+        if (buscarPor === "autor"){
+
+            for (const palabra of arrayBuscarValue){
+
+                libros.filter ((libro) => {
+
+                    if (libro.autor.toUpperCase().includes (palabra)) {
+                        
+                        verifSinResultados = 1;
+
+                        if (!arrayVerifId.includes (libro.id)){
+                            arrayVerifId.push (libro.id);
+                            mostrarResultadoBusqueda (libro.id);
+                        }   
+                    }  
+                }) 
+            }    
+        }
+
+        // resultado búsqueda por "editorial"
+        if (buscarPor === "editorial"){
+
+            for (const palabra of arrayBuscarValue){
+
+                libros.filter ((libro) => {
+
+                    if (libro.editorial.toUpperCase().includes (palabra)) {
+                        
+                        verifSinResultados = 1;
+
+                        if (!arrayVerifId.includes (libro.id)){
+                            arrayVerifId.push (libro.id);
+                            mostrarResultadoBusqueda (libro.id);
+                        }   
+                    }  
+                }) 
+            }    
+        }
 
         // sin resultados
         if (verifSinResultados === 0){
             const divSinResultado = document.getElementById ("sin-resultado");
             divSinResultado.className = "mostrar";
             divSinResultado.innerHTML = "";
-            divSinResultado.innerHTML = `<p>Lo sentimos, no pudimos encontrar lo que estás buscando. Intenta otra búsqueda.</p>`
+            divSinResultado.innerHTML = `<p class = "sin-resultado">Lo sentimos, no pudimos encontrar lo que estás buscando. Intenta otra búsqueda.</p>`
         }
     }
 })
@@ -402,10 +475,55 @@ botonBuscar.addEventListener ("click", () => {
 const iconoCarrito = document.getElementById ("icono-carrito");
 
 iconoCarrito.addEventListener ("click", () => {
-    // ver carrito
-    console.log ("ver carrito")
-});
+    
+    totalAPagar = 0;
 
+    // mostrar sección detalle carrito
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "mostrar";
+
+    // vaciar div contenedor detalle carrito
+    const contenedorDetalleCarrito = document.getElementById ("contenedor-detalle-carrito");
+    contenedorDetalleCarrito.innerHTML = `<h3 class = "h3-estilo">DETALLE COMPRA</h3>`;
+
+    // no mostrar
+    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+    seccionLibrosDisponibles.className = "no-mostrar";
+
+    const seccionFicha = document.getElementById ("seccion-detalle-libro");
+    seccionFicha.className = "no-mostrar";
+
+    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+    seccionLibrosAutor.className = "no-mostrar";
+
+    const seccionBusqueda = document.getElementById ("seccion-busqueda");
+    seccionBusqueda.className = "no-mostrar";
+
+    const alerta = document.getElementById ("alerta");
+    alerta.className = "alerta-no-mostrar";
+    alerta.innerText = "";
+
+    
+    // ver carrito
+    for (const item of carrito){
+
+        subtotalItem = parseInt (item.cantidad * item.precio);
+        totalAPagar = totalAPagar + subtotalItem;
+
+        const div = document.createElement ("div");
+        div.className = "detalle-compra-por-libro";
+        div.innerHTML = `<p>° ${item.titulo} x ${item.cantidad} unidad/es ---<p>
+                        <p>--- $${subtotalItem}`;
+
+        contenedorDetalleCarrito.append (div);
+    }
+
+    const pTotalAPagar = document.getElementById ("div-total-pagar");
+    pTotalAPagar.innerHTML = `<p><strong>TOTAL A PAGAR</strong> -->   $${totalAPagar}</p>`;
+
+    seccionDetalleCarrito.append (contenedorDetalleCarrito);
+    seccionDetalleCarrito.append (pTotalAPagar);
+})
 
 
 

@@ -14,7 +14,6 @@
     <title>Little Ñams - Libros Infantiles</title>
 </head>
 
-
 <body>
     <header>
         <nav>
@@ -27,7 +26,7 @@
             <!--form buscar-->
             <div class = "contenedor-buscador">
                 <div class = "buscador">
-                    <input id = "buscar-box" class = "estilo-buscar-box" placeholder = "Ingresar título, autor, ISBN, o palabra clave">
+                    <input id = "buscar-box" class = "estilo-buscar-box" placeholder = "Ingresar título, autor, editorial o palabra clave">
     
                     <div class="contenedor-select">
                         <select id="buscar-por" class="estilo-select mostrar">
@@ -68,7 +67,7 @@
             <h2 class = "h2-titulo-azul">Libros por Autor</h2>
             <ul id = "libros-por-autor" class = "grid-wrapper"></ul>
             <div>
-                <button id = "botones" class = "botones-accion" onclick = "regresarAListaLibros()">Volver</button>
+                <button class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
             </div>
         </section>
 
@@ -78,15 +77,20 @@
             <ul id = "libros-por-busqueda" class = "grid-wrapper"></ul>
             <div id = "sin-resultado" class = "no-mostrar"></div>
             <div>
-                <button id = "botones" class = "botones-accion" onclick = "regresarAListaLibros()">Volver</button>
+                <button class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
             </div>
         </section>
 
-
+        <!--sección mostrar detalle carrito-->
+        <section id = "seccion-detalle-carrito" class = "no-mostrar">
+            <div id = "contenedor-detalle-carrito"></div>
+            <div id = "div-total-pagar" class = "total-pagar"></div>
+            <button id = "boton-carrito" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
+        </section>
     </main>
-    
-    
+
     <script src = "/modules/Libros.js"></script>
     <script src="/main.js"></script>
 </body>
+
 </html>
