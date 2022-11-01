@@ -18,8 +18,8 @@
     <header>
         <nav>
             <!--logo-->
-            <a class="navbar-brand" href="#">
-                <img class="img-fluid animacion-logo  ms-lg-3 ms-xl-5" src="./images/logo-littlenams-head-2.png"
+            <a href="#">
+                <img class="animacion-logo" src="./images/logo-littlenams-head-2.png"
                 alt="Logo Little Ñams">
             </a>
           
@@ -85,7 +85,10 @@
         <section id = "seccion-detalle-carrito" class = "no-mostrar">
             <div id = "contenedor-detalle-carrito"></div>
             <div id = "div-total-pagar" class = "total-pagar"></div>
-            <button id = "boton-carrito" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
+            <div id = "botones-carrito">
+                <button class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
+                <button id = "boton-comprar" class = "botones-accion">Iniciar Compra</button>
+            </div>
         </section>
     </main>
 

@@ -1,4 +1,5 @@
 //localStorage.clear ();
+
 // accedo a la info en localStorage y la guardo en variable libros 
 const libros = JSON.parse (localStorage.getItem ("libros"));
 
@@ -9,7 +10,7 @@ let itemsAgregados = 0;
 let totalAPagar = 0;
 let subtotalItem = 0;
 
-// MOSTRAR libros disponibles //
+// MOSTRAR en HOME los libros disponibles //
 const listaLibros = document.getElementById ("lista-libros");
 
 for (const libro of libros){
@@ -97,6 +98,7 @@ function regresarAListaLibros (){
     alerta.className = "alerta-no-mostrar";
     alerta.innerText = "";
 }
+
 
 // FUNCION mostrar libro clickeado
 function buscarLibroPorTitulo(titulo){
@@ -230,6 +232,18 @@ function buscarLibroPorTitulo(titulo){
     }) 
 }
 
+
+// FUNCION sacar valor input (cantidad libros a comprar)
+function valorInput (){
+    unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);  
+    console.log (unidadesLibroAComprar);
+
+    // borrar alertas
+    alerta.className = "alertas-no-mostrar";
+    alerta.innerText = "";
+}
+
+
 // FUNCION mostrar libros por autor clickeado
 function buscarLibrosPorAutor(nombreAutor){
 
@@ -284,17 +298,6 @@ function buscarLibrosPorAutor(nombreAutor){
 }
 
 
-// FUNCION sacar valor input (cantidad libros a comprar)
-function valorInput (){
-    unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);  
-    console.log (unidadesLibroAComprar);
-
-    // borrar alertas
-    alerta.className = "alertas-no-mostrar";
-    alerta.innerText = "";
-}
-
-
 // FUNCION mostrar resultado por búsqueda
 function mostrarResultadoBusqueda (id){
 
@@ -331,7 +334,6 @@ function mostrarResultadoBusqueda (id){
         }
     }
 }
-
 
 
 // EVENTO click en botón buscar
@@ -523,7 +525,27 @@ iconoCarrito.addEventListener ("click", () => {
 
     seccionDetalleCarrito.append (contenedorDetalleCarrito);
     seccionDetalleCarrito.append (pTotalAPagar);
+
+    // variable botón 
+    const botonesCarrito = document.getElementById ("botones-carrito");
+
+    botonesCarrito.before (contenedorDetalleCarrito);
+    botonesCarrito.before (pTotalAPagar);
 })
+
+
+// EVENTO click en iniciar compra
+const botonIniciarCompra = document.getElementById ("boton-comprar");
+botonIniciarCompra.addEventListener ("click", () => {
+
+    // verificar si el usuario está registrado con variable global verifUsuario.
+    
+    // verifUsuario = 1 (está logeado) verifUsuario = 0 (no está, hay que registrarse).
+
+
+    console.log ("Iniciamos Compra");
+})
+
 
 
 
