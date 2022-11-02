@@ -9,6 +9,7 @@ let unidadesLibroAComprar = 0;
 let itemsAgregados = 0;
 let totalAPagar = 0;
 let subtotalItem = 0;
+let verifUsuario = false;
 
 // MOSTRAR en HOME los libros disponibles //
 const listaLibros = document.getElementById ("lista-libros");
@@ -93,10 +94,6 @@ function regresarAListaLibros (){
 
     const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "no-mostrar";
-
-    const alerta = document.getElementById ("alerta");
-    alerta.className = "alerta-no-mostrar";
-    alerta.innerText = "";
 }
 
 
@@ -164,7 +161,6 @@ function buscarLibroPorTitulo(titulo){
             </div>`
 
             const botones = document.getElementById ("botones");
-            const alerta = document.getElementById ("alerta");
 
             // crear botón comprar
             const botonAgregar = document.createElement ("button");
@@ -178,34 +174,57 @@ function buscarLibroPorTitulo(titulo){
                 // chequear si hay suficientes libros en stock
                 let unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);
 
-                if ((!unidadesLibroAComprar === 1) || (unidadesLibroAComprar > libro.stockLibro)) {
+                if (unidadesLibroAComprar > libro.stockLibro) {
 
                     // borro input
                     document.getElementById ("cantidad-libro").value = 1;
-                    alerta.className = "alertas-mostrar";
-                    alerta.innerText = `Lo sentimos, solo tenemos ${libro.stockLibro} libros en stock`
+
+                    // SWEET ALERT  sin stock suficiente
+                    swal ({
+                        title: "¡ LO SENTIMOS !",
+                        text: `Tenemos solamente ${libro.stockLibro} libros en stock.`
+                    });   
                     
                 } else {
 
                     // borrar input
                     document.getElementById ("cantidad-libro").value = 1;
 
-                    // borrar alertas
-                    alerta.className = "alertas-no-mostrar";
-                    alerta.innerText = "";
-
                     // sumar items
                     items = items + unidadesLibroAComprar;
 
-                    // indicar info items en carrito
+                    // indicar número de items en carrito
                     infoItems = document.getElementById ("info-carrito");
                     infoItems.innerText = `${items} productos`;
-        
-                    // agregar a array carrito
-                    alerta.className = "alertas-mostrar";
-                    alerta.innerText = `Se agregó ${unidadesLibroAComprar} libro/s a su carrito`;
+                    
+                    // SWEET ALERT item agregado a carrito
+                    swal({
+                        title: `${libro.titulo}`,
+                        text: `Agregaste ${unidadesLibroAComprar} libro/s a tu carrito.`,
+                        icon: "success",
+                        buttons: {
+                            confirm: "Seguir comprando",
+                            carrito: {
+                                text: "Ir a carrito",
+                                value: "carrito",
+                            }
+                        }
+                      })
+                      .then ((value) => {
+                        switch (value) {
 
+                            case "carrito":
+                                console.log ("ir a carrito");
+                                break;
+                            
+                            default:
+                                console.log ("seguir comprando")
+                        }
+                      });
+
+                    // agregar item a array carrito
                     carrito.push ({
+                        imagen: libro.img,
                         titulo: libro.titulo,
                         cantidad: unidadesLibroAComprar,
                         precio: libro.precio,
@@ -227,7 +246,6 @@ function buscarLibroPorTitulo(titulo){
             })
 
             botones.append (botonAgregar);
-            seccionFicha.append(alerta);
         }
     }) 
 }
@@ -236,11 +254,6 @@ function buscarLibroPorTitulo(titulo){
 // FUNCION sacar valor input (cantidad libros a comprar)
 function valorInput (){
     unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);  
-    console.log (unidadesLibroAComprar);
-
-    // borrar alertas
-    alerta.className = "alertas-no-mostrar";
-    alerta.innerText = "";
 }
 
 
@@ -364,11 +377,6 @@ botonBuscar.addEventListener ("click", () => {
 
     const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "no-mostrar";
-
-
-    const alerta = document.getElementById ("alerta");
-    alerta.className = "alerta-no-mostrar";
-    alerta.innerText = "";
 
     // obtener value input box
     const inputBuscarBox = document.getElementById ("buscar-box");
@@ -500,11 +508,6 @@ iconoCarrito.addEventListener ("click", () => {
 
     const seccionBusqueda = document.getElementById ("seccion-busqueda");
     seccionBusqueda.className = "no-mostrar";
-
-    const alerta = document.getElementById ("alerta");
-    alerta.className = "alerta-no-mostrar";
-    alerta.innerText = "";
-
     
     // ver carrito
     for (const item of carrito){
@@ -514,14 +517,17 @@ iconoCarrito.addEventListener ("click", () => {
 
         const div = document.createElement ("div");
         div.className = "detalle-compra-por-libro";
-        div.innerHTML = `<p>° ${item.titulo} x ${item.cantidad} unidad/es ---<p>
-                        <p>--- $${subtotalItem}`;
+        div.innerHTML = `<img src = "${item.imagen}" class = "img-carrito"/>
+                        <p class = "p-carrito">${item.titulo}<p>
+                        <p class = "p-carrito">${item.cantidad} unidad/es </p>
+                        <p>$${subtotalItem}`;
 
         contenedorDetalleCarrito.append (div);
     }
 
     const pTotalAPagar = document.getElementById ("div-total-pagar");
-    pTotalAPagar.innerHTML = `<p><strong>TOTAL A PAGAR</strong> -->   $${totalAPagar}</p>`;
+    pTotalAPagar.innerHTML = `<p class = "p-total"><strong>TOTAL A PAGAR </strong></p>
+                                <p>$${totalAPagar}</p>`;
 
     seccionDetalleCarrito.append (contenedorDetalleCarrito);
     seccionDetalleCarrito.append (pTotalAPagar);
@@ -538,12 +544,9 @@ iconoCarrito.addEventListener ("click", () => {
 const botonIniciarCompra = document.getElementById ("boton-comprar");
 botonIniciarCompra.addEventListener ("click", () => {
 
-    // verificar si el usuario está registrado con variable global verifUsuario.
-    
-    // verifUsuario = 1 (está logeado) verifUsuario = 0 (no está, hay que registrarse).
+    // verificar si la persona inicio sesión o se registró
+    (verifUsuario === false) ? console.log ("Registrase o iniciar sesión") : console.log ("Hola Usuario,");
 
-
-    console.log ("Iniciamos Compra");
 })
 
 

@@ -9,6 +9,8 @@
     <meta name="keywords" content="recetas, saludables, fáciles, niños, bebés, blw, snacks, crianza, respetuosa">
     <!--Font Awesome Icons-->
     <script src="https://kit.fontawesome.com/6ae03c6937.js" crossorigin="anonymous"></script>
+    <!--Sweet Alert-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="./images/favicon-littlenams.png">
     <title>Little Ñams - Libros Infantiles</title>
@@ -59,7 +61,6 @@
         <!--sección detalle por libro-->
         <section id = "seccion-detalle-libro">
             <div id = "contenedor-detalle-libro"></div> 
-            <div id = "alerta" class = "alertas-no-mostrar"></div>
         </section>
 
         <!--sección libros por autor clickeado-->
@@ -89,6 +90,12 @@
                 <button class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
                 <button id = "boton-comprar" class = "botones-accion">Iniciar Compra</button>
             </div>
+        </section>
+
+        <!--sección registrar nuevo usuario-->
+        <section id = "seccion-registro-usuario" class = "no-mostrar">
+            <input id = "nombre" class = "estilo-buscar-box" placeholder = "Nombre">
+
         </section>
     </main>
 

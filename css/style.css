@@ -41,7 +41,6 @@ main {
 section {
     margin-top: 30px;
     padding-bottom: 30px;
-    /* border-bottom: .5px solid #227c9d55;  */
 }
 
 h1{
@@ -86,7 +85,7 @@ p {
 }
 
 
-/* ESTILO BOTONES */
+/* estilo botones */
 .botones-accion {
     display: block;
     padding: 8px 15px;
@@ -119,7 +118,7 @@ p {
 }
 
 
-/* ESTILO LINK LIBROS */
+/* estilo link libros */
 .estilo-link-libros{
     text-decoration: none;
     color: #444;
@@ -131,7 +130,25 @@ p {
 }
 
 
-/* mostrar, no mostrar secciones */
+/* Sweet Alert */
+.swal-modal{
+    padding: 25px;
+}
+
+.swal-title{
+    font-size: 18px;
+}
+
+.swal-footer{
+    text-align: center;
+}
+
+.swal-button{
+    background-color: #227C9D;
+}
+
+
+/* mostrar, no mostrar para secciones */
 .mostrar {
     display:initial;
 }
@@ -265,22 +282,6 @@ p {
     border: solid .5px gray;
 }
 
-/* alertas */
-.alertas-no-mostrar{
-    display: none;
-}
-
-.alertas-mostrar{
-    display: inline-block;
-    position: relative;
-    top: -710px; 
-    left: 850px;
-
-    border: solid 3px #D4E09B;
-    padding: 10px;
-    font-size: 12px;
-}
-
 /* sección resultado búsqueda */
 .sin-resultado{
     padding-top: 5px;
@@ -311,8 +312,26 @@ p {
 .detalle-compra-por-libro{
     display: flex;
     flex-direction: row;
+    align-items: center;
     margin-bottom: 10px;
     font-size: 14px;
+}
+
+.img-carrito{
+    width: 90px;
+    height: auto;
+    padding-right: 30px;
+}
+
+.p-carrito{
+    width: 200px;
+    margin-right: 60px;
+}
+
+#div-total-pagar{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 .total-pagar{
@@ -326,6 +345,10 @@ p {
     text-align: right;
 }
 
+.p-total{
+    margin-right: 60px;
+}
+
 #botones-carrito {
     display: flex;
     flex-direction: row;
@@ -333,5 +356,3 @@ p {
     gap: 15px;
     width: 60%;
 }
-
-
