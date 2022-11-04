@@ -22,30 +22,6 @@ class Libros {
         this.stockLibro = stockLibro;
         this.precio = precio;   
     }
-    
-    agregarStockLibro (cantidad){
-        this.stockLibro = this.stockLibro + cantidad;
-        verifId = true;
-
-        alert ("Agregaste " + cantidad + " unidad/es al stock.\nStock disponible: " + this.stockLibro + " unidades.");
-    }
-
-    verStockLibro (){
-        alert (this.titulo + "\nStock disponible: " + this.stockLibro + " unidad/es.");
-        verifId = true;
-    }
-
-
-    cambiarPrecioLibro (precio){
-        this.precio = precio;
-        alert ("Se cambió el precio a $" + this.precio);
-        verifId = true;
-    }      
-
-    mostrarFichaTecnica (){
-        alert ("FICHA TÉCNICA \n\nTítulo: " + this.titulo + "\nAutor: " + this.autor + "\nFecha de Publicación: " + this.fechaPublicacion + "\nEditorial: " + this.editorial + "\nFormato: " + this.formato + "\nIdioma: " + this.idioma + "\nCantidad de páginas: " + this.cantidadPaginas + "\nISBN: " + this.isbn + "\n\nRango edad: " + this.rangoEdad + "\n\nSipnosis: " + this.sipnosis + "\n\nPrecio: $" + this.precio);
-        cont = 0;
-    }
 }
 
 // ***** AGREGAR LIBROS EN ARRAYLIBROS ***** 

@@ -1,15 +1,59 @@
 //localStorage.clear ();
 
-// accedo a la info en localStorage y la guardo en variable libros 
-const libros = JSON.parse (localStorage.getItem ("libros"));
-
 // variables globales
 let contId = 1;
 let unidadesLibroAComprar = 0;
 let itemsAgregados = 0;
 let totalAPagar = 0;
 let subtotalItem = 0;
+// guardar verifusuario en localStorage ??
 let verifUsuario = false;
+let librosJSON = [];
+
+// accedo a los libros guardados en libros.json
+// fetch ("/libros.json")
+//     .then ( (response) => {
+//         return response.json();
+//     }).then ( (libros) => {
+//         console.log (libros);
+//         librosJSON = libros;
+
+//         // MOSTRAR en HOME los libros disponibles //
+//         const listaLibros = document.getElementById ("lista-libros");
+
+//         for (const libro of librosJSON){
+
+//             if (libro.stockLibro > 0){
+
+//                 let div = document.createElement ("div");
+//                 div.className = "contenedor-por-libro";
+
+//                 let li = document.createElement ("li");
+//                 li.className = "libro";
+
+//                 let linkLibro = document.createElement ("a");
+//                 linkLibro.className = "estilo-link-libros";
+//                 linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
+//                 linkLibro.innerHTML = `<img src = "${libro.img}"/>
+//                                     <h2>${libro.titulo}</h2>`
+
+//                 let linkAutor = document.createElement ("a");
+//                 linkAutor.className = "estilo-link-libros";
+//                 linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };    
+//                 linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
+                
+//                 li.append(linkLibro);
+//                 li.append(linkAutor);
+//                 div.append (li);
+//                 listaLibros.append(div);  
+//             }
+//         }
+// });
+
+
+// accedo a los libros (array) en localStorage y los guardo en variable libros 
+const libros = JSON.parse (localStorage.getItem ("libros"));
+
 
 // MOSTRAR en HOME los libros disponibles //
 const listaLibros = document.getElementById ("lista-libros");
@@ -28,7 +72,7 @@ for (const libro of libros){
         linkLibro.className = "estilo-link-libros";
         linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
         linkLibro.innerHTML = `<img src = "${libro.img}"/>
-                            <h2>${libro.titulo}</h2>`
+                            <h2 class = "h2-titulo-libro">${libro.titulo}</h2>`
 
         let linkAutor = document.createElement ("a");
         linkAutor.className = "estilo-link-libros";
@@ -43,13 +87,27 @@ for (const libro of libros){
 }
 
 
+// *************** FUNCIONES *************** //
+
+// FUNCION registrar usuario
+function registrarUsuario (){
+    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+    seccionRegistroUsuario.className = "mostrar";
+}
+
+// FUNCION inciar sesión
+function iniciarSesion (){
+    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+    seccionIniciarSesion.className = "mostrar";
+}
+
 // FUNCION obtener carrito
 function obtenerCarrito () {
     let carrito = [];
 
     const carritoLS = localStorage.getItem ("carrito");
 
-    if (carritoLS !== null) {
+    if (carritoLS) {
         carrito = JSON.parse(carritoLS);
     }
 
@@ -57,21 +115,19 @@ function obtenerCarrito () {
 }
 let carrito = obtenerCarrito ();
 
-
 // FUNCION obtener items agregados
 function obtenerItems () {
     let items = 0;
 
     const itemsLS = localStorage.getItem ("items");
 
-    if (itemsLS !== null) {
+    if (itemsLS) {
         items = JSON.parse(itemsLS);
     }
 
     return items;
 }
 let items = obtenerItems ();
-
 
 // mostrar items en contenedor carrito
 infoItems = document.getElementById ("info-carrito");
@@ -96,8 +152,7 @@ function regresarAListaLibros (){
     seccionDetalleCarrito.className = "no-mostrar";
 }
 
-
-// FUNCION mostrar libro clickeado
+// FUNCION mostrar libro (por título) clickeado
 function buscarLibroPorTitulo(titulo){
 
     return libros.find ((libro) => {
@@ -180,9 +235,14 @@ function buscarLibroPorTitulo(titulo){
                     document.getElementById ("cantidad-libro").value = 1;
 
                     // SWEET ALERT  sin stock suficiente
-                    swal ({
+                    Swal.fire ({
                         title: "¡ LO SENTIMOS !",
-                        text: `Tenemos solamente ${libro.stockLibro} libros en stock.`
+                        text: `Tenemos solamente ${libro.stockLibro} libros en stock.`,
+                        padding: "2em",
+                        color: "#444",
+                        confirmButtonText: "Entendido",
+                        confirmButtonColor: "#227C9D",
+                        //timer: 2000,
                     });   
                     
                 } else {
@@ -198,28 +258,24 @@ function buscarLibroPorTitulo(titulo){
                     infoItems.innerText = `${items} productos`;
                     
                     // SWEET ALERT item agregado a carrito
-                    swal({
+                    Swal.fire({
                         title: `${libro.titulo}`,
                         text: `Agregaste ${unidadesLibroAComprar} libro/s a tu carrito.`,
                         icon: "success",
-                        buttons: {
-                            confirm: "Seguir comprando",
-                            carrito: {
-                                text: "Ir a carrito",
-                                value: "carrito",
-                            }
-                        }
+                        confirmButtonText: "Seguir comprando",
+                        confirmButtonColor: "#227C9D",
+                        showCancelButton: true,
+                        cancelButtonText: "Ver carrito",
+                        cancelButtonColor: "#227C9D",
                       })
-                      .then ((value) => {
-                        switch (value) {
+                      .then ((result) => {
 
-                            case "carrito":
-                                console.log ("ir a carrito");
-                                break;
-                            
-                            default:
-                                console.log ("seguir comprando")
+                        if (result.isConfirmed) {
+                            console.log ("seguir comprando")
+                        } else {
+                            console.log ("ir a carrito");
                         }
+                    
                       });
 
                     // agregar item a array carrito
@@ -250,12 +306,10 @@ function buscarLibroPorTitulo(titulo){
     }) 
 }
 
-
 // FUNCION sacar valor input (cantidad libros a comprar)
 function valorInput (){
     unidadesLibroAComprar = parseInt (document.getElementById ("cantidad-libro").value);  
 }
-
 
 // FUNCION mostrar libros por autor clickeado
 function buscarLibrosPorAutor(nombreAutor){
@@ -279,7 +333,6 @@ function buscarLibrosPorAutor(nombreAutor){
     const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "no-mostrar";
 
-
     // grid con libros del autor clickeado
     const listaLibrosPorAutor = document.getElementById ("libros-por-autor");
     listaLibrosPorAutor.innerHTML = "";
@@ -296,7 +349,7 @@ function buscarLibrosPorAutor(nombreAutor){
         linkLibro.className = "estilo-link-libros";
         linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
         linkLibro.innerHTML = `<img src = "${libro.img}"/>
-                            <h2>${libro.titulo}</h2>`
+                            <h2 class = "h2-titulo-libro">${libro.titulo}</h2>`
 
         let linkAutor = document.createElement ("a");
         linkAutor.className = "estilo-link-libros";               
@@ -309,7 +362,6 @@ function buscarLibrosPorAutor(nombreAutor){
         listaLibrosPorAutor.append(div);                          
     }
 }
-
 
 // FUNCION mostrar resultado por búsqueda
 function mostrarResultadoBusqueda (id){
@@ -333,7 +385,7 @@ function mostrarResultadoBusqueda (id){
             linkLibro.className = "estilo-link-libros";
             linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
             linkLibro.innerHTML = `<img src = "${libro.img}"/>
-                                <h2>${libro.titulo}</h2>`
+                                <h2 class = "h2-titulo-libro">${libro.titulo}</h2>`
 
             let linkAutor = document.createElement ("a");
             linkAutor.className = "estilo-link-libros";               
@@ -348,6 +400,29 @@ function mostrarResultadoBusqueda (id){
     }
 }
 
+// FUNCION finalizar compra
+function finalizarCompra (){
+    console.log ("finalizar compra");
+}
+
+
+// *************** EVENTOS *************** //
+
+// EVENTO click en link ingresar - nav
+const ingresar = document.getElementById ("a-ingresar");
+ingresar.addEventListener ("click", () => {
+
+    // llamar función iniciar sesión que lleva al formulario
+    iniciarSesion ();
+})
+
+// EVENTO click en link crear cuenta - nav
+const crearCuenta = document.getElementById ("a-crear-cuenta");
+crearCuenta.addEventListener ("click", () => {
+
+    // llamar función registrar usuario que lleva al formulario
+    registrarUsuario ();
+})
 
 // EVENTO click en botón buscar
 const botonBuscar = document.getElementById ("boton-buscar");
@@ -480,7 +555,6 @@ botonBuscar.addEventListener ("click", () => {
     }
 })
 
-
 // EVENTO click en carrito de compras 
 const iconoCarrito = document.getElementById ("icono-carrito");
 
@@ -539,112 +613,48 @@ iconoCarrito.addEventListener ("click", () => {
     botonesCarrito.before (pTotalAPagar);
 })
 
-
 // EVENTO click en iniciar compra
-const botonIniciarCompra = document.getElementById ("boton-comprar");
+const botonIniciarCompra = document.getElementById ("boton-iniciar-compra");
 botonIniciarCompra.addEventListener ("click", () => {
 
     // verificar si la persona inicio sesión o se registró
-    (verifUsuario === false) ? console.log ("Registrase o iniciar sesión") : console.log ("Hola Usuario,");
+    (verifUsuario === false) ? iniciarSesion() : finalizarCompra();
 
 })
 
+// EVENTO click botón crear cuenta del formulario registro usuario
+const botonCrearCuenta = document.getElementById ("crear-cuenta");
+botonCrearCuenta.addEventListener ("click", () => {
 
+    // guardar la información del usuario en Usuarios y en localStorage
+    console.log ("se creó la cuenta exitosamente");
+})
 
+// EVENTO click en link inicia sesión del formulario resgistro usuario
+const linkIniciaSesion = document.getElementById ("a-iniciar-sesion");
+linkIniciaSesion.addEventListener ("click", () => {
 
-// ****** AGREGAR STOCK POR ID ****** //
-let verifId = true;
-let idLibroElegido;
-let buscarLibroPorId;
-let indiceLibroElegido;
-// let cantidadEnStock;
+    // llamar función iniciar sesión que lleva al formulario
+    iniciarSesion();
+})
 
+// EVENTO click botón acceder del formulario de iniciar sesión
+const botonAcceder = document.getElementById ("acceder");
+botonAcceder.addEventListener ("click", () => {
 
-// idLibroElegido = parseInt (prompt ("Elegir ID del libro que desea aumentar stock."));
+    verifUsuario = true;
+    // guardar verifusuario en localStorage ??
+    // guardar value email y contraseña
 
-// while (verifId === true){
+    // verificar si existe en el array usuarios
+    console.log ("click en botón acceder");
+})
 
-//     buscarLibroPorId = arrayLibros.find (libro => {
-//         if (libro.id === idLibroElegido){
-//             return true;
-//         } 
-//     })
-
-//     if (buscarLibroPorId){
-//         cantidadEnStock = buscarLibroPorId.stockLibro;
-//         verifId = false;
-//         alert ("Elegiste " + buscarLibroPorId.titulo + "\nCantidad en stock: " + cantidadEnStock);
-        
-//     } else {
-//         idLibroElegido = parseInt (prompt ("No se encontró ID, ingresar ID válida."));;
-//     }
-// }
-
-// indiceLibroElegido = arrayLibros.map (libro => libro.id).indexOf(idLibroElegido);
-// let cantidadAAgregar = parseInt (prompt ("¿Cuántos libros desea agregar?"));
-
-// while (isNaN(cantidadAAgregar) || (cantidadAAgregar === 0)){
-//     cantidadAAgregar = parseInt (prompt ("Ingrese cantidad válida. ¿Cuántos libros desea agregar?"));
-// }
-
-// arrayLibros[indiceLibroElegido].agregarStockLibro(cantidadAAgregar);
-
-
-
-// ****** VER STOCK POR ID ****** //
-// idLibroElegido = parseInt (prompt ("Elegir ID del libro que desea ver stock."));
-
-// while (verifId === true){
-
-//     buscarLibroPorId = arrayLibros.find (libro => {
-//         if (libro.id === idLibroElegido){
-//             return true;
-//         } 
-//     })
-
-//     if (buscarLibroPorId){
-//         verifId = false;   
-//     } else {
-//         idLibroElegido = parseInt (prompt ("No se encontró ID, ingresar ID válida."));;
-//     }
-// }
-
-// indiceLibroElegido = arrayLibros.map (libro => libro.id).indexOf(idLibroElegido);
-// arrayLibros[indiceLibroElegido].verStockLibro();
-
-
-
-// ****** CAMBIAR PRECIO POR ID ****** //
-// let precioActual;
-// let precioACambiar;
-
-// idLibroElegido = parseInt (prompt ("Elegir ID del libro que desea cambiar de precio."));
-
-// while (verifId === true){
-
-//     buscarLibroPorId = arrayLibros.find (libro => {
-//         if (libro.id === idLibroElegido){
-//             return true;
-//         } 
-//     })
-
-//     if (buscarLibroPorId){
-//         precioActual = buscarLibroPorId.precio;
-//         verifId = false;
-//         alert ("Elegiste " + buscarLibroPorId.titulo + "\nPrecio Actual: $" + precioActual);
-        
-//     } else {
-//         idLibroElegido = parseInt (prompt ("No se encontró ID, ingresar ID válida."));;
-//     }
-// }
-
-// indiceLibroElegido = arrayLibros.map (libro => libro.id).indexOf(idLibroElegido);
-// precioACambiar = parseInt (prompt ("Ingrese nuevo precio."));
-
-// while (isNaN(precioACambiar) || (precioACambiar === 0)){
-//     precioACambiar = parseInt (prompt ("Ingrese precio válido."));
-// }
-
-// arrayLibros[indiceLibroElegido].cambiarPrecioLibro (precioACambiar);
-
+// EVENTO click en link regístrate del formulario iniciar sesión
+const linkRegistrate = document.getElementById ("a-registrate");
+linkRegistrate.addEventListener ("click", () => {
+    
+    // llamar función registrar usuario que lleva al formulario
+    registrarUsuario ();
+})
 

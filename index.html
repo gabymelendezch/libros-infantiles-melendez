@@ -10,7 +10,7 @@
     <!--Font Awesome Icons-->
     <script src="https://kit.fontawesome.com/6ae03c6937.js" crossorigin="anonymous"></script>
     <!--Sweet Alert-->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src= "https://cdn.jsdelivr.net/npm/sweetalert2@11.6.5/dist/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="./images/favicon-littlenams.png">
     <title>Little Ñams - Libros Infantiles</title>
@@ -19,34 +19,43 @@
 <body>
     <header>
         <nav>
-            <!--logo-->
-            <a href="#">
-                <img class="animacion-logo" src="./images/logo-littlenams-head-2.png"
-                alt="Logo Little Ñams">
-            </a>
-          
-            <!--form buscar-->
-            <div class = "contenedor-buscador">
-                <div class = "buscador">
-                    <input id = "buscar-box" class = "estilo-buscar-box" placeholder = "Ingresar título, autor, editorial o palabra clave">
-    
-                    <div class="contenedor-select">
-                        <select id="buscar-por" class="estilo-select mostrar">
-                            <option value="todos" selected>Todos</option>
-                            <option value="titulo">Título</option>
-                            <option value="autor">Autor</option>
-                            <option value="editorial">Editorial</option>
-                        </select>
-                    </div>
-    
-                    <div id = "boton-buscar">BUSCAR</div>
-                </div>           
+            <!--contenedor clientes-->
+            <div class = "contenedor-nav-clientes">
+                <a id = "a-ingresar" class = "estilo-link-libros"><p>Ingresar</p></a>
+                <a id = "a-crear-cuenta" class = "estilo-link-libros"><p>Crear cuenta</p></a>
             </div>
 
-            <!--info carrito-->
-            <div class = "contenedor-carrito">
-                <a id = "info-carrito">  productos</a>
-                <a id = "icono-carrito"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+            <div class = "contenedor-nav-logo">
+                <!--logo-->
+                <a href="#">
+                    <img class="animacion-logo" src="./images/logo-littlenams-head-2.png"
+                    alt="Logo Little Ñams">
+                </a>
+            
+                <!--form buscar-->
+                <div class = "contenedor-buscador">
+                    <div class = "buscador">
+                        <input id = "buscar-box" class = "estilo-buscar-box" placeholder = "Ingresar título, autor, editorial o palabra clave">
+        
+                        <div class="contenedor-select">
+                            <select id="buscar-por" class="estilo-select mostrar">
+                                <option value="todos" selected>Todos</option>
+                                <option value="titulo">Título</option>
+                                <option value="autor">Autor</option>
+                                <option value="editorial">Editorial</option>
+                            </select>
+                        </div>
+        
+                        <div id = "boton-buscar">BUSCAR</div>
+                    </div>           
+                </div>
+
+                <!--info carrito-->
+                <div class = "contenedor-carrito">
+                    <a id = "info-carrito">  productos</a>
+                    <a id = "icono-carrito"><i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+                </div>
+
             </div>
         </nav>   
     </header>
@@ -88,14 +97,41 @@
             <div id = "div-total-pagar" class = "total-pagar"></div>
             <div id = "botones-carrito">
                 <button class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
-                <button id = "boton-comprar" class = "botones-accion">Iniciar Compra</button>
+                <button id = "boton-iniciar-compra" class = "botones-accion">Iniciar Compra</button>
             </div>
         </section>
 
         <!--sección registrar nuevo usuario-->
         <section id = "seccion-registro-usuario" class = "no-mostrar">
-            <input id = "nombre" class = "estilo-buscar-box" placeholder = "Nombre">
+            <h1>Crear una Cuenta</h1>
+            <div class = "contenedor-registro-usuario">
+                <p class = "p-footer">Si ya tienes una cuenta, por favor <a id = "a-iniciar-sesion" class = "estilo-link-libros"><u>Inicia sesión</u></a></p>
+                <form class = "formularios-usuarios">
+                    <input type = "text" id = "nombre" name = "nombre" maxlength="40" placeholder = "Nombre" class = "form-box-usuario" required />
+                    <input type = "text" id = "apellido" name = "apellido" maxlength="40" placeholder = "Apellido" class = "form-box-usuario" required />
+                    <input type = "email" id = "email" name = "email" maxlength="40" placeholder = "Dirección de email" class = "form-box-usuario" required />
+                    <input type = "password" id = "contrasenia" name = "contrasenia" maxlength="40" placeholder = "Contraseña" class = "form-box-usuario" required />
+                    <div class = "contenedor-boton-formularios-usuarios">
+                        <button id = "crear-cuenta" type = "submit" class = "botones-accion">Crear Cuenta</button>
+                    </div>
+                </form>
+                
+            </div>
+        </section>
 
+        <!--sección iniciar sesión-->
+        <section id = "seccion-iniciar-sesion" class="no-mostrar">
+            <h1>Iniciar Sesión</h1>
+            <div class = "contenedor-iniciar-sesion">
+                <p class = "p-footer">Si no tienes una cuenta, por favor <a id = "a-registrate" class = "estilo-link-libros"><u>Regístrate</u></a></p>
+                <form class = "formularios-usuarios">
+                    <input type = "email" id = "email-inicio-sesion" name = "email" maxlength="40" placeholder = "Dirección de email" class = "form-box-usuario" required />
+                    <input type = "password" id = "contrasenia-inicio-sesion" name = "contrasenia" maxlength="40" placeholder = "Contraseña" class = "form-box-usuario" required />
+                    <div class = "contenedor-boton-formularios-usuarios">
+                        <button id = "acceder" type = "submit" class = "botones-accion">Acceder</button>
+                    </div>
+                </form>
+            </div>
         </section>
     </main>
 
