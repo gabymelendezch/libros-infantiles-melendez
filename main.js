@@ -8,6 +8,7 @@ let totalAPagar = 0;
 let subtotalItem = 0;
 // guardar verifusuario en localStorage ??
 let verifUsuario = false;
+let verifDatos = false;
 let librosJSON = [];
 
 // accedo a los libros guardados en libros.json
@@ -93,13 +94,66 @@ for (const libro of libros){
 function registrarUsuario (){
     const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
     seccionRegistroUsuario.className = "mostrar";
+
+    // no mostrar
+    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+    seccionLibrosDisponibles.className = "no-mostrar";
+
+    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
+    seccionDetalleLibro.className = "no-mostrar";
+
+    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+    seccionLibrosAutor.className = "no-mostrar";
+
+    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
+    seccionResultadoBusqueda.className = "no-mostrar";
+
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "no-mostrar";
+
+    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+    seccionIniciarSesion.className = "no-mostrar";
 }
 
 // FUNCION inciar sesión
 function iniciarSesion (){
     const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
     seccionIniciarSesion.className = "mostrar";
+
+    // no mostrar
+    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+    seccionLibrosDisponibles.className = "no-mostrar";
+    
+    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
+    seccionDetalleLibro.className = "no-mostrar";
+    
+    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+    seccionLibrosAutor.className = "no-mostrar";
+    
+    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
+    seccionResultadoBusqueda.className = "no-mostrar";
+    
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "no-mostrar";
+
+    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+    seccionRegistroUsuario.className = "no-mostrar";
 }
+
+// FUNCION obtener usuarios 
+function obtenerUsuarios () {
+    let usuarios = [];
+
+    const usuariosLS = localStorage.getItem ("usuarios");
+
+    if (usuariosLS) {
+        usuarios = JSON.parse (usuariosLS);
+    }
+
+    return usuarios;
+}
+let usuarios = obtenerUsuarios ();
+console.log (usuarios);
 
 // FUNCION obtener carrito
 function obtenerCarrito () {
@@ -150,6 +204,13 @@ function regresarAListaLibros (){
 
     const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "no-mostrar";
+
+    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+    seccionIniciarSesion.className = "no-mostrar";
+
+    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+    seccionRegistroUsuario.className = "no-mostrar";
+
 }
 
 // FUNCION mostrar libro (por título) clickeado
@@ -176,6 +237,12 @@ function buscarLibroPorTitulo(titulo){
             const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
             seccionDetalleCarrito.className = "no-mostrar";
 
+            const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+            seccionIniciarSesion.className = "no-mostrar";
+
+            const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+            seccionRegistroUsuario.className = "no-mostrar";
+
             // información del libro
             const contenedor = document.getElementById ("contenedor-detalle-libro");
             contenedor.innerHTML = 
@@ -193,7 +260,7 @@ function buscarLibroPorTitulo(titulo){
                     <input type = "number" id = "cantidad-libro" name = "cantidad-libro" value = "1" min = "1" onchange = valorInput() class = "input-cantidad-libro">
                     <p class = "precio">AR$ ${libro.precio}</p>
                     <div id= "botones" class = "contenedor-botones">
-                        <button class = "botones-accion" onclick = regresarAListaLibros()>Home</button>
+                        <button type = "button" class = "botones-accion" onclick = regresarAListaLibros()>Home</button>
                     </div>
                 </div>
             </div>
@@ -234,7 +301,7 @@ function buscarLibroPorTitulo(titulo){
                     // borro input
                     document.getElementById ("cantidad-libro").value = 1;
 
-                    // SWEET ALERT  sin stock suficiente
+                    // SWEET ALERT sin stock suficiente
                     Swal.fire ({
                         title: "¡ LO SENTIMOS !",
                         text: `Tenemos solamente ${libro.stockLibro} libros en stock.`,
@@ -332,6 +399,12 @@ function buscarLibrosPorAutor(nombreAutor){
 
     const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "no-mostrar";
+
+    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+    seccionIniciarSesion.className = "no-mostrar";
+
+    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+    seccionRegistroUsuario.className = "no-mostrar";
 
     // grid con libros del autor clickeado
     const listaLibrosPorAutor = document.getElementById ("libros-por-autor");
@@ -452,6 +525,12 @@ botonBuscar.addEventListener ("click", () => {
 
     const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "no-mostrar";
+
+    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+    seccionIniciarSesion.className = "no-mostrar";
+
+    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+    seccionRegistroUsuario.className = "no-mostrar";
 
     // obtener value input box
     const inputBuscarBox = document.getElementById ("buscar-box");
@@ -582,6 +661,12 @@ iconoCarrito.addEventListener ("click", () => {
 
     const seccionBusqueda = document.getElementById ("seccion-busqueda");
     seccionBusqueda.className = "no-mostrar";
+
+    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+    seccionIniciarSesion.className = "no-mostrar";
+
+    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+    seccionRegistroUsuario.className = "no-mostrar";
     
     // ver carrito
     for (const item of carrito){
@@ -624,10 +709,98 @@ botonIniciarCompra.addEventListener ("click", () => {
 
 // EVENTO click botón crear cuenta del formulario registro usuario
 const botonCrearCuenta = document.getElementById ("crear-cuenta");
-botonCrearCuenta.addEventListener ("click", () => {
+botonCrearCuenta.addEventListener ("click", (event) => {
 
-    // guardar la información del usuario en Usuarios y en localStorage
-    console.log ("se creó la cuenta exitosamente");
+    // detener el evento
+    event.preventDefault ();
+
+    // obtener los datos del input
+    const nombre = document.getElementById ("nombre").value;
+    const apellido = document.getElementById ("apellido").value;
+    const email = document.getElementById ("email").value;
+    const contrasenia = document.getElementById ("contrasenia").value;
+
+    // verificar si los 4 campos están completos 
+    if (nombre === "" || apellido === "" || email === "" || contrasenia === ""){
+
+        // SWEET ALERT si no se han completado todos los inputs
+        Swal.fire ({
+            text: `Por favor, complete todos los campos.`,
+            padding: "2em",
+            color: "#444",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#227C9D",
+        });  
+
+        verifDatos = true;
+
+    } else {
+
+        // verificar si el formato de email es válido
+        if (!email.includes("@") || !email.includes(".com")) {
+
+            // SWEET ALERT si el email es inválido
+            Swal.fire ({
+                text: `Por favor, ingrese una dirección de email válida.`,
+                padding: "2em",
+                color: "#444",
+                confirmButtonText: "OK",
+                confirmButtonColor: "#227C9D",
+            }); 
+
+            verifDatos = true;
+
+        } else {
+            
+            // verificar si el email ya ha sido registrado
+            for (const usuario of usuarios) {
+
+                if (usuario.email === email){
+
+                    Swal.fire ({
+                        text: `El email ingresado ya existe.`,
+                        padding: "2em",
+                        color: "#444",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#227C9D",
+                    }); 
+
+                    verifDatos = true;
+                }
+            } 
+        } 
+    }
+
+    // pushear si todos los datos están ingresados correctamente 
+    if (verifDatos === false) {
+
+        // cargar datos al array de usuarios
+        usuarios.push (new Usuarios (nombre, apellido, email, contrasenia));
+
+        // cargar array al localStorage
+        localStorage.setItem ("usuarios", JSON.stringify(usuarios));
+
+        // limpiar inputs
+        document.getElementById ("nombre").value = "";
+        document.getElementById ("apellido").value = "";
+        document.getElementById ("email").value = "";
+        document.getElementById ("contrasenia").value = "";
+
+        // SWEET ALERT se creó cuenta exitosamente
+        Swal.fire ({
+            text: `Usuario creado exitosamente. Por favor, inicie sesión`,
+            padding: "2em",
+            color: "#444",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#227C9D",
+        }); 
+
+        // llamar a función iniciar sesión
+        iniciarSesion ();
+
+    } else {
+        verifDatos = false;
+    }
 })
 
 // EVENTO click en link inicia sesión del formulario resgistro usuario

@@ -77,7 +77,7 @@
             <h2 class = "h2-titulo-azul">Libros por Autor</h2>
             <ul id = "libros-por-autor" class = "grid-wrapper"></ul>
             <div>
-                <button class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
+                <button type = "button" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
             </div>
         </section>
 
@@ -87,7 +87,7 @@
             <ul id = "libros-por-busqueda" class = "grid-wrapper"></ul>
             <div id = "sin-resultado" class = "no-mostrar"></div>
             <div>
-                <button class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
+                <button type = "button" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
             </div>
         </section>
 
@@ -96,7 +96,7 @@
             <div id = "contenedor-detalle-carrito"></div>
             <div id = "div-total-pagar" class = "total-pagar"></div>
             <div id = "botones-carrito">
-                <button class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
+                <button type = "button" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
                 <button id = "boton-iniciar-compra" class = "botones-accion">Iniciar Compra</button>
             </div>
         </section>
@@ -113,6 +113,7 @@
                     <input type = "password" id = "contrasenia" name = "contrasenia" maxlength="40" placeholder = "Contraseña" class = "form-box-usuario" required />
                     <div class = "contenedor-boton-formularios-usuarios">
                         <button id = "crear-cuenta" type = "submit" class = "botones-accion">Crear Cuenta</button>
+                        <button type = "button" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
                     </div>
                 </form>
                 
@@ -129,12 +130,14 @@
                     <input type = "password" id = "contrasenia-inicio-sesion" name = "contrasenia" maxlength="40" placeholder = "Contraseña" class = "form-box-usuario" required />
                     <div class = "contenedor-boton-formularios-usuarios">
                         <button id = "acceder" type = "submit" class = "botones-accion">Acceder</button>
+                        <button type = "button" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
                     </div>
                 </form>
             </div>
         </section>
     </main>
 
+    <script src = "modules/Usuarios.js"></script>
     <script src = "/modules/Libros.js"></script>
     <script src="/main.js"></script>
 </body>
