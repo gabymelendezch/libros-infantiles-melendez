@@ -9,6 +9,7 @@ let subtotalItem = 0;
 // guardar verifusuario en localStorage ??
 let verifUsuario = false;
 let verifDatos = false;
+let verifContrasenia = false;
 let librosJSON = [];
 
 // accedo a los libros guardados en libros.json
@@ -90,56 +91,6 @@ for (const libro of libros){
 
 // *************** FUNCIONES *************** //
 
-// FUNCION registrar usuario
-function registrarUsuario (){
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
-    seccionRegistroUsuario.className = "mostrar";
-
-    // no mostrar
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
-    seccionLibrosDisponibles.className = "no-mostrar";
-
-    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
-    seccionDetalleLibro.className = "no-mostrar";
-
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
-    seccionLibrosAutor.className = "no-mostrar";
-
-    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
-    seccionResultadoBusqueda.className = "no-mostrar";
-
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
-    seccionDetalleCarrito.className = "no-mostrar";
-
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
-    seccionIniciarSesion.className = "no-mostrar";
-}
-
-// FUNCION inciar sesión
-function iniciarSesion (){
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
-    seccionIniciarSesion.className = "mostrar";
-
-    // no mostrar
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
-    seccionLibrosDisponibles.className = "no-mostrar";
-    
-    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
-    seccionDetalleLibro.className = "no-mostrar";
-    
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
-    seccionLibrosAutor.className = "no-mostrar";
-    
-    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
-    seccionResultadoBusqueda.className = "no-mostrar";
-    
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
-    seccionDetalleCarrito.className = "no-mostrar";
-
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
-    seccionRegistroUsuario.className = "no-mostrar";
-}
-
 // FUNCION obtener usuarios 
 function obtenerUsuarios () {
     let usuarios = [];
@@ -211,6 +162,65 @@ function regresarAListaLibros (){
     const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
     seccionRegistroUsuario.className = "no-mostrar";
 
+    // limpiar inputs inicio de sesión
+    document.getElementById ("email-inicio-sesion").value = "";
+    document.getElementById ("contrasenia-inicio-sesion").value = "";
+
+    // limpiar inputs registro de usuario
+    document.getElementById ("nombre").value = "";
+    document.getElementById ("apellido").value = "";
+    document.getElementById ("email").value = "";
+    document.getElementById ("contrasenia").value = "";
+}
+
+// FUNCION registrar usuario
+function registrarUsuario (){
+    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+    seccionRegistroUsuario.className = "mostrar";
+
+    // no mostrar
+    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+    seccionLibrosDisponibles.className = "no-mostrar";
+
+    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
+    seccionDetalleLibro.className = "no-mostrar";
+
+    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+    seccionLibrosAutor.className = "no-mostrar";
+
+    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
+    seccionResultadoBusqueda.className = "no-mostrar";
+
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "no-mostrar";
+
+    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+    seccionIniciarSesion.className = "no-mostrar";
+}
+
+// FUNCION inciar sesión
+function iniciarSesion (){
+    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+    seccionIniciarSesion.className = "mostrar";
+
+    // no mostrar
+    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+    seccionLibrosDisponibles.className = "no-mostrar";
+    
+    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
+    seccionDetalleLibro.className = "no-mostrar";
+    
+    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+    seccionLibrosAutor.className = "no-mostrar";
+    
+    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
+    seccionResultadoBusqueda.className = "no-mostrar";
+    
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "no-mostrar";
+
+    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+    seccionRegistroUsuario.className = "no-mostrar";
 }
 
 // FUNCION mostrar libro (por título) clickeado
@@ -807,27 +817,114 @@ botonCrearCuenta.addEventListener ("click", (event) => {
 const linkIniciaSesion = document.getElementById ("a-iniciar-sesion");
 linkIniciaSesion.addEventListener ("click", () => {
 
+    // limpiar inputs registro de usuario
+    document.getElementById ("nombre").value = "";
+    document.getElementById ("apellido").value = "";
+    document.getElementById ("email").value = "";
+    document.getElementById ("contrasenia").value = "";
+
     // llamar función iniciar sesión que lleva al formulario
     iniciarSesion();
 })
 
 // EVENTO click botón acceder del formulario de iniciar sesión
 const botonAcceder = document.getElementById ("acceder");
-botonAcceder.addEventListener ("click", () => {
+botonAcceder.addEventListener ("click", (event) => {
 
-    verifUsuario = true;
-    // guardar verifusuario en localStorage ??
-    // guardar value email y contraseña
+    // detener el evento
+    event.preventDefault ();
 
-    // verificar si existe en el array usuarios
-    console.log ("click en botón acceder");
+    // obtener los datos del input
+    const email = document.getElementById ("email-inicio-sesion").value;
+    const contrasenia = document.getElementById ("contrasenia-inicio-sesion").value;
+
+    // verificar si los 2 campos están completos 
+
+    if (email === "" || contrasenia === "" ){
+
+        // SWEET ALERT si no se han completado todos los inputs
+        Swal.fire ({
+            text: `Por favor, complete todos los campos.`,
+            padding: "2em",
+            color: "#444",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#227C9D",
+        });  
+
+    } else {
+
+        // verificar si el usuario ingresado esta guardado en localStorage
+        for (const usuario of usuarios) {
+
+            if (usuario.email === email) {
+
+                if (usuario.contrasenia === contrasenia) {
+
+                    // limpiar inputs
+                    document.getElementById ("email-inicio-sesion").value = "";
+                    document.getElementById ("contrasenia-inicio-sesion").value = "";
+
+                    // variable boolean true para saber si paso por el if de contraseña
+                    verifContrasenia = true;
+
+                    // variable boolean para saber si el usuario está loggeado
+                    verifUsuario = true;
+                    console.log (`Hola ${usuario.nombre}`);
+
+                    // guardar verifusuario en localStorage ??
+
+                } else {
+
+                    // SWEET ALERT contraseña incorrecta
+                    Swal.fire ({
+                        text: `Contraseña incorrecta`,
+                        padding: "2em",
+                        color: "#444",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#227C9D",
+                    });  
+
+                    // variable boolean true para saber si paso por el if de contraseña
+                    verifContrasenia = true;
+
+                    // limpiar inputs
+                    document.getElementById ("email-inicio-sesion").value = "";
+                    document.getElementById ("contrasenia-inicio-sesion").value = "";    
+                }
+
+            } else {
+
+                // verificar si la contraseña no es incorrecta (false) - 
+                if (verifContrasenia === false){
+                    
+                    //SWEET ALERT no se encontró usuario
+                    Swal.fire ({
+                        text: `El email no se encuentra registrado en nuestra web. Por favor regístrate como nuevo cliente.`,
+                        padding: "2em",
+                        color: "#444",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#227C9D",
+                    }); 
+
+                    // limpiar inputs
+                    document.getElementById ("email-inicio-sesion").value = "";
+                    document.getElementById ("contrasenia-inicio-sesion").value = "";
+                }  
+            }
+        }
+
+        verifContrasenia = false;
+    }
 })
 
 // EVENTO click en link regístrate del formulario iniciar sesión
 const linkRegistrate = document.getElementById ("a-registrate");
 linkRegistrate.addEventListener ("click", () => {
+
+    // limpiar inputs inicio sesión
+    document.getElementById ("email-inicio-sesion").value = "";
+    document.getElementById ("contrasenia-inicio-sesion").value = "";
     
     // llamar función registrar usuario que lleva al formulario
     registrarUsuario ();
 })
-
