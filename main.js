@@ -90,17 +90,11 @@ for (const libro of libros){
 // FUNCION obtener usuario log in
 function obtenerUsuarioLogIn () {
 
-    const usuarioLogInLS = localStorage.getItem ("usuarioLogIn") || [];
     let usuarioLogIn = [];
 
-    // const usuarioLogInLS = localStorage.getItem ("usuarioLogIn");
-    // console.log (usuarioLogInLS);
-    // console.log (verifUsuario);
-    console.log (usuarioLogInLS.length); // 2
-    console.log (usuarioLogIn.length); // 0
-    
+    const usuarioLogInLS = localStorage.getItem ("usuarioLogIn");
 
-    if (usuarioLogInLS) {
+    if (usuarioLogInLS !== null) {
         usuarioLogIn = JSON.parse (usuarioLogInLS);
         verifUsuario = true;
     }
@@ -112,10 +106,10 @@ function obtenerUsuarioLogIn () {
     return usuarioLogIn;
 
 }
-
 let usuarioLogIn = obtenerUsuarioLogIn ();
-console.log (verifUsuario);
 console.log (usuarioLogIn);
+console.log ("verifUsuario " + verifUsuario);
+
 
 // FUNCION obtener usuarios 
 function obtenerUsuarios () {
@@ -690,15 +684,12 @@ salir.addEventListener ("click", () => {
 
         console.log ("salió de su cuenta");
 
-        // vaciar variable que guarda la info del usuario que inició sesión y guardar en el localStorage
-        usuarioLogIn = [];
-        localStorage.setItem ("usuarioLogIn", JSON.stringify(usuarioLogIn));
+        // remover key usuarioLogIn del localStorage
+        localStorage.removeItem ("usuarioLogIn");
 
-
-        // cambiar valor de la variable verifUsuario a false y guardar en el localStorage
+        // cambiar valor de la variable verifUsuario a false
         verifUsuario = false;
-        console.log (verifUsuario);
-    
+
     }  
 })
 
