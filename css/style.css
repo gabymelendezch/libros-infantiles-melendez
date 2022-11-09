@@ -44,16 +44,11 @@ h1{
     text-transform: uppercase;
 }
 
-.h2-titulo-libro {
+.h2-titulo-libro{
     font-size: 15px; 
 }
 
-.h2-regular {
-    margin-bottom: 30px;
-    font-size: 16px;
-}
-
-.h2-titulo-azul {
+.h2-titulo-azul{
     margin-top: 45px;
     margin-bottom: 30px;
     font-family: "Cabin Sketch", cursive;
@@ -61,6 +56,18 @@ h1{
     font-weight: 600;
     color: #227C9D;
     text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 1px; 
+}
+
+.h2-titulo-centrado{
+    margin-top: 45px;
+    margin-bottom: 30px;
+    font-family: "Cabin Sketch", cursive;
+    font-size: 30px;
+    font-weight: 600;
+    color: #227C9D;
+    text-align: center;
     text-transform: uppercase;
     letter-spacing: 1px; 
 }
@@ -116,7 +123,6 @@ p {
     cursor: pointer;
 }
 
-
 /* estilo link libros */
 .estilo-link-libros{
     text-decoration: none;
@@ -126,6 +132,32 @@ p {
 .estilo-link-libros:hover{
     color: #98a9b0;
     cursor: pointer;
+}
+
+/* estilo formularios */
+.formularios-usuarios{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* estilo form box */
+.form-box{
+    width: 400px;
+    height: 40px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+}
+
+/* estilo contenedor botones formularios */
+.contenedor-boton-formularios{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
 }
 
 /* sweet alert */
@@ -367,32 +399,22 @@ p {
     text-align: center;
 }
 
-.formularios-usuarios{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15px;
-    text-align: center;
-}
-
-.form-box-usuario{
-    width: 400px;
-    height: 40px;
-    margin-bottom: 15px;
-    padding-left: 10px;
-}
-
-.contenedor-boton-formularios-usuarios{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 10px;
-}
-
-
 /* sección iniciar sesión */
 .contenedor-iniciar-sesion{
     text-align: center;
 }
 
+
+/* sección finalizar compra */
+.contenedor-finalizar-compra{
+    width: 50%;
+    margin-top: 45px;
+    padding: 30px 45px;
+    border: solid 3px #D4E09B;
+}
+
+.formulario-finalizar-compra {
+    justify-content: start;
+    align-items: start;
+    margin-top: 30px;
+}

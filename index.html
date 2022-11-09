@@ -20,9 +20,10 @@
     <header>
         <nav>
             <!--contenedor clientes-->
-            <div class = "contenedor-nav-clientes">
+            <div id= "contenedor-nav-inicio" class = "contenedor-nav-clientes">
                 <a id = "a-ingresar" class = "estilo-link-libros"><p>Ingresar</p></a>
                 <a id = "a-crear-cuenta" class = "estilo-link-libros"><p>Crear cuenta</p></a>
+                <a id = "a-cerrar-sesion" class = "estilo-link-libros"><p>Salir</p></a>
             </div>
 
             <div class = "contenedor-nav-logo">
@@ -103,34 +104,50 @@
 
         <!--sección registrar nuevo usuario-->
         <section id = "seccion-registro-usuario" class = "no-mostrar">
-            <h1>Crear una Cuenta</h1>
+            <h2 class = "h2-titulo-centrado">Crear una Cuenta</h2>
             <div class = "contenedor-registro-usuario">
                 <p class = "p-footer">Si ya tienes una cuenta, por favor <a id = "a-iniciar-sesion" class = "estilo-link-libros"><u>Inicia sesión</u></a></p>
                 <form class = "formularios-usuarios">
-                    <input type = "text" id = "nombre" name = "nombre" maxlength="40" placeholder = "Nombre" class = "form-box-usuario" required />
-                    <input type = "text" id = "apellido" name = "apellido" maxlength="40" placeholder = "Apellido" class = "form-box-usuario" required />
-                    <input type = "email" id = "email" name = "email" maxlength="40" placeholder = "Dirección de email" class = "form-box-usuario" required />
-                    <input type = "password" id = "contrasenia" name = "contrasenia" maxlength="40" placeholder = "Contraseña" class = "form-box-usuario" required />
-                    <div class = "contenedor-boton-formularios-usuarios">
+                    <input type = "text" id = "nombre" name = "nombre" maxlength="40" placeholder = "Nombre" class = "form-box" required />
+                    <input type = "text" id = "apellido" name = "apellido" maxlength="40" placeholder = "Apellido" class = "form-box" required />
+                    <input type = "email" id = "email" name = "email" maxlength="40" placeholder = "Dirección de email" class = "form-box" required />
+                    <input type = "password" id = "contrasenia" name = "contrasenia" maxlength="40" placeholder = "Contraseña" class = "form-box" required />
+                    <div class = "contenedor-boton-formularios">
                         <button id = "crear-cuenta" type = "submit" class = "botones-accion">Crear Cuenta</button>
                         <button type = "button" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
                     </div>
                 </form>
-                
             </div>
         </section>
 
         <!--sección iniciar sesión-->
         <section id = "seccion-iniciar-sesion" class="no-mostrar">
-            <h1>Iniciar Sesión</h1>
+            <h2 class = "h2-titulo-centrado">Iniciar Sesión</h2>
             <div class = "contenedor-iniciar-sesion">
                 <p class = "p-footer">Si no tienes una cuenta, por favor <a id = "a-registrate" class = "estilo-link-libros"><u>Regístrate</u></a></p>
                 <form class = "formularios-usuarios">
-                    <input type = "email" id = "email-inicio-sesion" name = "email" maxlength="40" placeholder = "Dirección de email" class = "form-box-usuario" required />
-                    <input type = "password" id = "contrasenia-inicio-sesion" name = "contrasenia" maxlength="40" placeholder = "Contraseña" class = "form-box-usuario" required />
-                    <div class = "contenedor-boton-formularios-usuarios">
+                    <input type = "email" id = "email-inicio-sesion" name = "email" maxlength="40" placeholder = "Dirección de email" class = "form-box" required />
+                    <input type = "password" id = "contrasenia-inicio-sesion" name = "contrasenia" maxlength="40" placeholder = "Contraseña" class = "form-box" required />
+                    <div class = "contenedor-boton-formularios">
                         <button id = "acceder" type = "submit" class = "botones-accion">Acceder</button>
                         <button type = "button" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id = "seccion-finalizar-compra" class = "no-mostrar">
+            <div class = "contenedor-finalizar-compra">
+                <h2 class = "h3-estilo">DATOS PARA EL ENVÍO</h2>
+                <form class = "formularios-usuarios formulario-finalizar-compra">
+                    <input type = "text" id = "nombre-finalizar-compra" name = "nombre"  maxlength="40" placeholder = "Nombre completo" class = "form-box" required />
+                    <input type = "text" id = "domicilio-finalizar-compra" name = "domicilio"  maxlength="40" placeholder = "Domicilio" class = "form-box" required />
+                    <input type = "text" id = "telefono-finalizar-compra" name = "telefono"  maxlength="40" placeholder = "Número de teléfono" class = "form-box" required />
+                    <input type = "text" id = "pais-finalizar-compra" name = "pais"  maxlength="40" placeholder = "País" class = "form-box" required />
+                    <input type = "text" id = "provincia-finalizar-compra" name = "provincia"  maxlength="40" placeholder = "Provincia" class = "form-box" required />
+                    <input type = "text" id = "localidad-finalizar-compra" name = "localidad"  maxlength="40" placeholder = "Localidad" class = "form-box" required />
+                    <div class = "contenedor-boton-formularios">
+                        <button id = "finalizar-compra" type = "submit" class = "botones-accion">Finalizar Compra</button>
                     </div>
                 </form>
             </div>

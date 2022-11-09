@@ -1,0 +1,36 @@
+[
+    {
+        "nombre": "Gabriela",
+        "apellido": "Meléndez",
+        "email": "gabymelendezch@gmail.com",
+        "contrasenia":"123456789"
+    },
+
+    {
+        "nombre": "Ana",
+        "apellido": "Rodríguez",
+        "email": "anitarodriguez@gmail.com",
+        "contrasenia":"987654321"
+    },
+
+    {
+        "nombre": "Juan",
+        "apellido": "Ordóñez",
+        "email": "juan.ordonez",
+        "contrasenia":"24680"
+    },
+
+    {
+        "nombre": "Micaela",
+        "apellido": "López",
+        "email": "micalopez@gmail.com",
+        "contrasenia":"13579"
+    },
+
+    {
+        "nombre": "Bernardo",
+        "apellido": "Fernández",
+        "email": "bernardo_fernandez@gmail.com",
+        "contrasenia":"12344321"
+    }
+]
