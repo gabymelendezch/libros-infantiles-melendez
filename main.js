@@ -101,6 +101,12 @@ function obtenerUsuarioLogIn () {
 
     if (verifUsuario === true) {
         console.log (`Hola ${usuarioLogIn.nombre}`);
+
+        // mostrar saludo usuario
+        const saludoUsuario = document.getElementById ("saludo-usuario");
+        saludoUsuario.className = ("mostrar");
+        saludoUsuario.innerText = `-- Hola ${usuarioLogIn.nombre} --`;
+
     }
                                          
     return usuarioLogIn;
@@ -109,23 +115,6 @@ function obtenerUsuarioLogIn () {
 let usuarioLogIn = obtenerUsuarioLogIn ();
 console.log (usuarioLogIn);
 console.log ("verifUsuario " + verifUsuario);
-
-
-// FUNCION obtener usuarios 
-function obtenerUsuarios () {
-    let usuarios = [];
-
-    const usuariosLS = localStorage.getItem ("usuarios");
-
-    if (usuariosLS) {
-        usuarios = JSON.parse (usuariosLS);
-    }
-
-    //const usuarios = JSON.parse(localStorage.getItem ("usuarios")) || [];
-
-    return usuarios;
-}
-let usuarios = obtenerUsuarios ();
 
 // FUNCION obtener carrito
 function obtenerCarrito () {
@@ -158,6 +147,22 @@ let items = obtenerItems ();
 // mostrar items en contenedor carrito
 infoItems = document.getElementById ("info-carrito");
 infoItems.innerText = `${items} productos`;
+
+// FUNCION obtener usuarios 
+function obtenerUsuarios () {
+    let usuarios = [];
+
+    const usuariosLS = localStorage.getItem ("usuarios");
+
+    if (usuariosLS) {
+        usuarios = JSON.parse (usuariosLS);
+    }
+
+    //const usuarios = JSON.parse(localStorage.getItem ("usuarios")) || [];
+
+    return usuarios;
+}
+let usuarios = obtenerUsuarios ();
 
 // FUNCION botón home
 function regresarAListaLibros (){
@@ -256,8 +261,11 @@ function iniciarSesion (){
 
 // FUNCION notificar usuario que ya inició sesión
 function alertUsuarioLog (){
+    const usuarioLogInLS = localStorage.getItem ("usuarioLogIn");
+    const usuarioLogIn = JSON.parse (usuarioLogInLS);
+
     Swal.fire ({
-        text: `Ya iniciaste sesión!`,
+        text: `Ya iniciaste sesión como ${usuarioLogIn.email}`,
         padding: "2em",
         color: "#444",
         confirmButtonText: "OK",
@@ -676,19 +684,30 @@ crearCuenta.addEventListener ("click", () => {
 const salir = document.getElementById ("a-cerrar-sesion");
 salir.addEventListener ("click", () => {
 
-    if (verifUsuario === false){
+    if (verifUsuario === true){
 
-        console.log ("no ha iniciado sesión");
-
-    } else {
-
-        console.log ("salió de su cuenta");
+        // SWEET ALERT notificar cierre de sesión
+        Swal.fire ({
+            text: `Acabas de cerrar sesión, nos vemos pronto =)`,
+            padding: "2em",
+            color: "#444",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#227C9D",
+        });  
 
         // remover key usuarioLogIn del localStorage
         localStorage.removeItem ("usuarioLogIn");
 
         // cambiar valor de la variable verifUsuario a false
         verifUsuario = false;
+
+        // no mostrar saludo usuario
+        const saludoUsuario = document.getElementById ("saludo-usuario");
+        saludoUsuario.className = ("no-mostrar");
+
+        // no mostrar sección finalizar compra
+        const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
+        seccionFinalizarCompra.className = "no-mostrar";
 
     }  
 })
@@ -1006,8 +1025,10 @@ botonAcceder.addEventListener ("click", (event) => {
                     // variable boolean true para sepa que el usuario ya está registrado
                     verifContrasenia = true;
 
-                    // saludar usuario
-                    console.log (`Hola ${usuario.nombre}`);
+                    // mostrar saludo usuario
+                    const saludoUsuario = document.getElementById ("saludo-usuario");
+                    saludoUsuario.className = ("mostrar");
+                    saludoUsuario.innerText = `-- Hola ${usuario.nombre} --`;
 
                     // guardar datos usuario en variable
                     const usuarioLogIn = usuario;
