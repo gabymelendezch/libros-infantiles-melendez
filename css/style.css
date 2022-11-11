@@ -88,6 +88,11 @@ p {
 
 .p-footer {
     font-size: 12px;
+    font-weight: 500;
+}
+
+.p-alert{
+    font-size: 14px;
 }
 
 

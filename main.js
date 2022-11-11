@@ -123,13 +123,8 @@ console.log (verifIniciarCompra);
 
 // FUNCION obtener carrito
 function obtenerCarrito () {
-    let carrito = [];
 
-    const carritoLS = localStorage.getItem ("carrito");
-
-    if (carritoLS) {
-        carrito = JSON.parse(carritoLS);
-    }
+    const carrito = JSON.parse(localStorage.getItem ("carrito")) || [];
 
     return carrito;
 }
@@ -137,13 +132,8 @@ let carrito = obtenerCarrito ();
 
 // FUNCION obtener items agregados
 function obtenerItems () {
-    let items = 0;
 
-    const itemsLS = localStorage.getItem ("items");
-
-    if (itemsLS) {
-        items = JSON.parse(itemsLS);
-    }
+    const items = JSON.parse(localStorage.getItem ("items")) || [];
 
     return items;
 }
@@ -155,15 +145,8 @@ infoItems.innerText = `${items} productos`;
 
 // FUNCION obtener usuarios 
 function obtenerUsuarios () {
-    let usuarios = [];
 
-    const usuariosLS = localStorage.getItem ("usuarios");
-
-    if (usuariosLS) {
-        usuarios = JSON.parse (usuariosLS);
-    }
-
-    //const usuarios = JSON.parse(localStorage.getItem ("usuarios")) || [];
+    const usuarios = JSON.parse(localStorage.getItem ("usuarios")) || [];
 
     return usuarios;
 }
@@ -619,9 +602,8 @@ function irACarrito (){
     }
 }
 
-// FUNCION finalizar compra
-function finalizarCompra (){
-    console.log ("finalizar compra");
+// FUNCION iniciar compra
+function iniciarCompra (){
 
     // mostrar sección detalle carrito
     const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
@@ -659,8 +641,6 @@ function finalizarCompra (){
     document.getElementById ("apellido").value = "";
     document.getElementById ("email").value = "";
     document.getElementById ("contrasenia").value = "";
-
-
 }
 
 // ******************** EVENTOS ******************** //
@@ -898,7 +878,7 @@ const botonIniciarCompra = document.getElementById ("boton-iniciar-compra");
 botonIniciarCompra.addEventListener ("click", () => {
 
     // verificar si la persona inicio sesión - SINTAXIS AVANZADA
-    (verifUsuario === false) ? iniciarSesion() : finalizarCompra();
+    (verifUsuario === false) ? iniciarSesion() : iniciarCompra();
     verifIniciarCompra = true;
 
 })
@@ -1084,7 +1064,7 @@ botonAcceder.addEventListener ("click", (event) => {
 
                         // mostrar carrito de compras y detalle de compra
                         irACarrito ();
-                        finalizarCompra ();
+                        iniciarCompra ();
                     }
                     
                 } else {
@@ -1142,4 +1122,104 @@ linkRegistrate.addEventListener ("click", () => {
     
     // llamar función registrar usuario que lleva al formulario
     registrarUsuario ();
+})
+
+// EVENTO click botón finalizar compra
+const finalizarCompra = document.getElementById ("finalizar-compra");
+finalizarCompra.addEventListener ("click", (event) => {
+    
+    // detener el evento
+    event.preventDefault ();
+
+    // obtener los datos del input
+    const nombre = document.getElementById ("nombre-finalizar-compra").value;
+    const domicilio = document.getElementById ("domicilio-finalizar-compra").value;
+    const telefono = document.getElementById ("telefono-finalizar-compra").value;
+    const pais = document.getElementById ("pais-finalizar-compra").value;
+    const provincia = document.getElementById ("provincia-finalizar-compra").value;
+    const localidad = document.getElementById ("localidad-finalizar-compra").value;
+    const codigoPostal = document.getElementById ("codigo-finalizar-compra").value;
+
+
+    // verificar si los campos están completos 
+    if (nombre === "" || domicilio === "" || telefono === "" || pais === "" || provincia === "" || localidad === ""){
+
+        // SWEET ALERT si no se han completado todos los inputs
+        Swal.fire ({
+            text: `Por favor, complete todos los campos.`,
+            padding: "2em",
+            color: "#444",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#227C9D",
+        });  
+
+    } else {
+
+        // // no mostrar detalle carrito ni sección finalizar compra
+        // const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+        // seccionDetalleCarrito.className = "no-mostrar";
+
+        // const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
+        // seccionFinalizarCompra.className = "no-mostrar";
+
+        // mostrar sección información de compra 
+        console.log (` ${nombre} ${domicilio} ${telefono} ${pais} ${provincia} ${localidad} ${codigoPostal}`)  
+
+        // SWEET ALERT detallando la info
+        Swal.fire({
+            title: `<h2 class = "h2-titulo-centrado" style = "margin: 10px;">Datos de Envío</h2>`, 
+            html: `<p class = "p-alert"><b>Nombre:</b> ${nombre} </p>
+                    <p class = "p-alert"><b>Domicilio:</b> ${domicilio} </p>
+                    <p class = "p-alert"><b>Teléfono:</b> ${telefono} </p>
+                    <p class = "p-alert"><b>País:</b> ${pais} --- <b>Provincia:</b> ${provincia} </p>
+                    <p class = "p-alert"><b>Localidad:</b> ${localidad} --- <b>Código postal:</b> ${codigoPostal}</p>`, 
+            
+            confirmButtonText: "Confirmar", 
+            confirmButtonColor: "#227C9D",
+            showCancelButton: true,
+            cancelButtonText: "Modificar",
+            cancelButtonColor: "#227C9D",
+        })
+        .then ((result) => {
+
+            if (result.isConfirmed) {
+
+                // limpiar inputs
+                document.getElementById ("nombre-finalizar-compra").value = "";
+                document.getElementById ("domicilio-finalizar-compra").value = "";
+                document.getElementById ("telefono-finalizar-compra").value = "";
+                document.getElementById ("pais-finalizar-compra").value = "";
+                document.getElementById ("provincia-finalizar-compra").value = "";
+                document.getElementById ("localidad-finalizar-compra").value = "";
+                document.getElementById ("codigo-finalizar-compra").value = "";
+                
+                Swal.fire ({
+                    title: `<h2 class = "h2-titulo-centrado" style = "margin: 0px;">¡Excelente!</h2>`,
+                    text: `Confirmamos tu compra, gracias por elegirnos.`,
+                    padding: "2em",
+                    color: "#444",
+                    confirmButtonText: "OK",
+                    confirmButtonColor: "#227C9D",
+                });
+
+                // // remover key carrito del localStorage
+                // localStorage.removeItem ("carrito");
+
+                // // remover key items (cantidad) del localStorage
+                // localStorage.removeItem ("items");
+
+                // // llamar a función obtenerItems ()
+                // let items = obtenerItems ()
+
+                // // mostrar items en contenedor carrito
+                // const infoItems = document.getElementById ("info-carrito");
+                // infoItems.innerText = `${items} productos`;
+
+                // mostrar libros disponibles HOME
+                regresarAListaLibros ();
+
+                // verificar si el stock de libro queda disminuido ??
+            }
+        });
+    }
 })
