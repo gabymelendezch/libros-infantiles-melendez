@@ -418,3 +418,83 @@ p {
     align-items: start;
     margin-top: 30px;
 }
+
+
+
+/******************** RESPONSIVE ********************/
+
+/* ----- 1350 ----- */
+@media only screen and (max-width: 1350px) {
+    main {
+        margin-left: 50px;
+        margin-right: 50px; 
+    }
+}
+
+/* ----- 1200 ----- */
+@media only screen and (max-width: 1200px) {
+
+    /* seccion lista libros disponibles */
+    .grid-wrapper{
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 15px;
+    }
+}
+
+/* ----- 1O25 ----- */
+@media only screen and (max-width: 1025px) {
+
+    main {
+        margin-left: 10px;
+        margin-right: 10px; 
+    }
+
+    /* seccion lista libros disponibles */
+    .grid-wrapper{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ----- 768 ----- */
+@media only screen and (max-width: 768px) {
+
+    /* seccion lista libros disponibles */
+    .h2-titulo-libro {
+        font-size: 13px;
+        margin-bottom: 0px;
+    } 
+
+    .libro a img {
+        width: 120px;
+        height: auto;
+    }
+}
+
+/* ----- 500----- */
+@media only screen and (max-width: 500px) {
+
+    /* seccion lista libros disponibles */
+    .grid-wrapper{
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 15px;
+    }
+
+    .libro a img {
+        width: 150px;
+    }
+}
+
+/* ----- 380 ----- */
+@media only screen and (max-width: 380px) {
+
+    /* seccion lista libros disponibles */
+    .grid-wrapper{
+        grid-gap: 10px;
+    }
+
+    .libro a img {
+        width: 120px;
+    }
+}
+
+/* ----- 350 ----- */

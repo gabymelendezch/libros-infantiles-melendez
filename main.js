@@ -1,13 +1,16 @@
 //localStorage.clear ();
 
 // variables globales
+let verifUsuario = false;
+let verifDatos = false;
+let verifContrasenia = false;
+let verifIniciarCompra = false;
+
 let unidadesLibroAComprar = 0;
 let itemsAgregados = 0;
 let totalAPagar = 0;
 let subtotalItem = 0;
-let verifUsuario = false;
-let verifDatos = false;
-let verifContrasenia = false;
+
 let librosJSON = [];
 
 // accedo a los libros guardados en libros.json
@@ -97,6 +100,7 @@ function obtenerUsuarioLogIn () {
     if (usuarioLogInLS !== null) {
         usuarioLogIn = JSON.parse (usuarioLogInLS);
         verifUsuario = true;
+        verifIniciarCompra = true;
     }
 
     if (verifUsuario === true) {
@@ -115,6 +119,7 @@ function obtenerUsuarioLogIn () {
 let usuarioLogIn = obtenerUsuarioLogIn ();
 console.log (usuarioLogIn);
 console.log ("verifUsuario " + verifUsuario);
+console.log (verifIniciarCompra);
 
 // FUNCION obtener carrito
 function obtenerCarrito () {
@@ -145,7 +150,7 @@ function obtenerItems () {
 let items = obtenerItems ();
 
 // mostrar items en contenedor carrito
-infoItems = document.getElementById ("info-carrito");
+const infoItems = document.getElementById ("info-carrito");
 infoItems.innerText = `${items} productos`;
 
 // FUNCION obtener usuarios 
@@ -372,7 +377,6 @@ function buscarLibroPorTitulo(titulo){
                         color: "#444",
                         confirmButtonText: "Entendido",
                         confirmButtonColor: "#227C9D",
-                        //timer: 2000,
                     });   
                     
                 } else {
@@ -384,7 +388,7 @@ function buscarLibroPorTitulo(titulo){
                     items = items + unidadesLibroAComprar;
 
                     // indicar número de items en carrito
-                    infoItems = document.getElementById ("info-carrito");
+                    const infoItems = document.getElementById ("info-carrito");
                     infoItems.innerText = `${items} productos`;
                     
                     // SWEET ALERT item agregado a carrito
@@ -540,67 +544,79 @@ function mostrarResultadoBusqueda (id){
 // FUNCION ir a carrito de compras
 function irACarrito (){
 
-    totalAPagar = 0;
+    if (items == 0){
 
-    // mostrar sección detalle carrito
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
-    seccionDetalleCarrito.className = "mostrar";
+        // SWEET ALERT el carrito está vacío
+        Swal.fire ({
+            text: `El carrito está vacío`,
+            padding: "2em",
+            color: "#444",
+            showConfirmButton: false,
+            timer: 1000
+        }); 
 
-    // vaciar div contenedor detalle carrito
-    const contenedorDetalleCarrito = document.getElementById ("contenedor-detalle-carrito");
-    contenedorDetalleCarrito.innerHTML = `<h3 class = "h3-estilo">DETALLE COMPRA</h3>`;
+    } else {
 
-    // no mostrar
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
-    seccionLibrosDisponibles.className = "no-mostrar";
+        totalAPagar = 0;
 
-    const seccionFicha = document.getElementById ("seccion-detalle-libro");
-    seccionFicha.className = "no-mostrar";
+        // mostrar sección detalle carrito
+        const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+        seccionDetalleCarrito.className = "mostrar";
 
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
-    seccionLibrosAutor.className = "no-mostrar";
+        // vaciar div contenedor detalle carrito
+        const contenedorDetalleCarrito = document.getElementById ("contenedor-detalle-carrito");
+        contenedorDetalleCarrito.innerHTML = `<h3 class = "h3-estilo">DETALLE COMPRA</h3>`;
 
-    const seccionBusqueda = document.getElementById ("seccion-busqueda");
-    seccionBusqueda.className = "no-mostrar";
+        // no mostrar
+        const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+        seccionLibrosDisponibles.className = "no-mostrar";
 
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
-    seccionIniciarSesion.className = "no-mostrar";
+        const seccionFicha = document.getElementById ("seccion-detalle-libro");
+        seccionFicha.className = "no-mostrar";
 
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
-    seccionRegistroUsuario.className = "no-mostrar";
+        const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+        seccionLibrosAutor.className = "no-mostrar";
 
-    const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
-    seccionFinalizarCompra.className = "no-mostrar";
+        const seccionBusqueda = document.getElementById ("seccion-busqueda");
+        seccionBusqueda.className = "no-mostrar";
+
+        const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+        seccionIniciarSesion.className = "no-mostrar";
+
+        const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+        seccionRegistroUsuario.className = "no-mostrar";
+
+        const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
+        seccionFinalizarCompra.className = "no-mostrar";
+
+        for (const item of carrito){
+
+            subtotalItem = parseInt (item.cantidad * item.precio);
+            totalAPagar = totalAPagar + subtotalItem;
     
-    // ver carrito
-    for (const item of carrito){
-
-        subtotalItem = parseInt (item.cantidad * item.precio);
-        totalAPagar = totalAPagar + subtotalItem;
-
-        const div = document.createElement ("div");
-        div.className = "detalle-compra-por-libro";
-        div.innerHTML = `<img src = "${item.imagen}" class = "img-carrito"/>
-                        <p class = "p-carrito">${item.titulo}<p>
-                        <p class = "p-carrito">${item.cantidad} unidad/es </p>
-                        <p>$${subtotalItem}`;
-
-        contenedorDetalleCarrito.append (div);
+            const div = document.createElement ("div");
+            div.className = "detalle-compra-por-libro";
+            div.innerHTML = `<img src = "${item.imagen}" class = "img-carrito"/>
+                            <p class = "p-carrito">${item.titulo}<p>
+                            <p class = "p-carrito">${item.cantidad} unidad/es </p>
+                            <p>$${subtotalItem}`;
+    
+            contenedorDetalleCarrito.append (div);
+        }
+    
+        const pTotalAPagar = document.getElementById ("div-total-pagar");
+        pTotalAPagar.innerHTML = `<p class = "p-total"><strong>TOTAL A PAGAR </strong></p>
+                                    <p>$${totalAPagar}</p>`;
+    
+        seccionDetalleCarrito.append (contenedorDetalleCarrito);
+        seccionDetalleCarrito.append (pTotalAPagar);
+    
+        // variable botón 
+        const botonesCarrito = document.getElementById ("botones-carrito");
+    
+        botonesCarrito.before (contenedorDetalleCarrito);
+        botonesCarrito.before (pTotalAPagar);
     }
-
-    const pTotalAPagar = document.getElementById ("div-total-pagar");
-    pTotalAPagar.innerHTML = `<p class = "p-total"><strong>TOTAL A PAGAR </strong></p>
-                                <p>$${totalAPagar}</p>`;
-
-    seccionDetalleCarrito.append (contenedorDetalleCarrito);
-    seccionDetalleCarrito.append (pTotalAPagar);
-
-    // variable botón 
-    const botonesCarrito = document.getElementById ("botones-carrito");
-
-    botonesCarrito.before (contenedorDetalleCarrito);
-    botonesCarrito.before (pTotalAPagar);
-
 }
 
 // FUNCION finalizar compra
@@ -688,11 +704,11 @@ salir.addEventListener ("click", () => {
 
         // SWEET ALERT notificar cierre de sesión
         Swal.fire ({
-            text: `Acabas de cerrar sesión, nos vemos pronto =)`,
+            text: `Acabas de cerrar sesión, nos vemos pronto.`,
             padding: "2em",
             color: "#444",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#227C9D",
+            showConfirmButton: false,
+            timer: 2000
         });  
 
         // remover key usuarioLogIn del localStorage
@@ -701,6 +717,9 @@ salir.addEventListener ("click", () => {
         // cambiar valor de la variable verifUsuario a false
         verifUsuario = false;
 
+        // cambiar valor de la variable verifIniciarCompra a false
+        verifIniciarCompra = false;
+
         // no mostrar saludo usuario
         const saludoUsuario = document.getElementById ("saludo-usuario");
         saludoUsuario.className = ("no-mostrar");
@@ -708,6 +727,19 @@ salir.addEventListener ("click", () => {
         // no mostrar sección finalizar compra
         const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
         seccionFinalizarCompra.className = "no-mostrar";
+
+        // // remover key items (cantidad) del localStorage
+        // localStorage.removeItem ("items");
+
+        // // llamar a función obtenerItems 
+        // let items = obtenerItems ()
+
+        // // mostrar items en contenedor carrito
+        // const infoItems = document.getElementById ("info-carrito");
+        // infoItems.innerText = `${items} productos`;
+
+        // mostrar libros disponibles HOME
+        regresarAListaLibros ();
 
     }  
 })
@@ -865,8 +897,9 @@ iconoCarrito.addEventListener ("click", () => {
 const botonIniciarCompra = document.getElementById ("boton-iniciar-compra");
 botonIniciarCompra.addEventListener ("click", () => {
 
-    // verificar si la persona inicio sesión o se registró - SINTAXIS AVANZADA
+    // verificar si la persona inicio sesión - SINTAXIS AVANZADA
     (verifUsuario === false) ? iniciarSesion() : finalizarCompra();
+    verifIniciarCompra = true;
 
 })
 
@@ -1030,12 +1063,30 @@ botonAcceder.addEventListener ("click", (event) => {
                     saludoUsuario.className = ("mostrar");
                     saludoUsuario.innerText = `-- Hola ${usuario.nombre} --`;
 
-                    // guardar datos usuario en variable
+                    // guardar datos usuario logueado en variable usuarioLogIn
                     const usuarioLogIn = usuario;
+
+                    // // guardar productos seleccionados en un carrito personal
+
+                    // // remover key carrito del localStorage
+                    // localStorage.removeItem ("carrito");
 
                     // cargar usuario al localStorage
                     localStorage.setItem ("usuarioLogIn", JSON.stringify(usuarioLogIn));
 
+                    // verificar si se hizo click en botón iniciar compra
+                    if (verifIniciarCompra === false){
+
+                        // mostrar libros disponibles HOME
+                        regresarAListaLibros ();
+
+                    } else {
+
+                        // mostrar carrito de compras y detalle de compra
+                        irACarrito ();
+                        finalizarCompra ();
+                    }
+                    
                 } else {
 
                     // SWEET ALERT contraseña incorrecta
