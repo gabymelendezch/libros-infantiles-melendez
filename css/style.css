@@ -288,7 +288,7 @@ p {
 
 .precio-libro{
     margin-left: 100px;
-    padding-top: 60px;
+    padding-top: 15px;
 }
 
 .input-cantidad-libro{
@@ -466,7 +466,6 @@ p {
     /* logo */
     .animacion-logo {
         width: 150px;
-        height: auto;
     }
     
     /* formulario buscar */
@@ -485,14 +484,39 @@ p {
         font-size: 12px;
     }
 
-    /* seccion lista libros disponibles */
+    /* sección lista libros disponibles */
     .grid-wrapper{
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* carrito */
+    #contenedor-detalle-carrito{
+        margin-inline: 15px;
+    }
+
+    .total-pagar {
+        margin-inline: 15px;
+    }
+
+    /* sección finalizar compra */
+    .contenedor-finalizar-compra {
+        margin-inline: 15px;
+    }
+
+    .form-box {
+        width: 300px;
     }
 }
 
 /* ----- 768 ----- */
 @media only screen and (max-width: 768px) {
+    .h2-titulo-azul {
+        font-size: 22px;
+    }
+
+    .h3-estilo {
+        font-size: 18px;
+    }
 
     /* contenedor nav logo */
     .contenedor-nav-logo {
@@ -508,14 +532,68 @@ p {
 
     .libro a img {
         width: 120px;
-        height: auto;
     }
+
+    /* seccion detalle libro */
+    .contenedor-imagen-info {
+        margin-inline: 30px;
+        margin-bottom: 30px;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .libro-img img {
+        width: 200px;
+    }
+
+    .precio-libro {
+        margin-left: 45px;
+    }
+
+    /* carrito */
+    #contenedor-detalle-carrito {
+        width: 90%;
+        margin-inline: 15px;
+        padding-inline: 30px;
+    }
+
+    .total-pagar {
+        width: 90%;
+        margin-inline: 15px;
+        padding-inline: 30px;
+    }
+
+    #botones-carrito {
+        width: 90%;
+    }
+
+    /* sección finalizar compra */
+    .contenedor-finalizar-compra {
+        width: 80%;
+        padding: 30px;
+    }
+
 }
 
 /* ----- 500----- */
 @media only screen and (max-width: 500px) {
     h1 {
         font-size: 30px;
+    }
+
+    .h2-titulo-azul {
+        font-size: 20px;
+    }
+
+    .h3-estilo {
+        font-size: 18px;
+    }
+
+    /* botones acción */
+    .botones-accion {
+        display: block;
+        padding: 8px 12px;
+        font-size: 12px;
     }
 
     /* formulario buscar */
@@ -531,6 +609,62 @@ p {
 
     .libro a img {
         width: 150px;
+    }
+
+    /* seccion detalle libro */
+    .contenedor-imagen-info {
+        margin-inline: 0px;
+    }
+
+    .libro-img img {
+        width: 130px;
+    }
+
+    .precio-libro {
+        margin-left: 30px;
+        margin-right: 15px;
+    }
+
+    .precio-libro p {
+        font-size: 14px;
+    }
+
+    .detalle-libro {
+        margin-inline: 15px;
+    }
+
+    .detalle-libro p {
+        font-size: 14px;
+    }
+
+    /* carrito */
+    #contenedor-detalle-carrito {
+        padding-inline: 15px;
+    }
+
+    .p-carrito {
+        width: 200px;
+        margin-right: 10px;
+        text-align: center;
+    }
+
+    .img-carrito {
+        width: 70px;
+        padding-right: 10px;
+    }
+
+    .total-pagar {
+        padding-inline: 15px;
+    }
+
+    .p-total {
+        margin-right: 30px;
+    }
+
+    /* sección finalizar compra */
+    .contenedor-finalizar-compra {
+        width: 90%;
+        padding: 20px;
     }
 
     /* formularios registro - inicio de sesión */
@@ -553,5 +687,3 @@ p {
         width: 120px;
     }
 }
-
-/* ----- 350 ----- */

@@ -138,7 +138,6 @@ function obtenerItems () {
     return items;
 }
 let items = obtenerItems ();
-console.log (items);
 
 // mostrar items en contenedor carrito
 const infoItems = document.getElementById ("info-carrito");
@@ -1200,7 +1199,7 @@ finalizarCompra.addEventListener ("click", (event) => {
                 localStorage.removeItem ("items");
 
                 // llamar a función obtenerItems ()
-                let items = obtenerItems ()
+                items = obtenerItems ();
 
                 // mostrar items en contenedor carrito
                 const infoItems = document.getElementById ("info-carrito");
@@ -1209,7 +1208,6 @@ finalizarCompra.addEventListener ("click", (event) => {
                 // mostrar libros disponibles HOME
                 regresarAListaLibros ();
 
-                // verificar si el stock de libro queda disminuido ??
             }
         });
     }
