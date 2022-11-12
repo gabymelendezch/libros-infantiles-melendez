@@ -133,11 +133,12 @@ let carrito = obtenerCarrito ();
 // FUNCION obtener items agregados
 function obtenerItems () {
 
-    const items = JSON.parse(localStorage.getItem ("items")) || [];
+    const items = JSON.parse(localStorage.getItem ("items")) || 0;
 
     return items;
 }
 let items = obtenerItems ();
+console.log (items);
 
 // mostrar items en contenedor carrito
 const infoItems = document.getElementById ("info-carrito");
@@ -1155,16 +1156,6 @@ finalizarCompra.addEventListener ("click", (event) => {
 
     } else {
 
-        // // no mostrar detalle carrito ni sección finalizar compra
-        // const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
-        // seccionDetalleCarrito.className = "no-mostrar";
-
-        // const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
-        // seccionFinalizarCompra.className = "no-mostrar";
-
-        // mostrar sección información de compra 
-        console.log (` ${nombre} ${domicilio} ${telefono} ${pais} ${provincia} ${localidad} ${codigoPostal}`)  
-
         // SWEET ALERT detallando la info
         Swal.fire({
             title: `<h2 class = "h2-titulo-centrado" style = "margin: 10px;">Datos de Envío</h2>`, 
@@ -1202,18 +1193,18 @@ finalizarCompra.addEventListener ("click", (event) => {
                     confirmButtonColor: "#227C9D",
                 });
 
-                // // remover key carrito del localStorage
-                // localStorage.removeItem ("carrito");
+                // remover key carrito del localStorage
+                localStorage.removeItem ("carrito");
 
-                // // remover key items (cantidad) del localStorage
-                // localStorage.removeItem ("items");
+                // remover key items (cantidad) del localStorage
+                localStorage.removeItem ("items");
 
-                // // llamar a función obtenerItems ()
-                // let items = obtenerItems ()
+                // llamar a función obtenerItems ()
+                let items = obtenerItems ()
 
-                // // mostrar items en contenedor carrito
-                // const infoItems = document.getElementById ("info-carrito");
-                // infoItems.innerText = `${items} productos`;
+                // mostrar items en contenedor carrito
+                const infoItems = document.getElementById ("info-carrito");
+                infoItems.innerText = `${items} productos`;
 
                 // mostrar libros disponibles HOME
                 regresarAListaLibros ();

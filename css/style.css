@@ -448,10 +448,41 @@ p {
 
 /* ----- 1O25 ----- */
 @media only screen and (max-width: 1025px) {
+    nav {
+        font-size: 13px;
+    }
 
     main {
         margin-left: 10px;
         margin-right: 10px; 
+    }
+
+    /* contenedor nav clientes */
+    .contenedor-nav-clientes {
+        font-size: 12px;
+        padding-right: 30px;
+    }
+
+    /* logo */
+    .animacion-logo {
+        width: 150px;
+        height: auto;
+    }
+    
+    /* formulario buscar */
+    .estilo-buscar-box {
+        width: 270px;
+        font-size: 12px;
+    }
+
+    .estilo-select {
+        width: 70px;
+        font-size: 12px;
+    }
+
+    #boton-buscar {
+        width: 70px;
+        font-size: 12px;
     }
 
     /* seccion lista libros disponibles */
@@ -462,6 +493,12 @@ p {
 
 /* ----- 768 ----- */
 @media only screen and (max-width: 768px) {
+
+    /* contenedor nav logo */
+    .contenedor-nav-logo {
+        flex-direction: column;
+        gap: 20px
+    }
 
     /* seccion lista libros disponibles */
     .h2-titulo-libro {
@@ -477,6 +514,14 @@ p {
 
 /* ----- 500----- */
 @media only screen and (max-width: 500px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    /* formulario buscar */
+    .estilo-buscar-box {
+        width: 180px; 
+    }
 
     /* seccion lista libros disponibles */
     .grid-wrapper{
@@ -486,6 +531,13 @@ p {
 
     .libro a img {
         width: 150px;
+    }
+
+    /* formularios registro - inicio de sesión */
+    .form-box {
+        width: 250px;
+        margin-bottom: 15px;
+        padding-left: 10px;
     }
 }
 
