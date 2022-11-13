@@ -1,6 +1,9 @@
 //localStorage.clear ();
 
-// variables globales
+// ******************** VARIABLES GLOBALES ******************** //
+
+let libros = [];
+
 let verifUsuario = false;
 let verifDatos = false;
 let verifContrasenia = false;
@@ -11,84 +14,73 @@ let itemsAgregados = 0;
 let totalAPagar = 0;
 let subtotalItem = 0;
 
-let librosJSON = [];
 
-// accedo a los libros guardados en libros.json
-// fetch ("/libros.json")
-//     .then ( (response) => {
-//         return response.json();
-//     }).then ( (libros) => {
-//         console.log (libros);
-//         librosJSON = libros;
+// ******************** FUNCIONES ******************** //
 
-//         // MOSTRAR en HOME los libros disponibles //
-//         const listaLibros = document.getElementById ("lista-libros");
+// FUNCION obtener libros disponibles usando libros.json
+function librosDisponibles () {
 
-//         for (const libro of librosJSON){
+    const librosInLS = localStorage.getItem ("libros");
 
-//             if (libro.stockLibro > 0){
-
-//                 let div = document.createElement ("div");
-//                 div.className = "contenedor-por-libro";
-
-//                 let li = document.createElement ("li");
-//                 li.className = "libro";
-
-//                 let linkLibro = document.createElement ("a");
-//                 linkLibro.className = "estilo-link-libros";
-//                 linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
-//                 linkLibro.innerHTML = `<img src = "${libro.img}"/>
-//                                     <h2>${libro.titulo}</h2>`
-
-//                 let linkAutor = document.createElement ("a");
-//                 linkAutor.className = "estilo-link-libros";
-//                 linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };    
-//                 linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
-                
-//                 li.append(linkLibro);
-//                 li.append(linkAutor);
-//                 div.append (li);
-//                 listaLibros.append(div);  
-//             }
-//         }
-// });
-
-
-// accedo a los libros (array) en localStorage y los guardo en variable libros 
-const libros = JSON.parse (localStorage.getItem ("libros"));
-
-// MOSTRAR libros disponibles en HOME
-const listaLibros = document.getElementById ("lista-libros");
-
-for (const libro of libros){
-
-    if (libro.stockLibro > 0){
-
-        let div = document.createElement ("div");
-        div.className = "contenedor-por-libro";
-
-        let li = document.createElement ("li");
-        li.className = "libro";
-
-        let linkLibro = document.createElement ("a");
-        linkLibro.className = "estilo-link-libros";
-        linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
-        linkLibro.innerHTML = `<img src = "${libro.img}"/>
-                            <h2 class = "h2-titulo-libro">${libro.titulo}</h2>`
-
-        let linkAutor = document.createElement ("a");
-        linkAutor.className = "estilo-link-libros";
-        linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };    
-        linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
+    if (librosInLS === null) {
         
-        li.append(linkLibro);
-        li.append(linkAutor);
-        div.append (li);
-        listaLibros.append(div);  
+        fetch ("/libros.json")
+            .then ( (response) => {
+
+                return response.json();
+
+            }).then ( (data) => {
+
+                const infoLibros = data;
+                localStorage.setItem ("libros", JSON.stringify (infoLibros));
+
+                libros = JSON.parse (localStorage.getItem ("libros"));
+                mostrarLibrosDisponibles ();
+        });
+
+    } else {
+
+        libros = JSON.parse (localStorage.getItem ("libros"));
+        mostrarLibrosDisponibles ();
+
     }
 }
-    
-// ******************** FUNCIONES ******************** //
+
+librosDisponibles ();
+
+// FUNCION mostrar libros disponibles en HOME
+function mostrarLibrosDisponibles () {
+
+    const listaLibros = document.getElementById ("lista-libros");
+
+    for (const libro of libros){
+
+        if (libro.stockLibro > 0){
+
+            let div = document.createElement ("div");
+            div.className = "contenedor-por-libro";
+
+            let li = document.createElement ("li");
+            li.className = "libro";
+
+            let linkLibro = document.createElement ("a");
+            linkLibro.className = "estilo-link-libros";
+            linkLibro.onclick = function () { buscarLibroPorTitulo(libro.titulo) };
+            linkLibro.innerHTML = `<img src = "${libro.img}"/>
+                                <h2 class = "h2-titulo-libro">${libro.titulo}</h2>`
+
+            let linkAutor = document.createElement ("a");
+            linkAutor.className = "estilo-link-libros";
+            linkAutor.onclick = function () { buscarLibrosPorAutor(libro.autor) };    
+            linkAutor.innerHTML = `<p class = "autor-libro">${libro.autor}</p>`
+            
+            li.append(linkLibro);
+            li.append(linkAutor);
+            div.append (li);
+            listaLibros.append(div);  
+        }
+    }
+}
 
 // FUNCION obtener usuario log in
 function obtenerUsuarioLogIn () {
@@ -114,12 +106,7 @@ function obtenerUsuarioLogIn () {
     }
                                          
     return usuarioLogIn;
-
 }
-let usuarioLogIn = obtenerUsuarioLogIn ();
-console.log (usuarioLogIn);
-console.log ("verifUsuario " + verifUsuario);
-console.log (verifIniciarCompra);
 
 // FUNCION obtener carrito
 function obtenerCarrito () {
@@ -311,7 +298,7 @@ function buscarLibroPorTitulo(titulo){
                     <input type = "number" id = "cantidad-libro" name = "cantidad-libro" value = "1" min = "1" onchange = valorInput() class = "input-cantidad-libro">
                     <p class = "precio">AR$ ${libro.precio}</p>
                     <div id= "botones" class = "contenedor-botones">
-                        <button type = "button" class = "botones-accion" onclick = regresarAListaLibros()>Home</button>
+                        <button type = "button" class = "botones-accion" onclick = "regresarAListaLibros()">Home</button>
                     </div>
                 </div>
             </div>
@@ -581,6 +568,7 @@ function irACarrito (){
             div.className = "detalle-compra-por-libro";
             div.innerHTML = `<img src = "${item.imagen}" class = "img-carrito"/>
                             <p class = "p-carrito">${item.titulo}<p>
+                            <a class = "estilo-link-libros boton-eliminar" onclick = "eliminarItemCarrito('${item.titulo}', '${item.cantidad}')"><i class="fa-solid fa-x fa-2xs"></i></a>
                             <p class = "p-carrito">${item.cantidad} unidad/es </p>
                             <p>$${subtotalItem}`;
     
@@ -599,6 +587,53 @@ function irACarrito (){
     
         botonesCarrito.before (contenedorDetalleCarrito);
         botonesCarrito.before (pTotalAPagar);
+    }
+}
+
+// FUNCION eliminar item del carrito
+function eliminarItemCarrito(titulo, unidades){
+
+    // buscar titulo en array libros
+    for (const libro of libros) {
+
+        if (libro.titulo === titulo) {
+                
+            // agregar stock de vuelta
+            libro.stockLibro = libro.stockLibro + parseInt (unidades);
+
+            // guardar array libros en localStorage
+            localStorage.setItem ("libros", JSON.stringify (libros));
+
+            // modificar cantidad items navbar y guardar en localStorage
+            items = items - unidades;
+            localStorage.setItem ("items", JSON.stringify (items));
+
+            // mostrar items actualizados en contenedor carrito
+            const infoItems = document.getElementById ("info-carrito");
+            infoItems.innerText = `${items} productos`;
+
+            // encontrar índice de libro a eliminar
+            for (const libroCarrito of carrito) {
+
+                if (libroCarrito.titulo === titulo){
+
+                    const index = carrito.indexOf (libroCarrito);
+                    carrito.splice (index, 1);
+                    console.log (index);
+                }
+            }
+        
+            // guardar array carrito en localStorage
+            localStorage.setItem ("carrito", JSON.stringify (carrito));
+
+            // renderizar sección detalle carrito
+            irACarrito ();
+
+            // mostrar sección libros disponobles si no hay items en el carrito
+            if (items === 0) {
+                regresarAListaLibros ();
+            }   
+        }
     }
 }
 
@@ -708,179 +743,10 @@ salir.addEventListener ("click", () => {
         const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
         seccionFinalizarCompra.className = "no-mostrar";
 
-        // // remover key items (cantidad) del localStorage
-        // localStorage.removeItem ("items");
-
-        // // llamar a función obtenerItems 
-        // let items = obtenerItems ()
-
-        // // mostrar items en contenedor carrito
-        // const infoItems = document.getElementById ("info-carrito");
-        // infoItems.innerText = `${items} productos`;
-
         // mostrar libros disponibles HOME
         regresarAListaLibros ();
 
     }  
-})
-
-// EVENTO click en botón buscar
-const botonBuscar = document.getElementById ("boton-buscar");
-
-botonBuscar.addEventListener ("click", () => {
-
-    let verifSinResultados = 0;
-    let arrayVerifId = [];
-
-    // limpiar sección 
-    const listaResultadoBusqueda = document.getElementById ("libros-por-busqueda");
-    listaResultadoBusqueda.innerHTML = "";
-
-    // mostrar sección búsqueda
-    const seccionBusqueda = document.getElementById ("seccion-busqueda");
-    seccionBusqueda.className = "mostrar";
-
-    // no mostrar
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
-    seccionLibrosDisponibles.className = "no-mostrar";
-
-    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
-    seccionDetalleLibro.className = "no-mostrar";
-
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
-    seccionLibrosAutor.className = "no-mostrar";
-
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
-    seccionDetalleCarrito.className = "no-mostrar";
-
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
-    seccionIniciarSesion.className = "no-mostrar";
-
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
-    seccionRegistroUsuario.className = "no-mostrar";
-
-    const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
-    seccionFinalizarCompra.className = "no-mostrar";
-
-    // obtener value input box
-    const inputBuscarBox = document.getElementById ("buscar-box");
-    const arrayBuscarValue = inputBuscarBox.value.toUpperCase().split(" ");
-
-    inputBuscarBox.value = "";
-    inputBuscarBox.placeholder = "Ingresar título, autor, editorial o palabra clave";
-    
-    // obtener value option
-    const inputBuscarPor = document.getElementById ("buscar-por");
-    const buscarPor = inputBuscarPor.value;
-
-    // condicional: si el formulario tiene algún value
-    if (arrayBuscarValue){
-
-        // resultado búsqueda por "todos"
-        if (buscarPor === "todos"){
-
-            for (const palabra of arrayBuscarValue){
-
-                libros.filter ((libro) => {
-
-                    if (libro.titulo.includes (palabra) || libro.autor.toUpperCase().includes (palabra) || libro.editorial.toUpperCase().includes (palabra)) {
-                        verifSinResultados = 1;
-
-                        if (!arrayVerifId.includes (libro.id)){
-                            arrayVerifId.push (libro.id);
-                            mostrarResultadoBusqueda (libro.id);
-                        }   
-                    }  
-                }) 
-            }    
-        }
-
-        // resultado búsqueda por "título"
-        if (buscarPor === "titulo"){
-
-            for (const palabra of arrayBuscarValue){
-
-                libros.filter ((libro) => {
-
-                    if (libro.titulo.includes (palabra)) {
-                        verifSinResultados = 1;
-
-                        if (!arrayVerifId.includes (libro.id)){
-                            arrayVerifId.push (libro.id);
-                            mostrarResultadoBusqueda (libro.id);
-                        }   
-                    }  
-                }) 
-            }    
-        }
-
-        // resultado búsqueda por "autor"
-        if (buscarPor === "autor"){
-
-            for (const palabra of arrayBuscarValue){
-
-                libros.filter ((libro) => {
-
-                    if (libro.autor.toUpperCase().includes (palabra)) {
-                        
-                        verifSinResultados = 1;
-
-                        if (!arrayVerifId.includes (libro.id)){
-                            arrayVerifId.push (libro.id);
-                            mostrarResultadoBusqueda (libro.id);
-                        }   
-                    }  
-                }) 
-            }    
-        }
-
-        // resultado búsqueda por "editorial"
-        if (buscarPor === "editorial"){
-
-            for (const palabra of arrayBuscarValue){
-
-                libros.filter ((libro) => {
-
-                    if (libro.editorial.toUpperCase().includes (palabra)) {
-                        
-                        verifSinResultados = 1;
-
-                        if (!arrayVerifId.includes (libro.id)){
-                            arrayVerifId.push (libro.id);
-                            mostrarResultadoBusqueda (libro.id);
-                        }   
-                    }  
-                }) 
-            }    
-        }
-
-        // sin resultados
-        if (verifSinResultados === 0){
-            const divSinResultado = document.getElementById ("sin-resultado");
-            divSinResultado.className = "mostrar";
-            divSinResultado.innerHTML = "";
-            divSinResultado.innerHTML = `<p class = "sin-resultado">Lo sentimos, no pudimos encontrar lo que estás buscando. Intenta otra búsqueda.</p>`
-        }
-    }
-})
-
-// EVENTO click en carrito de compras 
-const iconoCarrito = document.getElementById ("icono-carrito");
-
-iconoCarrito.addEventListener ("click", () => {
-    
-    irACarrito ();
-    
-})
-
-// EVENTO click en iniciar compra
-const botonIniciarCompra = document.getElementById ("boton-iniciar-compra");
-botonIniciarCompra.addEventListener ("click", () => {
-
-    // verificar si la persona inicio sesión - SINTAXIS AVANZADA
-    (verifUsuario === false) ? iniciarSesion() : iniciarCompra();
-    verifIniciarCompra = true;
-
 })
 
 // EVENTO click botón crear cuenta del formulario registro usuario
@@ -1046,11 +912,6 @@ botonAcceder.addEventListener ("click", (event) => {
                     // guardar datos usuario logueado en variable usuarioLogIn
                     const usuarioLogIn = usuario;
 
-                    // // guardar productos seleccionados en un carrito personal
-
-                    // // remover key carrito del localStorage
-                    // localStorage.removeItem ("carrito");
-
                     // cargar usuario al localStorage
                     localStorage.setItem ("usuarioLogIn", JSON.stringify(usuarioLogIn));
 
@@ -1122,6 +983,165 @@ linkRegistrate.addEventListener ("click", () => {
     
     // llamar función registrar usuario que lleva al formulario
     registrarUsuario ();
+})
+
+// EVENTO click en botón buscar
+const botonBuscar = document.getElementById ("boton-buscar");
+
+botonBuscar.addEventListener ("click", () => {
+
+    let verifSinResultados = 0;
+    let arrayVerifId = [];
+
+    // limpiar sección 
+    const listaResultadoBusqueda = document.getElementById ("libros-por-busqueda");
+    listaResultadoBusqueda.innerHTML = "";
+
+    // mostrar sección búsqueda
+    const seccionBusqueda = document.getElementById ("seccion-busqueda");
+    seccionBusqueda.className = "mostrar";
+
+    // no mostrar
+    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+    seccionLibrosDisponibles.className = "no-mostrar";
+
+    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
+    seccionDetalleLibro.className = "no-mostrar";
+
+    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+    seccionLibrosAutor.className = "no-mostrar";
+
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "no-mostrar";
+
+    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+    seccionIniciarSesion.className = "no-mostrar";
+
+    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+    seccionRegistroUsuario.className = "no-mostrar";
+
+    const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
+    seccionFinalizarCompra.className = "no-mostrar";
+
+    // obtener value input box
+    const inputBuscarBox = document.getElementById ("buscar-box");
+    const arrayBuscarValue = inputBuscarBox.value.toUpperCase().split(" ");
+
+    inputBuscarBox.value = "";
+    inputBuscarBox.placeholder = "Ingresar título, autor, editorial o palabra clave";
+    
+    // obtener value option
+    const inputBuscarPor = document.getElementById ("buscar-por");
+    const buscarPor = inputBuscarPor.value;
+
+    // condicional: si el formulario tiene algún value
+    if (arrayBuscarValue){
+
+        // resultado búsqueda por "todos"
+        if (buscarPor === "todos"){
+
+            for (const palabra of arrayBuscarValue){
+
+                libros.filter ((libro) => {
+
+                    if (libro.titulo.includes (palabra) || libro.autor.toUpperCase().includes (palabra) || libro.editorial.toUpperCase().includes (palabra)) {
+                        verifSinResultados = 1;
+
+                        if (!arrayVerifId.includes (libro.id)){
+                            arrayVerifId.push (libro.id);
+                            mostrarResultadoBusqueda (libro.id);
+                        }   
+                    }  
+                }) 
+            }    
+        }
+
+        // resultado búsqueda por "título"
+        if (buscarPor === "titulo"){
+
+            for (const palabra of arrayBuscarValue){
+
+                libros.filter ((libro) => {
+
+                    if (libro.titulo.includes (palabra)) {
+                        verifSinResultados = 1;
+
+                        if (!arrayVerifId.includes (libro.id)){
+                            arrayVerifId.push (libro.id);
+                            mostrarResultadoBusqueda (libro.id);
+                        }   
+                    }  
+                }) 
+            }    
+        }
+
+        // resultado búsqueda por "autor"
+        if (buscarPor === "autor"){
+
+            for (const palabra of arrayBuscarValue){
+
+                libros.filter ((libro) => {
+
+                    if (libro.autor.toUpperCase().includes (palabra)) {
+                        
+                        verifSinResultados = 1;
+
+                        if (!arrayVerifId.includes (libro.id)){
+                            arrayVerifId.push (libro.id);
+                            mostrarResultadoBusqueda (libro.id);
+                        }   
+                    }  
+                }) 
+            }    
+        }
+
+        // resultado búsqueda por "editorial"
+        if (buscarPor === "editorial"){
+
+            for (const palabra of arrayBuscarValue){
+
+                libros.filter ((libro) => {
+
+                    if (libro.editorial.toUpperCase().includes (palabra)) {
+                        
+                        verifSinResultados = 1;
+
+                        if (!arrayVerifId.includes (libro.id)){
+                            arrayVerifId.push (libro.id);
+                            mostrarResultadoBusqueda (libro.id);
+                        }   
+                    }  
+                }) 
+            }    
+        }
+
+        // sin resultados
+        if (verifSinResultados === 0){
+            const divSinResultado = document.getElementById ("sin-resultado");
+            divSinResultado.className = "mostrar";
+            divSinResultado.innerHTML = "";
+            divSinResultado.innerHTML = `<p class = "sin-resultado">Lo sentimos, no pudimos encontrar lo que estás buscando. Intenta otra búsqueda.</p>`
+        }
+    }
+})
+
+// EVENTO click en carrito de compras 
+const iconoCarrito = document.getElementById ("icono-carrito");
+
+iconoCarrito.addEventListener ("click", () => {
+    
+    irACarrito ();
+    
+})
+
+// EVENTO click en iniciar compra
+const botonIniciarCompra = document.getElementById ("boton-iniciar-compra");
+botonIniciarCompra.addEventListener ("click", () => {
+
+    // verificar si la persona inicio sesión - SINTAXIS AVANZADA
+    (verifUsuario === false) ? iniciarSesion() : iniciarCompra();
+    verifIniciarCompra = true;
+
 })
 
 // EVENTO click botón finalizar compra
@@ -1207,7 +1227,6 @@ finalizarCompra.addEventListener ("click", (event) => {
 
                 // mostrar libros disponibles HOME
                 regresarAListaLibros ();
-
             }
         });
     }

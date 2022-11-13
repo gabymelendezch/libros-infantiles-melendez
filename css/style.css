@@ -331,7 +331,7 @@ p {
     letter-spacing: 0.5px;
 }
 
-/* carrito */
+/* sección carrito */
 #info-carrito {
     padding-right: 20px;
 }
@@ -367,6 +367,13 @@ p {
 .p-carrito{
     width: 200px;
     margin-right: 60px;
+}
+
+.boton-eliminar {
+    margin-right: 8px;
+    padding: 3px 5px;
+    border-bottom: solid 1px #444;
+    border-radius: 50%;
 }
 
 #div-total-pagar{
