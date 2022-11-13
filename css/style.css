@@ -693,4 +693,15 @@ p {
     .libro a img {
         width: 120px;
     }
+
+    /* carrito */
+    #contenedor-detalle-carrito {
+        width: 100%;
+        margin-inline: 0px;
+    }
+
+    .total-pagar {
+        width: 100%;
+        margin-inline: 0px;
+    }
 }
