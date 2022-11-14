@@ -27,10 +27,9 @@ if (librosInLS === null) {
 
         }).then ( (data) => {
 
-            const infoLibros = data;
-            localStorage.setItem ("libros", JSON.stringify (infoLibros));
+            localStorage.setItem ("libros", JSON.stringify (data));
+            libros = data;
 
-            libros = JSON.parse (localStorage.getItem ("libros"));
             mostrarLibrosDisponibles ();
     });
 
@@ -904,11 +903,8 @@ botonAcceder.addEventListener ("click", (event) => {
                     saludoUsuario.className = ("mostrar");
                     saludoUsuario.innerText = `-- Hola ${usuario.nombre} --`;
 
-                    // Guardar datos usuario logueado en variable usuarioLogIn
-                    const usuarioLogIn = usuario;
-
                     // Cargar usuario al localStorage
-                    localStorage.setItem ("usuarioLogIn", JSON.stringify(usuarioLogIn));
+                    localStorage.setItem ("usuarioLogIn", JSON.stringify(usuario));
 
                     // Verificar si se hizo click en botón iniciar compra
                     if (verifIniciarCompra === false){
