@@ -22,7 +22,7 @@ function librosDisponibles () {
 
     if (librosInLS === null) {
         
-        fetch ("/libros.json")
+        fetch ("./libros.json")
             .then ( (response) => {
 
                 return response.json();
