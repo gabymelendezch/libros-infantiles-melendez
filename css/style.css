@@ -29,8 +29,8 @@ main {
 }
 
 select {
-    color: #444;
-    background-color: white;
+    border: solid 1px #444;
+    color:#444;
 }
 
 section {
