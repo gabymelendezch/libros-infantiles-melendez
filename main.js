@@ -283,7 +283,7 @@ function buscarLibroPorTitulo(titulo){
 
             `<div class = "contenedor-imagen-info">
                 <div class = "libro-img">
-                    <img src = "${libro.img}"/>
+                    <img src = ""/>
                 </div>
 
                 <div class = "precio-libro">

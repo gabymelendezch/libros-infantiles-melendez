@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "img": "../images/la-vaca-se-empaca.png",
+        "img": "./images/la-vaca-se-empaca.png",
         "titulo": "LA VACA SE EMPACA",
         "autor": "Lynch Agustina",
         "fechaPublicacion": "Octubre 2020",
@@ -18,7 +18,7 @@
 
     {
         "id": 2,
-        "img": "../images/caillou-es-mio.png",
+        "img": "./images/caillou-es-mio.png",
         "titulo": "CAILLOU ¡ES MÍO!",
         "autor": "Sanschagrin Joceline ",
         "fechaPublicacion": "Agosto 2018",
@@ -35,7 +35,7 @@
 
     {
         "id": 3,
-        "img": "../images/las-emociones-animagenes.png",
+        "img": "./images/las-emociones-animagenes.png",
         "titulo": "LAS EMOCIONES - MIS ANIMÁGENES",
         "autor": "Editores de Auzou",
         "fechaPublicacion": "Mayo 2020",
@@ -51,7 +51,7 @@
     },
     {
         "id": 4,
-        "img": "../images/atrapala-kitty.png",
+        "img": "./images/atrapala-kitty.png",
         "titulo": "ATRÁPALA KITTY",
         "autor": "Parsons Nicola ",
         "fechaPublicacion": "Julio 2019",
@@ -68,7 +68,7 @@
 
     {
         "id": 5,
-        "img": "../images/muevo-miro-selva.png",
+        "img": "./images/muevo-miro-selva.png",
         "titulo": "MUEVO Y MIRO - EN LA SELVA",
         "autor": "Editores de Yoyo Books",
         "fechaPublicacion": "Octubre 2020",
@@ -85,7 +85,7 @@
 
     {
         "id": 6,
-        "img": "../images/primer-dia-clases.png",
+        "img": "./images/primer-dia-clases.png",
         "titulo": "PRIMER DÍA DE CLASES",
         "autor": "Sin Autor",
         "fechaPublicacion": "",
@@ -102,7 +102,7 @@
 
     {
         "id": 7,
-        "img": "../images/conviertete-heroe-ines-pricesita.png",
+        "img": "./images/conviertete-heroe-ines-pricesita.png",
         "titulo": "CONVIÉRTETE EN HÉROE CON INÉS LA PRINCESITA",
         "autor": "Editores de Auzou",
         "fechaPublicacion": "Agosto 2018",
@@ -119,7 +119,7 @@
 
     {
         "id": 8,
-        "img": "../images/libro-gigante-animales.png",
+        "img": "./images/libro-gigante-animales.png",
         "titulo": "MI LIBRO GIGANTE DE ANIMALES",
         "autor": "Editores de Auzou",
         "fechaPublicacion": "Octubre 2018",
@@ -136,7 +136,7 @@
 
     {
         "id": 9,
-        "img": "../images/la-selva-sabana-animagenes.png",
+        "img": "./images/la-selva-sabana-animagenes.png",
         "titulo": "LA SELVA Y LA SABANA - MIS ANIMÁGENES",
         "autor": "Editores de Auzou",
         "fechaPublicacion": "Septiembre 2018",
@@ -153,7 +153,7 @@
 
     {
         "id": 10,
-        "img": "../images/la-vaca-y-la-espinaca.png",
+        "img": "./images/la-vaca-y-la-espinaca.png",
         "titulo": "LA VACA Y LA ESPINACA",
         "autor": "Lynch Agustina",
         "fechaPublicacion": "Julio 2019",
@@ -170,7 +170,7 @@
 
     {
         "id": 11,
-        "img": "../images/caillou-no-mas-panales.png",
+        "img": "./images/caillou-no-mas-panales.png",
         "titulo": "CAILLOU NO MAS PAÑALES",
         "autor": "L'Heureux Christine",
         "fechaPublicacion": "Agosto 2011",
@@ -187,7 +187,7 @@
 
     {
         "id": 12,
-        "img": "../images/a-la-cama-animagenes.png",
+        "img": "./images/a-la-cama-animagenes.png",
         "titulo": "¡A LA CAMA! - MIS ANIMÁGENES",
         "autor": "Editores de Auzou",
         "fechaPublicacion": "Marzo 2017",
@@ -204,7 +204,7 @@
 
     {
         "id": 13,
-        "img": "../images/cuentos-montessori-crecer-felices.png",
+        "img": "./images/cuentos-montessori-crecer-felices.png",
         "titulo": "CUENTOS MONTESSORI PARA CRECER FELICES",
         "autor": "Prada Marta",
         "fechaPublicacion": "Octubre 2018",
@@ -221,7 +221,7 @@
 
     {
         "id": 14,
-        "img": "../images/cuentos-montessori-buenas-noches.png",
+        "img": "./images/cuentos-montessori-buenas-noches.png",
         "titulo": "CUENTOS MONTESSORI PARA LAS BUENAS NOCHES",
         "autor": "Prada Marta",
         "fechaPublicacion": "Octubre 2019",
