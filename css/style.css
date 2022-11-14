@@ -100,6 +100,7 @@ p {
     padding: 8px 15px;
     margin-top: 15px;
     margin-bottom: 20px;
+    border: solid 1.5px #444;
     background-color: white;
     letter-spacing: 1.5px;
     border-radius: 2cm;
@@ -107,9 +108,7 @@ p {
     
 .botones-accion:hover {
     padding: 8px 15px;
-    color: #444;
     background-color: #D4E09B;
-    border-color: #444;
 }
 
 #boton-buscar{
