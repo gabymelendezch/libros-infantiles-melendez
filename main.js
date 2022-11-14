@@ -1,5 +1,3 @@
-//localStorage.clear ();
-
 // ******************** VARIABLES GLOBALES ******************** //
 
 let libros = [];
@@ -45,7 +43,6 @@ function librosDisponibles () {
 
     }
 }
-
 librosDisponibles ();
 
 // FUNCION mostrar libros disponibles en HOME
@@ -102,7 +99,6 @@ function obtenerUsuarioLogIn () {
         const saludoUsuario = document.getElementById ("saludo-usuario");
         saludoUsuario.className = ("mostrar");
         saludoUsuario.innerText = `-- Hola ${usuarioLogIn.nombre} --`;
-
     }
                                          
     return usuarioLogIn;
@@ -399,7 +395,6 @@ function buscarLibroPorTitulo(titulo){
 
                     // guardar array libros en localStorage
                     localStorage.setItem ("libros", JSON.stringify (libros));
-
                 }
             })
 
@@ -678,6 +673,8 @@ function iniciarCompra (){
     document.getElementById ("contrasenia").value = "";
 }
 
+
+
 // ******************** EVENTOS ******************** //
 
 // EVENTO click en link ingresar - nav
@@ -745,7 +742,6 @@ salir.addEventListener ("click", () => {
 
         // mostrar libros disponibles HOME
         regresarAListaLibros ();
-
     }  
 })
 

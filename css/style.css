@@ -22,7 +22,6 @@ nav{
     border-bottom: dotted 2px #227C9D;
 }
 
-
 main {
     margin-left: 90px;
     margin-right: 90px;
@@ -94,7 +93,6 @@ p {
 .p-alert{
     font-size: 14px;
 }
-
 
 /* estilo botones */
 .botones-accion {
@@ -201,7 +199,6 @@ p {
     align-items: center;
 }
 
-
 /* animación logo */
 .animacion-logo {
     text-align: center;
@@ -276,7 +273,6 @@ p {
 .autor-libro {
     font-size: 14px;
     font-weight: 200;
-
 }
 
 /* seccion detalle libro */
@@ -405,7 +401,6 @@ p {
     width: 60%;
 }
 
-
 /* sección registrar nuevo usuario */
 .contenedor-registro-usuario{
     text-align: center;
@@ -415,7 +410,6 @@ p {
 .contenedor-iniciar-sesion{
     text-align: center;
 }
-
 
 /* sección finalizar compra */
 .contenedor-finalizar-compra{
@@ -496,7 +490,7 @@ p {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    /* carrito */
+    /* sección carrito */
     #contenedor-detalle-carrito{
         margin-inline: 15px;
     }
@@ -579,7 +573,6 @@ p {
         width: 80%;
         padding: 30px;
     }
-
 }
 
 /* ----- 500----- */
@@ -644,7 +637,7 @@ p {
         font-size: 14px;
     }
 
-    /* carrito */
+    /* sección carrito */
     #contenedor-detalle-carrito {
         padding-inline: 15px;
     }
@@ -694,7 +687,7 @@ p {
         width: 120px;
     }
 
-    /* carrito */
+    /* sección carrito */
     #contenedor-detalle-carrito {
         width: 100%;
         margin-inline: 0px;
