@@ -104,7 +104,7 @@ button {
 }
 
 
-/* estilo botones */
+/* Estilo botones */
 .botones-accion {
     display: block;
     padding: 8px 15px;
@@ -136,7 +136,7 @@ button {
     cursor: pointer;
 }
 
-/* estilo link libros */
+/* Estilo link libros */
 .estilo-link-libros{
     text-decoration: none;
     color: #444;
@@ -147,7 +147,7 @@ button {
     cursor: pointer;
 }
 
-/* estilo formularios */
+/* Estilo formularios */
 .formularios-usuarios{
     display: flex;
     flex-direction: column;
@@ -157,7 +157,7 @@ button {
     text-align: center;
 }
 
-/* estilo form box */
+/* Estilo form box */
 .form-box{
     width: 400px;
     height: 40px;
@@ -165,7 +165,7 @@ button {
     padding-left: 10px;
 }
 
-/* estilo contenedor botones formularios */
+/* Estilo contenedor botones formularios */
 .contenedor-boton-formularios{
     display: flex;
     flex-direction: row;
@@ -173,12 +173,12 @@ button {
     gap: 10px;
 }
 
-/* sweet alert */
+/* Sweet alert */
 .swal2-title{
     font-size: 1.4em;
 }
 
-/* mostrar, no mostrar para secciones */
+/* Mostrar, no mostrar para secciones */
 .mostrar {
     display:initial;
 }
@@ -190,7 +190,7 @@ button {
 
 /* NAVBAR */
 
-/* contenedores nav */
+/* Contenedores nav */
 .contenedor-nav-clientes{
     display: flex;
     flex-direction: row;
@@ -209,7 +209,7 @@ button {
     align-items: center;
 }
 
-/* animación logo */
+/* Animación logo */
 .animacion-logo {
     text-align: center;
     animation-name: efecto__logo;
@@ -224,7 +224,7 @@ button {
       transform: rotate(0deg);
       transform: scale(1); } }
     
-/* form buscar */
+/* Form buscar */
 .contenedor-buscador{
     padding-top: 15px;
     padding-bottom: 15px;
@@ -251,7 +251,7 @@ button {
 
 /* MAIN */
 
-/* seccion lista libros disponibles */
+/* Sección lista libros disponibles */
 .grid-wrapper{
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -285,7 +285,7 @@ button {
     font-weight: 200;
 }
 
-/* seccion detalle libro */
+/* Sección detalle libro */
 .contenedor-imagen-info{
     display: flex;
     flex-direction: row;
@@ -329,7 +329,7 @@ button {
     border: solid .5px gray;
 }
 
-/* sección resultado búsqueda */
+/* Sección resultado búsqueda */
 .sin-resultado{
     padding-top: 5px;
     padding-bottom: 30px;
@@ -337,7 +337,7 @@ button {
     letter-spacing: 0.5px;
 }
 
-/* sección carrito */
+/* Sección carrito */
 #info-carrito {
     padding-right: 20px;
 }
@@ -411,17 +411,17 @@ button {
     width: 60%;
 }
 
-/* sección registrar nuevo usuario */
+/* Sección registrar nuevo usuario */
 .contenedor-registro-usuario{
     text-align: center;
 }
 
-/* sección iniciar sesión */
+/* Sección iniciar sesión */
 .contenedor-iniciar-sesion{
     text-align: center;
 }
 
-/* sección finalizar compra */
+/* Sección finalizar compra */
 .contenedor-finalizar-compra{
     width: 50%;
     margin-top: 45px;
@@ -450,7 +450,7 @@ button {
 /* ----- 1200 ----- */
 @media only screen and (max-width: 1200px) {
 
-    /* seccion lista libros disponibles */
+    /* Sección lista libros disponibles */
     .grid-wrapper{
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 15px;
@@ -468,18 +468,18 @@ button {
         margin-right: 10px; 
     }
 
-    /* contenedor nav clientes */
+    /* Contenedor nav clientes */
     .contenedor-nav-clientes {
         font-size: 12px;
         padding-right: 30px;
     }
 
-    /* logo */
+    /* Logo */
     .animacion-logo {
         width: 150px;
     }
     
-    /* formulario buscar */
+    /* Formulario buscar */
     .estilo-buscar-box {
         width: 270px;
         font-size: 12px;
@@ -495,12 +495,12 @@ button {
         font-size: 12px;
     }
 
-    /* sección lista libros disponibles */
+    /* Sección lista libros disponibles */
     .grid-wrapper{
         grid-template-columns: repeat(3, 1fr);
     }
 
-    /* sección carrito */
+    /* Sección carrito */
     #contenedor-detalle-carrito{
         margin-inline: 15px;
     }
@@ -509,7 +509,7 @@ button {
         margin-inline: 15px;
     }
 
-    /* sección finalizar compra */
+    /* Sección finalizar compra */
     .contenedor-finalizar-compra {
         margin-inline: 15px;
     }
@@ -529,13 +529,13 @@ button {
         font-size: 18px;
     }
 
-    /* contenedor nav logo */
+    /* Contenedor nav logo */
     .contenedor-nav-logo {
         flex-direction: column;
         gap: 20px
     }
 
-    /* seccion lista libros disponibles */
+    /* Seccion lista libros disponibles */
     .h2-titulo-libro {
         font-size: 13px;
         margin-bottom: 0px;
@@ -545,7 +545,7 @@ button {
         width: 120px;
     }
 
-    /* seccion detalle libro */
+    /* Seccion detalle libro */
     .contenedor-imagen-info {
         margin-inline: 30px;
         margin-bottom: 30px;
@@ -561,7 +561,7 @@ button {
         margin-left: 45px;
     }
 
-    /* carrito */
+    /* Sección carrito */
     #contenedor-detalle-carrito {
         width: 90%;
         margin-inline: 15px;
@@ -578,7 +578,7 @@ button {
         width: 90%;
     }
 
-    /* sección finalizar compra */
+    /* Sección finalizar compra */
     .contenedor-finalizar-compra {
         width: 80%;
         padding: 30px;
@@ -599,19 +599,19 @@ button {
         font-size: 18px;
     }
 
-    /* botones acción */
+    /* Botones acción */
     .botones-accion {
         display: block;
         padding: 8px 12px;
         font-size: 12px;
     }
 
-    /* formulario buscar */
+    /* Formulario buscar */
     .estilo-buscar-box {
         width: 180px; 
     }
 
-    /* seccion lista libros disponibles */
+    /* Sección lista libros disponibles */
     .grid-wrapper{
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 15px;
@@ -621,7 +621,7 @@ button {
         width: 150px;
     }
 
-    /* seccion detalle libro */
+    /* Sección detalle libro */
     .contenedor-imagen-info {
         margin-inline: 0px;
     }
@@ -647,7 +647,7 @@ button {
         font-size: 14px;
     }
 
-    /* sección carrito */
+    /* Sección carrito */
     #contenedor-detalle-carrito {
         padding-inline: 15px;
     }
@@ -671,13 +671,13 @@ button {
         margin-right: 30px;
     }
 
-    /* sección finalizar compra */
+    /* Sección finalizar compra */
     .contenedor-finalizar-compra {
         width: 90%;
         padding: 20px;
     }
 
-    /* formularios registro - inicio de sesión */
+    /* Formularios registro - inicio de sesión */
     .form-box {
         width: 250px;
         margin-bottom: 15px;
@@ -688,7 +688,7 @@ button {
 /* ----- 380 ----- */
 @media only screen and (max-width: 380px) {
 
-    /* seccion lista libros disponibles */
+    /* Sección lista libros disponibles */
     .grid-wrapper{
         grid-gap: 10px;
     }
@@ -697,7 +697,7 @@ button {
         width: 120px;
     }
 
-    /* sección carrito */
+    /* Sección carrito */
     #contenedor-detalle-carrito {
         width: 100%;
         margin-inline: 0px;
