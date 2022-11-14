@@ -94,6 +94,10 @@ p {
     font-size: 14px;
 }
 
+button {
+    color: #444;
+}
+
 /* estilo botones */
 .botones-accion {
     display: block;
