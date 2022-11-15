@@ -177,26 +177,10 @@ function registrarUsuario (){
     seccionRegistroUsuario.className = "mostrar";
 
     // No mostrar
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
-    seccionLibrosDisponibles.className = "no-mostrar";
-
-    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
-    seccionDetalleLibro.className = "no-mostrar";
-
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
-    seccionLibrosAutor.className = "no-mostrar";
-
-    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
-    seccionResultadoBusqueda.className = "no-mostrar";
-
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
-    seccionDetalleCarrito.className = "no-mostrar";
-
     const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
     seccionIniciarSesion.className = "no-mostrar";
 
-    const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
-    seccionFinalizarCompra.className = "no-mostrar";
+    noMostrarEnRegistroInicio ()
 }
 
 // Función inciar sesión
@@ -206,26 +190,33 @@ function iniciarSesion (){
     seccionIniciarSesion.className = "mostrar";
 
     // No mostrar
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
-    seccionLibrosDisponibles.className = "no-mostrar";
-    
-    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
-    seccionDetalleLibro.className = "no-mostrar";
-    
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
-    seccionLibrosAutor.className = "no-mostrar";
-    
-    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
-    seccionResultadoBusqueda.className = "no-mostrar";
-    
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
-    seccionDetalleCarrito.className = "no-mostrar";
-
     const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
     seccionRegistroUsuario.className = "no-mostrar";
 
+    noMostrarEnRegistroInicio ()
+}
+
+// Función no mostrar secciones en registrar usuario e iniciar de sesión
+function noMostrarEnRegistroInicio (){
+
+    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+    seccionLibrosDisponibles.className = "no-mostrar";
+
+    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
+    seccionDetalleLibro.className = "no-mostrar";
+
+    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+    seccionLibrosAutor.className = "no-mostrar";
+
+    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
+    seccionResultadoBusqueda.className = "no-mostrar";
+
+    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleCarrito.className = "no-mostrar";
+
     const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
     seccionFinalizarCompra.className = "no-mostrar";
+
 }
 
 // Función notificar usuario que ya inició sesión
@@ -1029,89 +1020,96 @@ botonBuscar.addEventListener ("click", () => {
     if (arrayBuscarValue){
 
         // Resultado búsqueda por "todos"
-        if (buscarPor === "todos"){
 
-            for (const palabra of arrayBuscarValue){
+        switch (buscarPor) {
+        
+            case "todos":
 
-                libros.filter ((libro) => {
+                for (const palabra of arrayBuscarValue){
 
-                    if (libro.titulo.includes (palabra) || libro.autor.toUpperCase().includes (palabra) || libro.editorial.toUpperCase().includes (palabra)) {
-                        verifSinResultados = 1;
+                    libros.filter ((libro) => {
+    
+                        if (libro.titulo.includes (palabra) || libro.autor.toUpperCase().includes (palabra) || libro.editorial.toUpperCase().includes (palabra)) {
+                            verifSinResultados = 1;
+    
+                            if (!arrayVerifId.includes (libro.id)){
+                                arrayVerifId.push (libro.id);
+                                mostrarResultadoBusqueda (libro.id);
+                            }   
+                        }  
+                    }) 
+                }    
+                
+                break;
+            
+            case "titulo":
 
-                        if (!arrayVerifId.includes (libro.id)){
-                            arrayVerifId.push (libro.id);
-                            mostrarResultadoBusqueda (libro.id);
-                        }   
-                    }  
-                }) 
-            }    
-        }
+                for (const palabra of arrayBuscarValue){
 
-        // Resultado búsqueda por "título"
-        if (buscarPor === "titulo"){
+                    libros.filter ((libro) => {
+    
+                        if (libro.titulo.includes (palabra)) {
+                            verifSinResultados = 1;
+    
+                            if (!arrayVerifId.includes (libro.id)){
+                                arrayVerifId.push (libro.id);
+                                mostrarResultadoBusqueda (libro.id);
+                            }   
+                        }  
+                    }) 
+                }
 
-            for (const palabra of arrayBuscarValue){
+                break;
+            
+            case "autor":
 
-                libros.filter ((libro) => {
+                for (const palabra of arrayBuscarValue){
 
-                    if (libro.titulo.includes (palabra)) {
-                        verifSinResultados = 1;
+                    libros.filter ((libro) => {
+    
+                        if (libro.autor.toUpperCase().includes (palabra)) {
+                            
+                            verifSinResultados = 1;
+    
+                            if (!arrayVerifId.includes (libro.id)){
+                                arrayVerifId.push (libro.id);
+                                mostrarResultadoBusqueda (libro.id);
+                            }   
+                        }  
+                    }) 
+                }    
 
-                        if (!arrayVerifId.includes (libro.id)){
-                            arrayVerifId.push (libro.id);
-                            mostrarResultadoBusqueda (libro.id);
-                        }   
-                    }  
-                }) 
-            }    
-        }
+                break;
 
-        // Resultado búsqueda por "autor"
-        if (buscarPor === "autor"){
+            case "editorial":
 
-            for (const palabra of arrayBuscarValue){
+                for (const palabra of arrayBuscarValue){
 
-                libros.filter ((libro) => {
+                    libros.filter ((libro) => {
+    
+                        if (libro.editorial.toUpperCase().includes (palabra)) {
+                            
+                            verifSinResultados = 1;
+    
+                            if (!arrayVerifId.includes (libro.id)){
+                                arrayVerifId.push (libro.id);
+                                mostrarResultadoBusqueda (libro.id);
+                            }   
+                        }  
+                    }) 
+                } 
 
-                    if (libro.autor.toUpperCase().includes (palabra)) {
-                        
-                        verifSinResultados = 1;
-
-                        if (!arrayVerifId.includes (libro.id)){
-                            arrayVerifId.push (libro.id);
-                            mostrarResultadoBusqueda (libro.id);
-                        }   
-                    }  
-                }) 
-            }    
-        }
-
-        // Resultado búsqueda por "editorial"
-        if (buscarPor === "editorial"){
-
-            for (const palabra of arrayBuscarValue){
-
-                libros.filter ((libro) => {
-
-                    if (libro.editorial.toUpperCase().includes (palabra)) {
-                        
-                        verifSinResultados = 1;
-
-                        if (!arrayVerifId.includes (libro.id)){
-                            arrayVerifId.push (libro.id);
-                            mostrarResultadoBusqueda (libro.id);
-                        }   
-                    }  
-                }) 
-            }    
+                break;
         }
 
         // Sin resultados
         if (verifSinResultados === 0){
+
             const divSinResultado = document.getElementById ("sin-resultado");
             divSinResultado.className = "mostrar";
             divSinResultado.innerHTML = "";
             divSinResultado.innerHTML = `<p class = "sin-resultado">Lo sentimos, no pudimos encontrar lo que estás buscando. Intenta otra búsqueda.</p>`
+
         }
     }
 })
