@@ -13,6 +13,15 @@ let itemsAgregados = 0;
 let totalAPagar = 0;
 let subtotalItem = 0;
 
+const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
+const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
+const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
+const saludoUsuario = document.getElementById ("saludo-usuario");
 
 
 // Obtener libros disponibles usando libros.json
@@ -93,7 +102,6 @@ function obtenerUsuarioLogIn () {
     if (verifUsuario === true) {
 
         // Mostrar saludo usuario
-        const saludoUsuario = document.getElementById ("saludo-usuario");
         saludoUsuario.className = ("mostrar");
         saludoUsuario.innerText = `-- Hola ${usuarioLogIn.nombre} --`;
     }
@@ -135,29 +143,16 @@ let usuarios = obtenerUsuarios ();
 
 // Función botón home
 function regresarAListaLibros (){
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
+
     seccionLibrosDisponibles.className = "mostrar";
 
     // No mostrar
-    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
     seccionDetalleLibro.className = "no-mostrar";
-
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
     seccionLibrosAutor.className = "no-mostrar";
-
-    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
     seccionResultadoBusqueda.className = "no-mostrar";
-
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "no-mostrar";
-
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
     seccionIniciarSesion.className = "no-mostrar";
-
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
     seccionRegistroUsuario.className = "no-mostrar";
-
-    const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
     seccionFinalizarCompra.className = "no-mostrar";
 
     // Limpiar inputs inicio de sesión
@@ -173,11 +168,10 @@ function regresarAListaLibros (){
 
 // Función registrar usuario
 function registrarUsuario (){
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
+
     seccionRegistroUsuario.className = "mostrar";
 
     // No mostrar
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
     seccionIniciarSesion.className = "no-mostrar";
 
     noMostrarEnRegistroInicio ()
@@ -186,11 +180,9 @@ function registrarUsuario (){
 // Función inciar sesión
 function iniciarSesion (){
 
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
     seccionIniciarSesion.className = "mostrar";
 
     // No mostrar
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
     seccionRegistroUsuario.className = "no-mostrar";
 
     noMostrarEnRegistroInicio ()
@@ -199,24 +191,12 @@ function iniciarSesion (){
 // Función no mostrar secciones en registrar usuario e iniciar de sesión
 function noMostrarEnRegistroInicio (){
 
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
     seccionLibrosDisponibles.className = "no-mostrar";
-
-    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
     seccionDetalleLibro.className = "no-mostrar";
-
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
     seccionLibrosAutor.className = "no-mostrar";
-
-    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
     seccionResultadoBusqueda.className = "no-mostrar";
-
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "no-mostrar";
-
-    const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
     seccionFinalizarCompra.className = "no-mostrar";
-
 }
 
 // Función notificar usuario que ya inició sesión
@@ -241,29 +221,15 @@ function buscarLibroPorTitulo(titulo){
         if (libro.titulo === titulo){
             
             // Mostrar sección detalle libro
-            const seccionFicha = document.getElementById ("seccion-detalle-libro");
-            seccionFicha.className = "mostrar";
+            seccionDetalleLibro.className = "mostrar";
 
             // No mostrar
-            const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
             seccionLibrosDisponibles.className = "no-mostrar";
-
-            const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
             seccionLibrosAutor.className = "no-mostrar";
-
-            const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
             seccionResultadoBusqueda.className = "no-mostrar";
-
-            const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
             seccionDetalleCarrito.className = "no-mostrar";
-
-            const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
             seccionIniciarSesion.className = "no-mostrar";
-
-            const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
             seccionRegistroUsuario.className = "no-mostrar";
-
-            const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
             seccionFinalizarCompra.className = "no-mostrar";
 
             // Información del libro
@@ -403,29 +369,15 @@ function buscarLibrosPorAutor(nombreAutor){
     const librosPorAutor = libros.filter ((libro) => libro.autor === nombreAutor);
 
     // Mostrar sección libros por autor
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
     seccionLibrosAutor.className = "mostrar";
 
     // No mostrar
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
     seccionLibrosDisponibles.className = "no-mostrar";
-
-    const seccionFicha = document.getElementById ("seccion-detalle-libro");
-    seccionFicha.className = "no-mostrar";
-
-    const seccionBusqueda = document.getElementById ("seccion-busqueda");
-    seccionBusqueda.className = "no-mostrar";
-
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
+    seccionDetalleLibro.className = "no-mostrar";
+    seccionResultadoBusqueda.className = "no-mostrar";
     seccionDetalleCarrito.className = "no-mostrar";
-
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
     seccionIniciarSesion.className = "no-mostrar";
-
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
     seccionRegistroUsuario.className = "no-mostrar";
-
-    const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
     seccionFinalizarCompra.className = "no-mostrar";
 
     // Grid con libros del autor clickeado
@@ -514,7 +466,6 @@ function irACarrito (){
         totalAPagar = 0;
 
         // Mostrar sección detalle carrito
-        const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
         seccionDetalleCarrito.className = "mostrar";
 
         // Vaciar div contenedor detalle carrito
@@ -522,25 +473,12 @@ function irACarrito (){
         contenedorDetalleCarrito.innerHTML = `<h3 class = "h3-estilo">DETALLE COMPRA</h3>`;
 
         // No mostrar
-        const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
         seccionLibrosDisponibles.className = "no-mostrar";
-
-        const seccionFicha = document.getElementById ("seccion-detalle-libro");
-        seccionFicha.className = "no-mostrar";
-
-        const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
+        seccionDetalleLibro.className = "no-mostrar";
         seccionLibrosAutor.className = "no-mostrar";
-
-        const seccionBusqueda = document.getElementById ("seccion-busqueda");
-        seccionBusqueda.className = "no-mostrar";
-
-        const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
+        seccionResultadoBusqueda.className = "no-mostrar";
         seccionIniciarSesion.className = "no-mostrar";
-
-        const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
         seccionRegistroUsuario.className = "no-mostrar";
-
-        const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
         seccionFinalizarCompra.className = "no-mostrar";
 
         for (const item of carrito){
@@ -624,30 +562,17 @@ function eliminarItemCarrito(titulo, unidades){
 function iniciarCompra (){
 
     // Mostrar sección detalle carrito
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "mostrar";
 
     // Mostrar sección formulario finalizar compra
-    const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
     seccionFinalizarCompra.className = "mostrar";
 
     // No mostrar
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
     seccionLibrosDisponibles.className = "no-mostrar";
-
-    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
     seccionDetalleLibro.className = "no-mostrar";
-
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
     seccionLibrosAutor.className = "no-mostrar";
-
-    const seccionResultadoBusqueda = document.getElementById ("seccion-busqueda");
     seccionResultadoBusqueda.className = "no-mostrar";
-
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
     seccionIniciarSesion.className = "no-mostrar";
-
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
     seccionRegistroUsuario.className = "no-mostrar";
 
     // Limpiar inputs inicio de sesión
@@ -722,11 +647,9 @@ salir.addEventListener ("click", () => {
         verifIniciarCompra = false;
 
         // No mostrar saludo usuario
-        const saludoUsuario = document.getElementById ("saludo-usuario");
         saludoUsuario.className = ("no-mostrar");
 
         // No mostrar sección finalizar compra
-        const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
         seccionFinalizarCompra.className = "no-mostrar";
 
         // Mostrar libros disponibles HOME
@@ -890,7 +813,6 @@ botonAcceder.addEventListener ("click", (event) => {
                     verifContrasenia = true;
 
                     // Mostrar saludo usuario
-                    const saludoUsuario = document.getElementById ("saludo-usuario");
                     saludoUsuario.className = ("mostrar");
                     saludoUsuario.innerText = `-- Hola ${usuario.nombre} --`;
 
@@ -984,25 +906,12 @@ botonBuscar.addEventListener ("click", () => {
     seccionBusqueda.className = "mostrar";
 
     // No mostrar
-    const seccionLibrosDisponibles = document.getElementById ("seccion-libros-disponibles");
     seccionLibrosDisponibles.className = "no-mostrar";
-
-    const seccionDetalleLibro = document.getElementById ("seccion-detalle-libro");
     seccionDetalleLibro.className = "no-mostrar";
-
-    const seccionLibrosAutor = document.getElementById ("seccion-libros-autor");
     seccionLibrosAutor.className = "no-mostrar";
-
-    const seccionDetalleCarrito = document.getElementById ("seccion-detalle-carrito");
     seccionDetalleCarrito.className = "no-mostrar";
-
-    const seccionIniciarSesion = document.getElementById ("seccion-iniciar-sesion");
     seccionIniciarSesion.className = "no-mostrar";
-
-    const seccionRegistroUsuario = document.getElementById ("seccion-registro-usuario");
     seccionRegistroUsuario.className = "no-mostrar";
-
-    const seccionFinalizarCompra = document.getElementById ("seccion-finalizar-compra");
     seccionFinalizarCompra.className = "no-mostrar";
 
     // Obtener value input box
@@ -1119,8 +1028,7 @@ const iconoCarrito = document.getElementById ("icono-carrito");
 
 iconoCarrito.addEventListener ("click", () => {
     
-    irACarrito ();
-    
+    irACarrito (); 
 })
 
 // Evento click en iniciar compra
@@ -1130,7 +1038,6 @@ botonIniciarCompra.addEventListener ("click", () => {
     // Verificar si la persona inicio sesión - SINTAXIS AVANZADA
     (verifUsuario === false) ? iniciarSesion() : iniciarCompra();
     verifIniciarCompra = true;
-
 })
 
 // Evento click botón finalizar compra
